@@ -1,0 +1,129 @@
+.card-body ul {
+  margin-left: 24px;
+}
+
+.card-footer img {
+  border-radius: 50%;
+  height: 32px;
+}
+
+.tag {
+  font-size: 1em;
+}
+
+.tabs-nav-box {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.tabs-nav-box button {
+  padding: 16px 16px;
+  flex-grow: 1;
+  text-align: center;
+  border: none;
+  border-radius: 4px;
+  font-size: 1em;
+  min-width: fit-content;
+  background-color: transparent;
+}
+
+.tabs-nav-box button:hover {
+  background-color: var(--background100);
+  color: var(--primary100);
+  box-shadow: none;
+  font-weight: normal;
+}
+
+.tabs-nav-box button.active {
+  background-color: var(--primary100);
+  font-weight: bold;
+}
+
+.tabs-nav-box button.active:hover {
+  color: var(--text100);
+}
+
+.tabs-content-box .tab-content {
+  display: none;
+  animation: fade 0.32s;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+.tabbed-table {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  gap: 16px;
+}
+
+.tabbed-table table {
+  min-width: 360px;
+}
+
+.file-pertemuan-table th:first-child,
+.file-pertemuan-table td:first-child {
+  width: 10%;
+  text-align: center;
+}
+
+.file-pertemuan-table th:nth-child(2),
+.file-pertemuan-table td:nth-child(2) {
+  width: fit-content;
+  text-align: left;
+}
+
+.file-pertemuan-table th:nth-child(3),
+.file-pertemuan-table td:nth-child(3) {
+  width: fit-content;
+  text-align: left;
+}
+
+.file-pertemuan-table th:nth-child(4),
+.file-pertemuan-table td:nth-child(4) {
+  width: 25%;
+  text-align: left;
+}
+
+.year-nav-list {
+  flex-direction: column;
+  height: fit-content;
+}
+
+
+@media (max-width: 992px) {
+  .class-banner .card-footer p {
+    margin: 0 !important;
+    margin-right: 7% !important;
+  }
+
+  .class-banner .card-footer p i {
+    margin: 0;
+    margin-right: 8px;
+  }
+
+  .tabbed-table {
+    display: block;
+
+  }
+
+  .year-nav-list {
+    flex-direction: row;
+  }
+
+}
