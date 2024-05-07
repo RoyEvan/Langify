@@ -1,0 +1,26 @@
+Sementara ini untuk Eclass aku kepikiran kyk gini tabel e :
+
+1. Akun (Dosen / Mhs) - Create,Read,Update
+2. Makul - CRUD
+3. Kelas Matkul (per angkatan) - CRUD
+4. Materi (per kelas) - CRUD
+5. Tugas (per kelas) - CRUD
+6. Comment materi - Create,Read
+7. Comment Tugas - Create,Read
+
+Ditambah dgn Hasil Many To Many :
+1. Akun dan Makul
+2. Akun dan Kelas
+3. Akun dan Tugas (Karena 1 Akun memiliki minimal 0, maksimal 1 tugas. Tugas minimal dimiliki oleh 1 akun dan maksimal N akun)
+
+
+Students    = S + [2_digitTahunGabung] + [5_digitNoUrut]
+  Contoh : S2024911 -> Siswa ke-911 yang bergabung di tahun 2024
+
+
+Teachers    = T + [4_digitTahunGabung] + [3_digitKodePelajaran]
+  Contoh : T2024911 -> Guru bidang ajar XX yang bergabung di tahun 2024
+
+
+Courses     = C + [4_digitNoUrutMaPel] + [2_digitLevel]
+  Contoh : C101005 -> Course dengan kode 1010, Tingkat 5
