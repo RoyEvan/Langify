@@ -98,7 +98,8 @@ create table MATERIAL_FILES
 create table STUDENTS
 (
    STUDENT_ID           varchar(8) not null,
-   STUDENT_USERNAME     varchar(16) not null,
+   USERNAME             varchar(16) not null,
+   PASSWORD             varchar(255) not null,
    STUDENT_NAME         varchar(64) not null,
    STUDENT_EMAIL        varchar(32) not null,
    STUDENT_ADDRESS      varchar(128) not null,
@@ -112,7 +113,8 @@ create table STUDENTS
 create table TEACHERS
 (
    TEACHER_ID           varchar(8) not null,
-   TEACHER_USERNAME     varchar(16) not null,
+   USERNAME             varchar(16) not null,
+   PASSWORD             varchar(255) not null,
    TEACHER_NAME         varchar(64) not null,
    TEACHER_EMAIL        varchar(32) not null,
    TEACHER_ADDRESS      varchar(128) not null,
