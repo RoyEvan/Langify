@@ -21,13 +21,8 @@ class SiteController extends Controller
             return redirect("langify/login");
         }
     }
-
     public function login(Request $req) {
         return view('layout.login');
-    }
-
-    public function doLogin(Request $req) {
-
     }
 
     public function dashboard(Request $req) {

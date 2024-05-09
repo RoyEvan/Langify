@@ -15,12 +15,19 @@ Ditambah dgn Hasil Many To Many :
 
 
 Students    = S + [2_digitTahunGabung] + [5_digitNoUrut]
-  Contoh : S2024911 -> Siswa ke-911 yang bergabung di tahun 2024
+  Contoh : S2491191 -> Siswa ke-91191 yang bergabung di tahun 2024
 
 
 Teachers    = T + [4_digitTahunGabung] + [3_digitKodePelajaran]
   Contoh : T2024911 -> Guru bidang ajar XX yang bergabung di tahun 2024
 
 
-Courses     = C + [4_digitNoUrutMaPel] + [2_digitLevel]
-  Contoh : C101005 -> Course dengan kode 1010, Tingkat 5
+Courses     = C + [4_digitNoUrutMaPel]
+  Contoh : C1010 -> Course dengan kode 1010
+
+
+
+You will learn complex English for complex conversation!
+You will learn complex Mandarin for complex conversation!
+You will learn complex Spanish for complex conversation!
+You will learn complex Japanese for complex conversation!
