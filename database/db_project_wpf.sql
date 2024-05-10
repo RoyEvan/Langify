@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2024 at 11:10 AM
+-- Generation Time: May 10, 2024 at 03:51 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -22,28 +22,14 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
-DROP TABLE IF EXISTS ASSIGNMENTS;
 
-DROP TABLE IF EXISTS ASSIGNMENT_FILES;
-
-DROP TABLE IF EXISTS COURSES;
-
-DROP TABLE IF EXISTS COURSES_TAKEN;
-
-DROP TABLE IF EXISTS MATERIALS;
-
-DROP TABLE IF EXISTS MATERIAL_FILES;
-
-DROP TABLE IF EXISTS STUDENTS;
-
-DROP TABLE IF EXISTS TEACHERS;
 --
 -- Table structure for table `assignments`
 --
 
 CREATE TABLE `assignments` (
   `ASSIGNMENT_ID` int(11) NOT NULL,
-  `COURSE_ID` varchar(3) NOT NULL,
+  `COURSE_ID` varchar(5) NOT NULL,
   `ASSIGNMENT_TITLE` varchar(32) NOT NULL,
   `ASSIGNMENT_DESC` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -84,8 +70,7 @@ CREATE TABLE `courses` (
 
 CREATE TABLE `courses_taken` (
   `STUDENT_ID` varchar(8) NOT NULL,
-  `COURSE_ID` varchar(3) NOT NULL,
-  `IS_FINISHED` tinyint(1) NOT NULL
+  `COURSE_ID` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -96,7 +81,7 @@ CREATE TABLE `courses_taken` (
 
 CREATE TABLE `materials` (
   `MATERIAL_ID` int(11) NOT NULL,
-  `COURSE_ID` varchar(3) NOT NULL,
+  `COURSE_ID` varchar(5) NOT NULL,
   `MATERIAL_TITLE` varchar(32) NOT NULL,
   `MATERIAL_DESC` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -120,12 +105,12 @@ CREATE TABLE `material_files` (
 
 CREATE TABLE `students` (
   `STUDENT_ID` varchar(8) NOT NULL,
-  `USERNAME` varchar(16) NOT NULL,
-  `PASSWORD` varchar(255) NOT NULL,
+  `STUDENT_USERNAME` varchar(16) NOT NULL,
   `STUDENT_NAME` varchar(64) NOT NULL,
   `STUDENT_EMAIL` varchar(32) NOT NULL,
   `STUDENT_ADDRESS` varchar(128) NOT NULL,
-  `STUDENT_PHONE` varchar(13) NOT NULL
+  `STUDENT_PHONE` varchar(13) NOT NULL,
+  `STUDENT_PASSWORD` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -136,12 +121,12 @@ CREATE TABLE `students` (
 
 CREATE TABLE `teachers` (
   `TEACHER_ID` varchar(8) NOT NULL,
-  `USERNAME` varchar(16) NOT NULL,
-  `PASSWORD` varchar(255) NOT NULL,
+  `TEACHER_USERNAME` varchar(16) NOT NULL,
   `TEACHER_NAME` varchar(64) NOT NULL,
   `TEACHER_EMAIL` varchar(32) NOT NULL,
   `TEACHER_ADDRESS` varchar(128) NOT NULL,
-  `TEACHER_PHONE` varchar(13) NOT NULL
+  `TEACHER_PHONE` varchar(13) NOT NULL,
+  `TEACHER_PASSWORD` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -159,7 +144,7 @@ ALTER TABLE `assignments`
 -- Indexes for table `assignment_files`
 --
 ALTER TABLE `assignment_files`
-  ADD KEY `ASSIGNMENT_ID` (`ASSIGNMENT_ID`);
+  ADD KEY `FK_RELATIONSHIP_8` (`ASSIGNMENT_ID`);
 
 --
 -- Indexes for table `courses`
@@ -192,15 +177,13 @@ ALTER TABLE `material_files`
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
-  ADD PRIMARY KEY (`STUDENT_ID`),
-  ADD UNIQUE KEY `STUDENT_USERNAME` (`USERNAME`);
+  ADD PRIMARY KEY (`STUDENT_ID`);
 
 --
 -- Indexes for table `teachers`
 --
 ALTER TABLE `teachers`
-  ADD PRIMARY KEY (`TEACHER_ID`),
-  ADD UNIQUE KEY `TEACHER_USERNAME` (`USERNAME`);
+  ADD PRIMARY KEY (`TEACHER_ID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -232,8 +215,7 @@ ALTER TABLE `assignments`
 -- Constraints for table `assignment_files`
 --
 ALTER TABLE `assignment_files`
-  ADD CONSTRAINT `FK_RELATIONSHIP_8` FOREIGN KEY (`ASSIGNMENT_ID`) REFERENCES `assignments` (`ASSIGNMENT_ID`),
-  ADD CONSTRAINT `assignment_files_ibfk_1` FOREIGN KEY (`ASSIGNMENT_ID`) REFERENCES `assignments` (`ASSIGNMENT_ID`);
+  ADD CONSTRAINT `FK_RELATIONSHIP_8` FOREIGN KEY (`ASSIGNMENT_ID`) REFERENCES `assignments` (`ASSIGNMENT_ID`);
 
 --
 -- Constraints for table `courses`
