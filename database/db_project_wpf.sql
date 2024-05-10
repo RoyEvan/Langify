@@ -66,7 +66,7 @@ CREATE TABLE `assignment_files` (
 --
 
 CREATE TABLE `courses` (
-  `COURSE_ID` varchar(3) NOT NULL,
+  `COURSE_ID` varchar(5) NOT NULL,
   `TEACHER_ID` varchar(8) NOT NULL,
   `COURSE_NAME` varchar(32) NOT NULL,
   `COURSE_DESC` varchar(64) DEFAULT NULL,
