@@ -14,9 +14,9 @@ Route::prefix("login")->group(function () {
 
 Route::prefix("student")->group(function () {
     Route::get('/', [SiteController::class, "dashboard"]);
-    Route::get('/kelas', [SiteController::class, "kelas"]);
-    Route::get('/tugas', [SiteController::class, "tugas"]);
-    Route::get('/detail_kelas', [SiteController::class, "detail_kelas"]);
+    Route::get('/classroom', [SiteController::class, "classroom"]);
+    Route::get('/assignment', [SiteController::class, "assignment"]);
+    Route::get('/class_detail', [SiteController::class, "class_detail"]);
 });
 
 Route::prefix("teacher")->group(function () {

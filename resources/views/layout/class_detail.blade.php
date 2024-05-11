@@ -25,7 +25,7 @@
         </div>
         <div class="card-footer">
             <p><i class="bi bi-people"></i>4 People</p>
-            <p><i class="bi bi-person-video3"></i>Budi Meresapi S.epeda</p>
+            <p><i class="bi bi-mortarboard"></i>Budi Meresapi S.epeda</p>
             <p><i class="bi bi-geo-alt"></i>X-001</p>
             <p><i class="bi bi-calendar-event"></i>Senin</p>
             <p><i class="bi bi-clock"></i>24.00</p>

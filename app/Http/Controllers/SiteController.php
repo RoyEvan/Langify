@@ -24,26 +24,33 @@ class SiteController extends Controller
     }
     public function login(Request $req)
     {
+
+
         return view('layout.login');
     }
 
     public function dashboard(Request $req)
     {
-        return view('layout.dashboard');
+        $active_route = "dashboard";
+
+
+        return view('layout.dashboard', compact('active_route'));
     }
 
-    public function kelas(Request $req)
+    public function classroom(Request $req)
     {
-        return view('layout.kelas');
+        $active_route = "classroom";
+
+        return view('layout.classroom', compact('active_route'));
     }
 
-    public function detail_kelas(Request $req)
+    public function class_detail(Request $req)
     {
-        return view('layout.detail_kelas');
+        return view('layout.class_detail');
     }
 
-    public function tugas(Request $req)
+    public function assignment(Request $req)
     {
-        return view('layout.tugas');
+        return view('layout.assignment  ');
     }
 }

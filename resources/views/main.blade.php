@@ -30,14 +30,18 @@
     <nav class="sidebar closed">
         <h1><i class="bi bi-globe2"></i>Langify</h1>
         <ol>
-            <li class="active"><a href="{{ url('student/') }}"><i class="bi bi-house"></i>Dashboard</a></li>
-            <li><a href="{{ url('student/kelas') }}"><i class="bi bi-book"></i>Kelas</a></li>
-            <li><a href="{{ url('student/tugas') }}"><i class="bi bi-journal-bookmark"></i>Tugas Kuliah</a></li>
-            <li><a href="{{ url('student/detail_kelas') }}"><i class="bi bi-clipboard-data"></i>Detail Kelas</a></li>
-            <li><a href="{{ url('login') }}"><i class="bi bi-door-open"></i>Sign Out</a></li>
+            <li class="{{ $active_route == 'dashboard' ? 'active' : '' }}"><a href="{{ url('student/') }}"><i
+                        class="bi bi-house"></i>Dashboard</a></li>
+            <li class="{{ $active_route == 'classroom' ? 'active' : '' }}"><a href="{{ url('student/classroom') }}"><i
+                        class="bi bi-book"></i>My Class Room</a></li>
+            <li class=""><a href="{{ url('student/assignment') }}"><i class="bi bi-journal-bookmark"></i>Tugas
+                    Kuliah</a></li>
+            <li class=""><a href="{{ url('student/class_detail') }}"><i class="bi bi-clipboard-data"></i>Detail
+                    Kelas</a></li>
+            <li class=""><a href="{{ url('login') }}"><i class="bi bi-door-open"></i>Sign Out</a></li>
         </ol>
         <div class="account-box">
-            <img src="assets/img/2532369.jpg" alt="" loading="lazy">
+            <img src="{{ asset('assets/img/2532369.jpg') }}" alt="" loading="lazy">
             <div class="account-details">
                 <p>Sugeng Display None</p>
                 <span>123456789</span>
