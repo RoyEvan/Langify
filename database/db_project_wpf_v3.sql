@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 10, 2024 at 03:55 PM
+-- Generation Time: May 12, 2024 at 02:17 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,7 +31,11 @@ CREATE TABLE `assignments` (
   `ASSIGNMENT_ID` int(11) NOT NULL,
   `COURSE_ID` varchar(5) NOT NULL,
   `ASSIGNMENT_TITLE` varchar(32) NOT NULL,
-  `ASSIGNMENT_DESC` varchar(255) NOT NULL
+  `ASSIGNMENT_DESC` varchar(255) NOT NULL,
+  `DEADLINE` datetime DEFAULT NULL,
+  `CREATED_AT` datetime DEFAULT NULL,
+  `UPDATED_AT` datetime DEFAULT NULL,
+  `DELETED_AT` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -59,7 +63,10 @@ CREATE TABLE `courses` (
   `COURSE_LEVEL` int(11) NOT NULL,
   `COURSE_CLASS` varchar(6) NOT NULL,
   `COURSE_DAY` varchar(9) NOT NULL,
-  `COURSE_LENGTH` float NOT NULL
+  `COURSE_LENGTH` float NOT NULL,
+  `CREATED_AT` datetime DEFAULT NULL,
+  `UPDATED_AT` datetime DEFAULT NULL,
+  `DELETED_AT` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -77,6 +84,21 @@ CREATE TABLE `courses_taken` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `finished_assignments`
+--
+
+CREATE TABLE `finished_assignments` (
+  `STUDENT_ID` varchar(8) NOT NULL,
+  `ASSIGNMENT_ID` int(11) NOT NULL,
+  `SCORE` float NOT NULL,
+  `CREATED_AT` datetime DEFAULT NULL,
+  `UPDATED_AT` datetime DEFAULT NULL,
+  `DELETED_AT` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `materials`
 --
 
@@ -84,7 +106,10 @@ CREATE TABLE `materials` (
   `MATERIAL_ID` int(11) NOT NULL,
   `COURSE_ID` varchar(5) NOT NULL,
   `MATERIAL_TITLE` varchar(32) NOT NULL,
-  `MATERIAL_DESC` varchar(256) NOT NULL
+  `MATERIAL_DESC` varchar(256) NOT NULL,
+  `CREATED_AT` datetime DEFAULT NULL,
+  `UPDATED_AT` datetime DEFAULT NULL,
+  `DELETED_AT` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -107,11 +132,14 @@ CREATE TABLE `material_files` (
 CREATE TABLE `students` (
   `STUDENT_ID` varchar(8) NOT NULL,
   `STUDENT_USERNAME` varchar(16) NOT NULL,
+  `STUDENT_PASSWORD` varchar(255) NOT NULL,
   `STUDENT_NAME` varchar(64) NOT NULL,
   `STUDENT_EMAIL` varchar(32) NOT NULL,
   `STUDENT_ADDRESS` varchar(128) NOT NULL,
   `STUDENT_PHONE` varchar(13) NOT NULL,
-  `STUDENT_PASSWORD` varchar(255) NOT NULL
+  `CREATED_AT` datetime DEFAULT NULL,
+  `UPDATED_AT` datetime DEFAULT NULL,
+  `DELETED_AT` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -123,11 +151,14 @@ CREATE TABLE `students` (
 CREATE TABLE `teachers` (
   `TEACHER_ID` varchar(8) NOT NULL,
   `TEACHER_USERNAME` varchar(16) NOT NULL,
+  `TEACHER_PASSWORD` varchar(255) NOT NULL,
   `TEACHER_NAME` varchar(64) NOT NULL,
   `TEACHER_EMAIL` varchar(32) NOT NULL,
   `TEACHER_ADDRESS` varchar(128) NOT NULL,
   `TEACHER_PHONE` varchar(13) NOT NULL,
-  `TEACHER_PASSWORD` varchar(255) NOT NULL
+  `CREATED_AT` datetime DEFAULT NULL,
+  `UPDATED_AT` datetime DEFAULT NULL,
+  `DELETED_AT` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -162,6 +193,13 @@ ALTER TABLE `courses_taken`
   ADD KEY `FK_RELATIONSHIP_2` (`COURSE_ID`);
 
 --
+-- Indexes for table `finished_assignments`
+--
+ALTER TABLE `finished_assignments`
+  ADD PRIMARY KEY (`STUDENT_ID`,`ASSIGNMENT_ID`),
+  ADD KEY `FK_RELATIONSHIP_9` (`ASSIGNMENT_ID`);
+
+--
 -- Indexes for table `materials`
 --
 ALTER TABLE `materials`
@@ -194,13 +232,13 @@ ALTER TABLE `teachers`
 -- AUTO_INCREMENT for table `assignments`
 --
 ALTER TABLE `assignments`
-  MODIFY `ASSIGNMENT_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ASSIGNMENT_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `materials`
 --
 ALTER TABLE `materials`
-  MODIFY `MATERIAL_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `MATERIAL_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Constraints for dumped tables
@@ -232,6 +270,13 @@ ALTER TABLE `courses_taken`
   ADD CONSTRAINT `FK_RELATIONSHIP_2` FOREIGN KEY (`COURSE_ID`) REFERENCES `courses` (`COURSE_ID`);
 
 --
+-- Constraints for table `finished_assignments`
+--
+ALTER TABLE `finished_assignments`
+  ADD CONSTRAINT `FK_RELATIONSHIP_7` FOREIGN KEY (`STUDENT_ID`) REFERENCES `students` (`STUDENT_ID`),
+  ADD CONSTRAINT `FK_RELATIONSHIP_9` FOREIGN KEY (`ASSIGNMENT_ID`) REFERENCES `assignments` (`ASSIGNMENT_ID`);
+
+--
 -- Constraints for table `materials`
 --
 ALTER TABLE `materials`
@@ -247,5 +292,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
