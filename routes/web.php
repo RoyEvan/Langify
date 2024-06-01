@@ -12,6 +12,11 @@ Route::prefix("login")->group(function () {
     Route::post('/', [SiteController::class, "login"]);
 });
 
+Route::prefix("register")->group(function () {
+    Route::get('/', [SiteController::class, "register"]);
+    Route::post('/', [SiteController::class, "register"]);
+});
+
 Route::prefix("student")->group(function () {
     Route::get('/', [SiteController::class, "dashboard"]);
     Route::get('/classroom', [SiteController::class, "classroom"]);

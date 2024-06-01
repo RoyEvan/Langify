@@ -29,6 +29,13 @@ class SiteController extends Controller
         return view('layout.login');
     }
 
+    public function register(Request $req)
+    {
+
+
+        return view('layout.register');
+    }
+
     public function dashboard(Request $req)
     {
         $active_route = "dashboard";

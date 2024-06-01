@@ -19,7 +19,7 @@
 	</head>
 
 	<body>
-		<form action="index.html" class="login-form">
+		<form class="login-form">
 			<h1><i class="bi bi-globe2"></i>Langify</h1>
 
 
@@ -39,8 +39,16 @@
 				</div>
 			</div>
 
-			<button>Log In</button>
-            <a href="{{ url("register") }}">Dont have account? Register here</a>
+			<div class="input-group">
+				<label for="">Confirm Password</label>
+				<div class="input-text-icon">
+					<i class="bi bi-shield-lock"></i>
+					<input type="password" name="" id="" placeholder="Confirm Password">
+				</div>
+			</div>
+
+			<button>Register</button>
+            <a href="{{ url("login") }}">Dont have account? Login here</a>
 		</form>
 
 
