@@ -1,133 +1,155 @@
 :root {
-  --background100: hsl(196, 28%, 10%);
-  --background200: hsl(200, 26%, 16%);
-  --background300: hsl(216, 20%, 28%);
+	--background100: hsl(196, 28%, 10%);
+	--background200: hsl(200, 26%, 16%);
+	--background300: hsl(216, 20%, 28%);
 
-  --text090: hsl(216, 12%, 84%);
-  --text100: #f9fafb;
+	--text090: hsl(216, 12%, 84%);
+	--text100: #f9fafb;
 
-  --border100: hsl(216, 20%, 28%);
-
-
-  --primary100: #17b0f6;
-  --primary090: #2563eb;
-  --accent: hsl(264, 70%, 50%);
+	--border100: hsl(216, 20%, 28%);
 
 
-  --danger: hsl(360, 100%, 64%);
-  --transparentDanger: hsla(360, 100%, 64%, 0.16);
-  --warning: #fde68a;
-  --success: #57cc02;
+	--primary100: #17b0f6;
+	--primary090: #2563eb;
+	--accent: hsl(264, 70%, 50%);
 
-  --disabled: hsla(216, 12%, 84%, 0.32);
+
+	--danger: hsl(360, 100%, 64%);
+	--transparentDanger: hsla(360, 100%, 64%, 0.16);
+	--warning: #fde68a;
+	--success: #57cc02;
+
+	--disabled: hsla(216, 12%, 84%, 0.32);
 }
 
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  scroll-behavior: smooth;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	scroll-behavior: smooth;
 }
 
 a {
-  text-decoration: none;
-  color: inherit;
+	text-align: center;
+	color: inherit;
+	font-size: 0.8em;
+	text-decoration: underline;
+	color: var(--text100);
+}
+
+a:hover {
+	color: var(--primary100);
 }
 
 body {
-  background-image: url("../img/Login-Background.jpg");
-  background-size: cover;
-  color: var(--text100);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100svh;
-  background-size: cover;
-  font-family: 'Poppins', sans-serif;
-  backdrop-filter: invert(100%) hue-rotate(160deg) brightness(32%);
+	background-image: url("../img/Login-Background.jpg");
+	background-size: cover;
+	color: var(--text100);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100svh;
+	background-size: cover;
+	font-family: 'Poppins', sans-serif;
+	backdrop-filter: invert(100%) hue-rotate(160deg) brightness(32%);
 }
 
 .login-form {
-  background-color: var(--background100);
-  border: 2px solid var(--primary100);
-  padding: 24px;
-  margin: 16px;
-  display: flex;
-  flex-direction: column;
-  border-radius: 8px;
-  gap: 16px;
+	background-color: var(--background100);
+	border: 2px solid var(--primary100);
+	padding: 24px;
+	margin: 16px;
+	display: flex;
+	flex-direction: column;
+	border-radius: 8px;
+	gap: 16px;
+	min-width: 400px;
 }
 
 .login-form h1 {
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 i:not(.signout-button>i) {
-  margin-right: 8px;
-  display: inline-flex;
-  align-self: center;
-  vertical-align: middle;
+	margin-right: 8px;
+	display: inline-flex;
+	align-self: center;
+	vertical-align: middle;
+}
+
+.input-group.input-danger label {
+	color: var(--danger) !important;
+}
+
+.input-group.input-danger p {
+	color: var(--danger);
+	font-size: 0.8em;
+	margin-top: 2px;
+}
+
+.input-group.input-danger .input-text-icon {
+	border-color: var(--danger) !important;
 }
 
 form input {
-  width: 100%;
-  outline: none;
-  border: none;
-  padding: 8px;
-  background-color: transparent;
-  font-family: 'Poppins', sans-serif;
-  font-size: 1em;
-  color: var(--text100);
+	width: 100%;
+	outline: none;
+	border: none;
+	padding: 8px;
+	background-color: transparent;
+	font-family: 'Poppins', sans-serif;
+	font-size: 1em;
+	color: var(--text100);
 }
 
 .input-group {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .input-group label {
-  margin-bottom: 4px;
-  font-size: 0.9em;
-  color: var(--text100);
+	margin-bottom: 4px;
+	font-size: 0.9em;
+	color: var(--text100);
 }
 
 .input-text-icon {
-  border: 2px solid var(--border100);
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  transition: all 0.1s ease-in-out;
+	border: 2px solid var(--border100);
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+	transition: all 0.1s ease-in-out;
 }
 
 .input-text-icon:has(input:focus) {
-  border: 2px solid var(--primary100);
+	border: 2px solid var(--primary100);
 }
 
 .input-text-icon i {
-  margin-left: 12px;
-  margin-right: 4px;
-  font-size: 1.2em;
+	margin-left: 12px;
+	margin-right: 4px;
+	font-size: 1.2em;
 }
 
 
 .login-form button {
-  cursor: pointer;
-  background-color: var(--primary100);
-  padding: 12px;
-  outline: none;
-  border-radius: 4px;
-  border: none;
-  color: var(--text100);
-  font-family: 'Poppins', sans-serif;
-  font-weight: bold;
-  font-size: 1em;
-  transition: all 0.2s ease-in-out;
+	cursor: pointer;
+	background-color: var(--primary100);
+	padding: 12px;
+	outline: none;
+	border-radius: 4px;
+	border: none;
+	color: var(--text100);
+	font-family: 'Poppins', sans-serif;
+	font-weight: bold;
+	font-size: 1em;
+	transition: all 0.2s ease-in-out;
 }
 
 .login-form button:hover {
-  background-color: var(--text100);
-  color: var(--primary100);
+	background-color: var(--text100);
+	color: var(--primary100);
 }

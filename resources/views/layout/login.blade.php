@@ -19,28 +19,32 @@
 	</head>
 
 	<body>
-		<form class="login-form">
+
+		<form action="{{ url("student/") }}" class="login-form">
 			<h1><i class="bi bi-globe2"></i>Langify</h1>
 
 
-			<div class="input-group">
-				<label for="">Username</label>
-				<div class="input-text-icon">
-					<i class="bi bi-person"></i>
-					<input type="text" name="" id="" placeholder="Username">
-				</div>
-			</div>
+			<div class="input-group input-danger">
+                <label for="">Username</label>
+                <div class="input-text-icon">
+                  <i class="bi bi-person"></i>
+                  <input type="text" name="" id="" placeholder="Username">
+                </div>
+                <p>Sorry, username invalid!</p>
+              </div>
 
-			<div class="input-group">
-				<label for="">Password</label>
-				<div class="input-text-icon">
-					<i class="bi bi-shield-lock"></i>
-					<input type="password" name="" id="" placeholder="Password">
-				</div>
-			</div>
+              <div class="input-group">
+                <label for="">Password</label>
+                <div class="input-text-icon">
+                  <i class="bi bi-shield-lock"></i>
+                  <input type="password" name="" id="" placeholder="Password">
+                </div>
+              </div>
 
-			<button><a href="index.html">Log In</a></button>
+			<button>Log In</button>
+            <a href="{{ url("register") }}">Dont have account? Register here</a>
 		</form>
+
 
 	</body>
 </html>

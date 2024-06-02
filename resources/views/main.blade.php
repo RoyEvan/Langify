@@ -38,6 +38,7 @@
                     Kuliah</a></li>
             <li class=""><a href="{{ url('student/class_detail') }}"><i class="bi bi-clipboard-data"></i>Detail
                     Kelas</a></li>
+            <li class="{{ $active_route == 'account_settings' ? 'active' : '' }}"><a href="{{ url('student/account_settings') }}"><i class="bi bi-person-rolodex"></i>Account Settings</a></li>
             <li class=""><a href="{{ url('login') }}"><i class="bi bi-door-open"></i>Sign Out</a></li>
         </ol>
         <div class="account-box">
