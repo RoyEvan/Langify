@@ -17,9 +17,9 @@ class SiteController extends Controller
     public function index(Request $req)
     {
         if ($this->isLoggedIn($req)) {
-            return redirect("langify/dashboard");
+            return redirect("dashboard");
         } else {
-            return redirect("langify/login");
+            return redirect("login");
         }
     }
     public function login(Request $req)
@@ -53,7 +53,15 @@ class SiteController extends Controller
 
     public function class_detail(Request $req)
     {
+
         return view('layout.class_detail');
+    }
+
+    public function account_settings(Request $req)
+    {
+        $active_route = "account_settings";
+
+        return view('layout.account_settings', compact('active_route'));
     }
 
     public function assignment(Request $req)

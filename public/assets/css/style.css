@@ -214,6 +214,20 @@ form input {
     flex-direction: column;
 }
 
+.input-group.input-danger label {
+    color: var(--danger) !important;
+}
+
+.input-group.input-danger p {
+    color: var(--danger);
+    font-size: 0.8em;
+    margin-top: 2px;
+}
+
+.input-group.input-danger .input-text-icon {
+    border-color: var(--danger) !important;
+}
+
 .input-group label {
     margin-bottom: 4px;
     font-size: 0.9em;
@@ -532,8 +546,6 @@ button {
 button:hover {
     color: var(--primary100);
     background-color: var(--text100);
-    /* font-weight: bold; */
-    box-shadow: 0 0 16px 0 var(--primary100);
 }
 
 table {
@@ -672,6 +684,7 @@ main:has(.scroll-card-list) {
     background-color: var(--background200);
     border: 1px solid var(--border100);
     border-radius: 8px;
+    height: fit-content;
 }
 
 .card a {

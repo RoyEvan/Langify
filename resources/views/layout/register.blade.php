@@ -42,7 +42,7 @@
 			<div class="input-group">
 				<label for="">Confirm Password</label>
 				<div class="input-text-icon">
-					<i class="bi bi-shield-lock"></i>
+					<i class="bi bi-shield-check"></i>
 					<input type="password" name="" id="" placeholder="Confirm Password">
 				</div>
 			</div>
