@@ -14,11 +14,10 @@ class Assignment extends Model
     protected $connection = "mysql";
     protected $table = "assignments";
     protected $primaryKey = "assignment_id";
-    public $incrementing = false;
+    public $incrementing = true;
     public $timestamps = true;
 
     protected $fillable = [
-        'assignment_id',
         'course_id',
         'assignment_title',
         'assignment_desc',
@@ -30,7 +29,7 @@ class Assignment extends Model
     }
 
     public function Student() {
-        return $this->belongsToMany(Student::class, 'finished_assignments', 'assignment_id', 'assignment_id');
+        return $this->belongsToMany(Student::class, 'finished_assignments', 'assignment_id', 'student_id');
     }
 
     public function AssignmentFile() {
