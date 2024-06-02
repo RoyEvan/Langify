@@ -66,6 +66,6 @@ class SiteController extends Controller
 
     public function assignment(Request $req)
     {
-        return view('layout.assignment  ');
+        return view('layout.assignment');
     }
 }

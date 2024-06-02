@@ -1,4 +1,5 @@
-@extends('main')
+@extends('layout/main')
+
 
 @section('tab-title')
 @endsection
