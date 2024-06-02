@@ -14,11 +14,10 @@ class Material extends Model
     protected $connection = "mysql";
     protected $table = "materials";
     protected $primaryKey = "material_id";
-    public $incrementing = false;
+    public $incrementing = true;
     public $timestamps = true;
 
     protected $fillable = [
-        'material_id',
         'course_id',
         'material_title',
         'material_desc'
