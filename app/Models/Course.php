@@ -13,34 +13,34 @@ class Course extends Model
 
     protected $connection = "mysql";
     protected $table = "courses";
-    protected $primaryKey = null;
+    protected $primaryKey = "course_id";
     public $incrementing = false;
     public $timestamps = true;
 
     protected $fillable = [
-        'course_id',
-        'teacher_id',
-        'course_name',
-        'course_desc',
-        'course_level',
-        'course_class',
-        'course_day',
-        'course_length'
+        'COURSE_ID',
+        'TEACHER_ID',
+        'COURSE_NAME',
+        'COURSE_DESC',
+        'COURSE_LEVEL',
+        'COURSE_CLASS',
+        'COURSE_DAY',
+        'COURSE_LENGTH'
     ];
 
     public function Students() {
-        return $this->belongsToMany(Student::class, 'courses_taken', 'course_id', 'student_id');
+        return $this->belongsToMany(Student::class, 'courses_taken', 'COURSE_ID', 'STUDENT_ID');
     }
 
     public function Teacher() {
-        return $this->belongsTo(Teacher::class, 'teacher_id', 'teacher_id');
+        return $this->belongsTo(Teacher::class, 'TEACHER_ID', 'TEACHER_ID');
     }
 
     public function Materials() {
-        return $this->hasMany(Material::class, 'course_id', 'course_id');
+        return $this->hasMany(Material::class, 'COURSE_ID', 'COURSE_ID');
     }
 
     public function Assignments() {
-        return $this->hasMany(Assignment::class, 'course_id', 'course_id');
+        return $this->hasMany(Assignment::class, 'COURSE_ID', 'COURSE_ID');
     }
 }

@@ -16,11 +16,11 @@ class MaterialFile extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'material_id',
-        'material_file_path'
+        'MATERIAL_ID',
+        'MATERIAL_FILE_PATH'
     ];
 
     public function Material() {
-        return $this->belongsTo(Material::class, 'material_id', 'material_id');
+        return $this->belongsTo(Material::class, 'MATERIAL_ID', 'MATERIAL_ID');
     }
 }

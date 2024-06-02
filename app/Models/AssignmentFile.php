@@ -16,11 +16,11 @@ class AssignmentFile extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'assignment_id',
-        'assignment_file_path'
+        'ASSIGNMENT_ID',
+        'ASSIGNMENT_FILE_PATH'
     ];
 
     public function Assignment() {
-        return $this->belongsTo(Assignment::class, 'assignment_id', 'assignment_id');
+        return $this->belongsTo(Assignment::class, 'ASSIGNMENT_ID', 'ASSIGNMENT_ID');
     }
 }

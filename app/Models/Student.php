@@ -13,25 +13,25 @@ class Student extends Model
 
     protected $connection = "mysql";
     protected $table = "students";
-    protected $primaryKey = "student_id";
+    protected $primaryKey = "STUDENT_ID";
     public $incrementing = false;
     public $timestamps = true;
 
     protected $fillable = [
-        'student_id',
-        'student_username',
-        'student_password',
-        'student_name',
-        'student_email',
-        'student_address',
-        'student_phone',
+        'STUDENT_ID',
+        'STUDENT_USERNAME',
+        'STUDENT_PASSWORD',
+        'STUDENT_NAME',
+        'STUDENT_EMAIL',
+        'STUDENT_ADDRESS',
+        'STUDENT_PHONE',
     ];
 
     public function Courses() {
-        return $this->belongsToMany(Course::class, 'courses_taken', 'student_id', 'course_id');
+        return $this->belongsToMany(Course::class, 'courses_taken', 'STUDENT_ID', 'COURSE_ID');
     }
 
     public function Assignment() {
-        return $this->belongsToMany(Assignment::class, 'finished_assignments', 'student_id', 'assignment_id');
+        return $this->belongsToMany(Assignment::class, 'finished_assignments', 'STUDENT_ID', 'ASSIGNMENT_ID');
     }
 }

@@ -13,21 +13,21 @@ class Material extends Model
 
     protected $connection = "mysql";
     protected $table = "materials";
-    protected $primaryKey = "material_id";
+    protected $primaryKey = "MATERIAL_ID";
     public $incrementing = true;
     public $timestamps = true;
 
     protected $fillable = [
-        'course_id',
-        'material_title',
-        'material_desc'
+        'COURSE_ID',
+        'MATERIAL_TITLE',
+        'MATERIAL_DESC'
     ];
 
     public function Course() {
-        return $this->belongsTo(Course::class, 'course_id', 'course_id');
+        return $this->belongsTo(Course::class, 'COURSE_ID', 'COURSE_ID');
     }
 
     public function MaterialFile() {
-        return $this->hasMany(MaterialFile::class, 'material_id', 'material_id');
+        return $this->hasMany(MaterialFile::class, 'MATERIAL_ID', 'MATERIAL_ID');
     }
 }

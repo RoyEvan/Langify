@@ -13,26 +13,26 @@ class Assignment extends Model
 
     protected $connection = "mysql";
     protected $table = "assignments";
-    protected $primaryKey = "assignment_id";
+    protected $primaryKey = "ASSIGNMENT_ID";
     public $incrementing = true;
     public $timestamps = true;
 
     protected $fillable = [
-        'course_id',
-        'assignment_title',
-        'assignment_desc',
-        'deadline'
+        'COURSE_ID',
+        'ASSIGNMENT_TITLE',
+        'ASSIGNMENT_DESC',
+        'DEADLINE'
     ];
 
     public function Course() {
-        return $this->belongsTo(Course::class, 'course_id', 'course_id');
+        return $this->belongsTo(Course::class, 'COURSE_ID', 'COURSE_ID');
     }
 
     public function Student() {
-        return $this->belongsToMany(Student::class, 'finished_assignments', 'assignment_id', 'student_id');
+        return $this->belongsToMany(Student::class, 'finished_assignments', 'ASSIGNMENT_ID', 'STUDENT_ID');
     }
 
     public function AssignmentFile() {
-        return $this->hasMany(AssignmentFile::class, 'assignment_id', 'assignment_id');
+        return $this->hasMany(AssignmentFile::class, 'ASSIGNMENT_ID', 'ASSIGNMENT_ID');
     }
 }

@@ -13,21 +13,21 @@ class Teacher extends Model
 
     protected $connection = "mysql";
     protected $table = "teachers";
-    protected $primaryKey = "teacher_id";
+    protected $primaryKey = "TEACHER_ID";
     public $incrementing = false;
     public $timestamps = true;
 
     protected $fillable = [
-        'teacher_id',
-        'teacher_username',
-        'teacher_password',
-        'teacher_name',
-        'teacher_email',
-        'teacher_address',
-        'teacher_phone',
+        'TEACHER_ID',
+        'TEACHER_USERNAME',
+        'TEACHER_PASSWORD',
+        'TEACHER_NAME',
+        'TEACHER_EMAIL',
+        'TEACHER_ADDRESS',
+        'TEACHER_PHONE',
     ];
 
     public function Course() {
-        return $this->hasOne(Course::class, 'teacher_id', 'teacher_id');
+        return $this->hasMany(Course::class, 'TEACHER_ID', 'TEACHER_ID');
     }
 }
