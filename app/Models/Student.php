@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Student extends Model
+class Student extends Authenticatable
 {
     use SoftDeletes;
     use HasFactory;
@@ -27,11 +28,40 @@ class Student extends Model
         'STUDENT_PHONE',
     ];
 
-    public function Courses() {
+    protected $appends = ["globalusername", "globalname", "globalemail", "globalrole"];
+
+    public function getGlobalusernameAttribute() {
+        return $this->STUDENT_USERNAME;
+    }
+    public function getGlobalnameAttribute() {
+        return $this->STUDENT_NAME;
+    }
+    public function getGlobalemailAttribute() {
+        return $this->STUDENT_EMAIL;
+    }
+    public function getGlobalroleAttribute() {
+        return "student";
+    }
+
+    public function Courses()
+    {
         return $this->belongsToMany(Course::class, 'courses_taken', 'STUDENT_ID', 'COURSE_ID');
     }
 
-    public function Assignment() {
+    public function Assignment()
+    {
         return $this->belongsToMany(Assignment::class, 'finished_assignments', 'STUDENT_ID', 'ASSIGNMENT_ID');
+    }
+
+
+
+    /**
+     * Get the password for the user.
+     *
+     * @return string
+     */
+    public function getAuthPassword()
+    {
+        return $this->STUDENT_PASSWORD;
     }
 }

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="An Langify Website">
+    <meta name="description" content="Langify: Website for Language Learning">
     <title>@yield('tab-title')</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/icon/globe2.svg') }}">
 
@@ -41,13 +41,20 @@
             <li class="{{ $active_route == 'account_settings' ? 'active' : '' }}"><a
                     href="{{ url('student/account_settings') }}"><i class="bi bi-person-rolodex"></i>Account
                     Settings</a></li>
-            <li class=""><a href="{{ url('login') }}"><i class="bi bi-door-open"></i>Sign Out</a></li>
+            <li class=""><a href="{{ url('logout') }}"><i class="bi bi-door-open"></i>Sign Out</a></li>
         </ol>
         <div class="account-box">
             <img src="{{ asset('assets/img/2532369.jpg') }}" alt="" loading="lazy">
             <div class="account-details">
-                <p>Sugeng Display None</p>
-                <span>123456789</span>
+                @if (Auth::guard('student_guard')->check())
+                    <p>{{Auth::guard('student_guard')->user()->globalname}}</p>
+                    <span>{{Auth::guard('student_guard')->user()->globalusername}}</span>
+                @endif
+                @if (Auth::guard('teacher_guard')->check())
+                    <p>{{Auth::guard('teacher_guard')->user()->globalname}}</p>
+                    <span>{{Auth::guard('teacher_guard')->user()->globalusername}}</span>
+                @endif
+
             </div>
         </div>
     </nav>

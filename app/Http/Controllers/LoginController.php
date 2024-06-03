@@ -7,28 +7,58 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function isLoggedIn() {
-        if(Auth::guard('teacher_guard')->check() || Auth::guard('student_guard')->check()) {
-            return true;
+
+    public function login(Request $req)
+    {
+        if (Auth::guard('student_guard')->check()) {
+            return redirect('/student');
+        }
+        if (Auth::guard('teacher_guard')->check()) {
+            return redirect('/teacher');
         }
 
-        return false;
+        return view('login');
     }
 
-    public function logout() {
-        
+    public function logout()
+    {
+        if (Auth::guard('student_guard')->check()) {
+            Auth::guard('student_guard')->logout();
+        }
+
+
+        if (Auth::guard('teacher_guard')->check()) {
+            Auth::guard('teacher_guard')->logout();
+        }
+
+
+        return redirect('login');
     }
 
-    public function doLogin(Request $request) {
-        $credentials = [
-            "username" => $request->username,
-            "password" => $request->password
+    public function doLogin(Request $req)
+    {
+        $req->validate([
+            "email" => 'required|email',
+            "password" => 'required',
+        ], [], []);
+
+
+        $studentCredentials = [
+            "STUDENT_EMAIL" => $req->email,
+            "password" => $req->password
         ];
 
-        if(Auth::guard('teacher_guard')->attempt($credentials)) {
-            $user = Auth::guard('teacher_guard')->user();
+        $teacherCredentials = [
+            "TEACHER_EMAIL" => $req->email,
+            "password" => $req->password
+        ];
 
-            dump($user);
+        if (Auth::guard('student_guard')->attempt($studentCredentials)) {
+            return redirect('student');
+        } else if (Auth::guard('teacher_guard')->attempt($teacherCredentials)) {
+            return redirect('teacher');
         }
+
+        return redirect('login');
     }
 }

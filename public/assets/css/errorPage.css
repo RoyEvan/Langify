@@ -1,0 +1,49 @@
+:root {
+    --background100: hsl(196, 28%, 10%);
+    --background200: hsl(200, 26%, 16%);
+    --background300: hsl(216, 20%, 28%);
+
+    --text090: hsl(216, 12%, 84%);
+    --text100: #f9fafb;
+
+    --border100: hsl(216, 20%, 28%);
+
+
+    --primary100: #17b0f6;
+    --primary090: #2563eb;
+    --accent: hsl(264, 70%, 50%);
+
+
+    --danger: hsl(360, 100%, 64%);
+    --transparentDanger: hsla(360, 100%, 64%, 0.16);
+    --warning: #fde68a;
+    --success: #57cc02;
+
+    --disabled: hsla(216, 12%, 84%, 0.32);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--background100);
+    color: var(--text100);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100svh;
+    font-family: 'Poppins', sans-serif;
+    flex-direction: column;
+}
+
+h1 {
+    font-size: 8em;
+}
+
+p {
+    color: var(--text090);
+}

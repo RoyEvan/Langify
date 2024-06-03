@@ -198,6 +198,14 @@ form {
     gap: 16px;
 }
 
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+    background-color: transparent;
+}
+
 form input {
     width: 100%;
     outline: none;
