@@ -29,16 +29,16 @@ Route::prefix("register")->group(function () {
 
 Route::prefix("student")->group(function () {
     Route::get('/', [StudentDashboardController::class, "dashboard"]);
-    Route::get('/classroom', [StudentClassroomController::class, "classroom"]);
+    Route::get('/classroom/{course_id?}', [StudentClassroomController::class, "classroom"]);
+
     Route::get('/account_settings', [StudentAccountController::class, "account_settings"]);
 
     Route::get('/assignment', [StudentAssignmentController::class, "assignment"]);
-    Route::get('/class_detail', [StudentClassDetailController::class, "class_detail"]);
 });
 
 Route::prefix("teacher")->group(function () {
     Route::get('/', [TeacherDashboardController::class, "dashboard"]);
-    Route::get('/classroom', [TeacherClassroomController::class, "classroom"]);
+    Route::get('/classroom/{course_id?}', [TeacherClassroomController::class, "classroom"]);
     Route::get('/account_settings', [TeacherAccountController::class, "account_settings"]);
 
     Route::get('/assignment', [TeacherAssignmentController::class, "assignment"]);

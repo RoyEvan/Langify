@@ -27,8 +27,9 @@ class Student extends Model
         'STUDENT_PHONE',
     ];
 
-    public function Courses() {
-        return $this->belongsToMany(Course::class, 'courses_taken', 'STUDENT_ID', 'COURSE_ID');
+    public function Course() {
+        return $this->belongsToMany(Course::class, 'courses_taken', 'STUDENT_ID', 'COURSE_ID')
+            ->withPivot("STUDENT_ID");
     }
 
     public function Assignment() {

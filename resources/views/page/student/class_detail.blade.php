@@ -20,15 +20,15 @@
 @section('content')
     <header class="class-banner card" role="banner">
         <div class="card-body">
-            <h2>Bahasa Sapi</h2>
-            <p>Profesional Program of Moology</p>
+            <h2>{{ $course->COURSE_NAME }}</h2>
+            <p>{{ $course->COURSE_DESC }}</p>
         </div>
         <div class="card-footer">
             <p><i class="bi bi-people"></i>4 People</p>
-            <p><i class="bi bi-mortarboard"></i>Budi Meresapi S.epeda</p>
-            <p><i class="bi bi-geo-alt"></i>X-001</p>
-            <p><i class="bi bi-calendar-event"></i>Senin</p>
-            <p><i class="bi bi-clock"></i>24.00</p>
+            <p><i class="bi bi-mortarboard"></i>{{ $course->Teacher->TEACHER_NAME }}</p>
+            <p><i class="bi bi-geo-alt"></i>{{ $course->COURSE_CLASS }}</p>
+            <p><i class="bi bi-calendar-event"></i>{{ $course->COURSE_DAY }}</p>
+            <p><i class="bi bi-clock"></i>{{ $course->COURSE_LENGTH }}</p>
         </div>
     </header>
 
@@ -48,7 +48,6 @@
 
         <!-- Beranda -->
         <div class="tab-content active">
-
             <div class="card">
                 <div class="card-header space-between">
                     <h3>Pertemuan 1 telah selesai</h3>
