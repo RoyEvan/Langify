@@ -21,15 +21,15 @@
 @section('content')
     <header class="class-banner card" role="banner">
         <div class="card-body">
-            <h2>Bahasa Sapi</h2>
-            <p>Profesional Program of Moology</p>
+            <h2>{{ $course->COURSE_NAME }}</h2>
+            <p>{{ $course->COURSE_DESC }}</p>
         </div>
         <div class="card-footer">
-            <p><i class="bi bi-people"></i>4 People</p>
-            <p><i class="bi bi-mortarboard"></i>Budi Meresapi S.epeda</p>
-            <p><i class="bi bi-geo-alt"></i>X-001</p>
-            <p><i class="bi bi-calendar-event"></i>Senin</p>
-            <p><i class="bi bi-clock"></i>24.00</p>
+            <p><i class="bi bi-people"></i>{{ count($students) }} People</p>
+            <p><i class="bi bi-mortarboard"></i>{{ $course->Teacher->TEACHER_NAME }}</p>
+            <p><i class="bi bi-geo-alt"></i>{{ $course->COURSE_CLASS }}</p>
+            <p><i class="bi bi-calendar-event"></i>{{ $course->COURSE_DAY }}</p>
+            <p><i class="bi bi-clock"></i>{{ $course->COURSE_LENGTH }}</p>
         </div>
     </header>
 
@@ -50,22 +50,24 @@
         <!-- Beranda -->
         <div class="tab-content active">
 
-            <div class="card">
-                <div class="card-header space-between">
-                    <h3>Pertemuan 1 telah selesai</h3>
-                    <h4 class="tag bg-success"><i class="bi bi-check"></i>Hadir</h4>
-                </div>
-                <div class="card-body">
-                    <p>Mempelajari cara berkomunikasi dengan Sapi</p>
-                </div>
-                <div class="card-footer space-between">
-                    <div class="flex-row">
-                        <img src="assets/img/WP62.png" alt="">
-                        <p>Budi Meresapi S.epeda</p>
+            @foreach ($materials as $m)
+                <div class="card">
+                    <div class="card-header space-between">
+                        <h3>{{ $m->MATERIAL_TITLE }} telah selesai</h3>
+                        <h4 class="tag bg-success"><i class="bi bi-check"></i>Hadir</h4>
                     </div>
-                    <span><i class="bi bi-calendar-event"></i>12 Februari 2012 at 24:00</span>
+                    <div class="card-body">
+                        <p>{{ $m->MATERIAL_DESC }}</p>
+                    </div>
+                    <div class="card-footer space-between">
+                        <div class="flex-row">
+                            <img src="{{ asset("assets/img/WP62.png") }}" alt="">
+                            <p>Budi Meresapi S.epeda</p>
+                        </div>
+                        <span><i class="bi bi-calendar-event"></i>12 Februari 2012 at 24:00</span>
+                    </div>
                 </div>
-            </div>
+            @endforeach
             <div class="card">
                 <div class="card-header space-between">
                     <h3>Materi</h3>
@@ -124,35 +126,12 @@
 
             <div class="tabbed-table">
 
-                <div id="student-tabs-nav" class="tabs-nav-box year-nav-list card">
+                {{-- <div id="student-tabs-nav" class="tabs-nav-box year-nav-list card">
                     <button class="tabs-item">Tingkat 1</button>
                     <button class="tabs-item active">Tingkat 2</button>
-                </div>
+                </div> --}}
 
                 <div id="student-tabs-content" class="tabs-content-box">
-                    <div class="tab-content">
-                        <div class="card">
-                            <div class="card-body">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>NRP</th>
-                                            <th>Nama</th>
-                                        </tr>
-                                    <tbody>
-                                        <tr>
-                                            <td>123456789</td>
-                                            <td>Budi Meresapi S.epeda</td>
-                                        </tr>
-                                        <tr>
-                                            <td>123456789</td>
-                                            <td>Budi Meresapi S.epeda</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
                     <div class="tab-content active">
                         <div class="card">
                             <div class="card-body">
@@ -163,6 +142,28 @@
                                             <th>Nama</th>
                                         </tr>
                                     <tbody>
+                                        @foreach ($students as $s)
+                                            <tr>
+                                                <td>{{ $s->STUDENT_ID }}</td>
+                                                <td>{{ $s->STUDENT_NAME }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- <div class="tab-content active">
+                        <div class="card">
+                            <div class="card-body">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>NRP</th>
+                                            <th>Nama</th>
+                                        </tr>
+                                    <tbody>
                                         <tr>
                                             <td>123456789</td>
                                             <td>Budi Meresapi S.epeda</td>
@@ -175,7 +176,7 @@
                                 </table>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -223,8 +224,7 @@
                         <h1>Tambah Materi</h1>
                     </div>
                     <div class="card-body">
-                        <form action="">
-
+                        <form action="{{ url("teacher/classroom/$course->COURSE_ID/uppload/material") }}">
                             <div class="input-group">
                                 <label for="">Pertemuan</label>
                                 <div class="input-text-icon">
@@ -269,40 +269,19 @@
                                 <th>Action</th>
                             </tr>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Ini adalah nama file 1</td>
-                                <td>Deksripsi dari file ini adalah dokumen pertemuan 1</td>
-                                <td>
-                                    <ul>
-                                        <li><a href="">Info Materi</a></li>
-                                        <li><a href="">Download Materi</a></li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Ini adalah nama file 1</td>
-                                <td>Deksripsi dari file ini adalah dokumen pertemuan 1</td>
-                                <td>
-                                    <ul>
-                                        <li><a href="">Info Materi</a></li>
-                                        <li><a href="">Download Materi</a></li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Ini adalah nama file 1</td>
-                                <td>Deksripsi dari file ini adalah dokumen pertemuan 1</td>
-                                <td>
-                                    <ul>
-                                        <li><a href="">Info Materi</a></li>
-                                        <li><a href="">Download Materi</a></li>
-                                    </ul>
-                                </td>
-                            </tr>
-
+                            @foreach ($materials as $m)
+                                <tr>
+                                    <td>{{ Str::substr($m->MATERIAL_TITLE, 5) }}</td>
+                                    <td>{{ $m->MATERIAL_TITLE }}</td>
+                                    <td>{{ $m->MATERIAL_DESC }}</td>
+                                    <td>
+                                        <ul>
+                                            <li><a href="">Info Materi</a></li>
+                                            <li><a href="">Download Materi</a></li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
