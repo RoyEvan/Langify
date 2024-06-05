@@ -13,7 +13,7 @@ class Course extends Model
 
     protected $connection = "mysql";
     protected $table = "courses";
-    protected $primaryKey = "course_id";
+    protected $primaryKey = "COURSE_ID";
     public $incrementing = false;
     public $timestamps = true;
 

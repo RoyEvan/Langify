@@ -15,17 +15,14 @@ class TeacherClassroomController extends Controller
 
         if($req->course_id) {
 
-
             $course = Course::find($req->course_id);
-            dump(Course::find($req->course_id)->toRawSql());
-            dump($course);
-            dd($course->Student()->wherePivot("COURSE_ID", $req->course_id)->toRawSql());
+            $students = $course->Student()->wherePivot("IS_FINISHED", 0)->get();
 
             if(!$course) return redirect("teacher/classroom")->with("msg", "Page Not Found!");
 
-            $materials = $course->Materials()->get();
+            $materials = $course->Material()->get();
 
-            return view("page.teacher.class_detail", compact("active_route", "course", "materials"));
+            return view("page.teacher.class_detail", compact("active_route", "course", "materials", "students"));
         }
         else {
             $courses = Teacher::find("T2024001")->Course()->get();
