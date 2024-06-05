@@ -42,6 +42,7 @@ Route::prefix("student")->middleware(['CekRole:student'])->group(function () {
     Route::get('/classroom/{course_id?}', [StudentClassroomController::class, "classroom"]);
 
     Route::get('/account_settings', [StudentAccountController::class, "account_settings"]);
+    Route::get('/account_settings/update', [StudentAccountController::class, "updateSetting"]);
 
     Route::get('/assignment', [StudentAssignmentController::class, "assignment"]);
 });
@@ -53,6 +54,8 @@ Route::prefix("teacher")->middleware(['CekRole:teacher'])->group(function () {
     Route::post('/classroom/{course_id}/upload/material', [TeacherClassroomController::class, "classroom"]);
 
     Route::get('/account_settings', [TeacherAccountController::class, "account_settings"]);
+    Route::get('/account_settings/update', [TeacherAccountController::class, "updateSetting"]);
+
 
     Route::get('/assignment', [TeacherAssignmentController::class, "assignment"]);
     Route::get('/class_detail', [TeacherClassDetailController::class, "class_detail"]);

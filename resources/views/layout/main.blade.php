@@ -60,12 +60,14 @@
     </nav>
 
     <div class="content">
+        @if (Session::has('notification'))
         <div class="notification">
-            <span>Ini Adalah notifikasi penting!</span>
-            <div class="dynamic-action">
+            <span>{{ Session::get('notification') }}</span>
+            {{-- <div class="dynamic-action">
                 <button aria-label="Close Notification"><i class="bi bi-x-lg"></i></button>
-            </div>
+            </div> --}}
         </div>
+        @endif
 
         <main>
             @yield('content')

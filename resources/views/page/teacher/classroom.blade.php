@@ -22,7 +22,7 @@
         @foreach ($courses as $c)
             <article class="card">
                 <div class="card-header">
-                    <img src="{{ asset('assets/icon/flags/English.png') }}" alt="">
+                    <img src="{{ asset("assets/icon/flags/$c->COURSE_NAME.png") }}" alt="">
                     <div class="level-badge">
                         {{ $c->COURSE_LEVEL }}
                     </div>
@@ -42,7 +42,7 @@
                 <div class="card-footer space-between">
                     <p><i class="bi bi-geo-alt"></i>{{ $c->COURSE_CLASS }}</p>
                     <p><i class="bi bi-calendar-event"></i>{{ $c->COURSE_DAY }}</p>
-                    <p><i class="bi bi-clock"></i>{{ $c->COURSE_LENGTH }}</p>
+                    <p><i class="bi bi-clock"></i>{{ $c->COURSE_LENGTH }} hours</p>
                 </div>
             </article>
         @endforeach

@@ -20,83 +20,103 @@
     <section class="card-list">
 
         <article class="card">
-          <div class="card-header">
-            <h1>Profile Picture Settings</h1>
-          </div>
-          <div class="card-body">
-            <form action="">
-              <div class="input-group">
-                <label for="">Name</label>
-                <div class="input-text-icon">
-                  <i class="bi bi-person"></i>
-                  <input type="text" name="" id="" placeholder="Name">
-                </div>
-              </div>
+            <div class="card-header">
+                <h1>Profile Picture Settings</h1>
+            </div>
+            <div class="card-body">
+                <form action="">
+                    <div class="input-group">
+                        <label for="">Name</label>
+                        <div class="input-text-icon">
+                            <i class="bi bi-person"></i>
+                            <input type="text" name="" id="" placeholder="Name">
+                        </div>
+                    </div>
 
-              <button>Save</button>
-            </form>
+                    <button>Save</button>
+                </form>
 
 
-          </div>
+            </div>
         </article>
 
         <article class="card">
-          <div class="card-header">
-            <h1>Profile Settings</h1>
-          </div>
-          <div class="card-body">
-            <form action="">
-              <div class="input-group">
-                <label for="">Name</label>
-                <div class="input-text-icon">
-                  <i class="bi bi-person"></i>
-                  <input type="text" name="" id="" placeholder="Name" value="{{$accountData->globalname}}">
-                </div>
-              </div>
-              <div class="input-group">
-                <label for="">Email</label>
-                <div class="input-text-icon">
-                  <i class="bi bi-at"></i>
-                  <input type="email" name="" id="" placeholder="Email" value="{{$accountData->globalemail}}">
-                </div>
-              </div>
-              <div class="input-group">
-                <label for="">Address</label>
-                <div class="input-text-icon">
-                  <i class="bi bi-house-gear"></i>
-                  <input type="text" name="" id="" placeholder="Address" value="{{$accountData->TEACHER_ADDRESS}}">
-                </div>
-              </div>
-              <div class="input-group">
-                <label for="">Phone</label>
-                <div class="input-text-icon">
-                  <i class="bi bi-phone"></i>
-                  <input type="text" name="" id="" placeholder="Phone" value="{{$accountData->TEACHER_ADDRESS}}">
-                </div>
-              </div>
-              <button>Save</button>
-            </form>
+            <div class="card-header">
+                <h1>Profile Settings</h1>
+            </div>
+            <div class="card-body">
+                <form action="{{ url('teacher/account_settings/update') }}" action="POST">
+                    <div class="input-group @error('TEACHER_NAME') input-danger @enderror">
+                        <label for="">Name</label>
+                        <div class="input-text-icon">
+                            <i class="bi bi-person"></i>
+                            <input type="text" name="TEACHER_NAME" id="" placeholder="Name"
+                                value="{{ $accountData->globalname }}">
+                        </div>
+                        @error('TEACHER_NAME')
+                            <p>{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="input-group @error('TEACHER_EMAIL') input-danger @enderror">
+                        <label for="">Email</label>
+                        <div class="input-text-icon">
+                            <i class="bi bi-at"></i>
+                            <input type="email" name="TEACHER_EMAIL" id="" placeholder="Email"
+                                value="{{ $accountData->globalemail }}">
+                        </div>
+                        @error('TEACHER_EMAIL')
+                            <p>{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="input-group @error('TEACHER_ADDRESS') input-danger @enderror">
+                        <label for="">Address</label>
+                        <div class="input-text-icon">
+                            <i class="bi bi-house-gear"></i>
+                            <input type="text" name="TEACHER_ADDRESS" id="" placeholder="Address"
+                                value="{{ $accountData->TEACHER_ADDRESS }}">
+                        </div>
+                        @error('TEACHER_ADDRESS')
+                            <p>{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="input-group @error('TEACHER_PHONE') input-danger @enderror">
+                        <label for="">Phone</label>
+                        <div class="input-text-icon">
+                            <i class="bi bi-phone"></i>
+                            <input type="text" name="TEACHER_PHONE" id="" placeholder="Phone"
+                                value="{{ $accountData->TEACHER_PHONE }}">
+                        </div>
+                        @error('TEACHER_PHONE')
+                            <p>{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <button type="submit">Save</button>
+                </form>
 
 
-          </div>
+            </div>
         </article>
 
         <article class="card">
-          <div class="card-header">
-            <h1>Statistic</h1>
-          </div>
-          <div class="card-body">
-            <div class="icon-text"><i class="bi bi-journal-check"></i>Rata-rata Nilai : </div>
-            <div class="icon-text"><i class="bi bi-book"></i>Total Kelas Diambil :</div>
+            <div class="card-header">
+                <h1>Statistic</h1>
+            </div>
+            <div class="card-body">
+                <div class="icon-text"><i class="bi bi-journal-check"></i>Rata-rata Nilai : </div>
+                <div class="icon-text"><i class="bi bi-book"></i>Total Kelas Diambil : {{ count($courseTaken) }}</div>
 
-          </div>
-          <div class="card-footer">
-            <span class="tag">English</span>
-            <span class="tag">Spanish</span>
-          </div>
+            </div>
+            <div class="card-footer">
+                @forelse ($courseTaken as $c)
+                    <span class="tag">{{ $c->COURSE_NAME }} &bull; {{ $c->COURSE_LEVEL }}</span>
+                @empty
+                    <span class="tag">You're not in a class yet!</span>
+                @endforelse ()
+            </div>
         </article>
 
 
 
-      </section>
+    </section>
 @endsection

@@ -44,40 +44,53 @@
                 <h1>Profile Settings</h1>
             </div>
             <div class="card-body">
-                <form action="">
-                    <div class="input-group">
+                <form action="{{url('student/account_settings/update')}}" action="POST">
+                    <div class="input-group @error('STUDENT_NAME') input-danger @enderror">
                         <label for="">Name</label>
                         <div class="input-text-icon">
                             <i class="bi bi-person"></i>
-                            <input type="text" name="" id="" placeholder="Name"
+                            <input type="text" name="STUDENT_NAME" id="" placeholder="Name"
                                 value="{{ $accountData->globalname }}">
                         </div>
+                        @error('STUDENT_NAME')
+                            <p>{{ $message }}</p>
+                        @enderror
                     </div>
-                    <div class="input-group">
+                    <div class="input-group @error('STUDENT_EMAIL') input-danger @enderror">
                         <label for="">Email</label>
                         <div class="input-text-icon">
                             <i class="bi bi-at"></i>
-                            <input type="email" name="" id="" placeholder="Email"
+                            <input type="email" name="STUDENT_EMAIL" id="" placeholder="Email"
                                 value="{{ $accountData->globalemail }}">
                         </div>
+                        @error('STUDENT_EMAIL')
+                            <p>{{ $message }}</p>
+                        @enderror
                     </div>
-                    <div class="input-group">
+                    <div class="input-group @error('STUDENT_ADDRESS') input-danger @enderror">
                         <label for="">Address</label>
                         <div class="input-text-icon">
                             <i class="bi bi-house-gear"></i>
-                            <input type="text" name="" id="" placeholder="Address"
+                            <input type="text" name="STUDENT_ADDRESS" id="" placeholder="Address"
                                 value="{{ $accountData->STUDENT_ADDRESS }}">
                         </div>
+                        @error('STUDENT_ADDRESS')
+                            <p>{{ $message }}</p>
+                        @enderror
                     </div>
-                    <div class="input-group">
+                    <div class="input-group @error('STUDENT_PHONE') input-danger @enderror">
                         <label for="">Phone</label>
                         <div class="input-text-icon">
                             <i class="bi bi-phone"></i>
-                            <input type="text" name="" id="" placeholder="Phone"
+                            <input type="text" name="STUDENT_PHONE" id="" placeholder="Phone"
                                 value="{{ $accountData->STUDENT_PHONE }}">
                         </div>
+                        @error('STUDENT_PHONE')
+                            <p>{{ $message }}</p>
+                        @enderror
                     </div>
-                    <button>Save</button>
+
+                    <button type="submit">Save</button>
                 </form>
 
 
@@ -92,12 +105,12 @@
                 </div>
                 <div class="card-body">
                     <div class="icon-text"><i class="bi bi-journal-check"></i>Rata-rata Nilai : </div>
-                    <div class="icon-text"><i class="bi bi-book"></i>Total Kelas Diambil :</div>
+                    <div class="icon-text"><i class="bi bi-book"></i>Total Kelas Diambil : {{ count($courseTaken) }}</div>
 
                 </div>
                 <div class="card-footer">
                     @forelse ($courseTaken as $c)
-                        <span class="tag">{{ $c->COURSE_NAME }}</span>
+                        <span class="tag">{{ $c->COURSE_NAME }} &bull; {{ $c->COURSE_LEVEL }}</span>
                     @empty
                         <span class="tag">You're not in a class yet!</span>
                     @endforelse ()
@@ -114,8 +127,7 @@
                             <label for="">Class Code</label>
                             <div class="input-text-icon">
                                 <i class="bi bi-hash"></i>
-                                <input type="text" name="" id="" placeholder="Code"
-                                    value="">
+                                <input type="text" name="" id="" placeholder="Code" value="">
                             </div>
                         </div>
                         <button>Join</button>

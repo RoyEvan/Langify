@@ -227,7 +227,7 @@ form input {
 }
 
 .input-group.input-danger p {
-    color: var(--danger);
+    color: var(--danger) !important;
     font-size: 0.8em;
     margin-top: 2px;
 }

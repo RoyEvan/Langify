@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StudentClassroomController extends Controller
 {
@@ -14,18 +15,19 @@ class StudentClassroomController extends Controller
     {
         $active_route = "classroom";
 
-        if($req->course_id) {
-            $course = Course::find($req->course_id);
+        if ($req->course_id) {
+            $course =  Auth::guard('student_guard')->user()->Course()->find($req->course_id);
 
-            if(!$course) return redirect("student/classroom/")->with("msg", "Page Not Found!");
+            if (!$course) {
+                return redirect("student/classroom/")->with("notification", "You haven't signed up for that class.");
+            }
 
-            $materials = $course->Materials()->get();
+            $materials = $course->Material()->get();
 
             return view("page.student.class_detail", compact("active_route", "course", "materials"));
-        }
-        else {
-            $courses = Student::find("S2400001")->Course()->wherePivot("IS_FINISHED", 0)->get();
-            $student = Student::find("S2400001");
+        } else {
+            $courses = Auth::guard('student_guard')->user()->Course()->wherePivot("IS_FINISHED", 0)->get();
+            $student = Auth::guard('student_guard')->user();
 
             return view('page.student.classroom', compact('active_route', 'courses', 'student'));
         }
