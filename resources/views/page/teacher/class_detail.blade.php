@@ -21,8 +21,8 @@
 @section('content')
     <header class="class-banner card" role="banner">
         <div class="card-body">
-            <h2>Bahasa Sapi</h2>
-            <p>Profesional Program of Moology</p>
+            <h2>{{ $course->COURSE_NAME }}</h2>
+            <p>{{ $course->COURSE_DESC }}</p>
         </div>
         <div class="card-footer">
             <p><i class="bi bi-people"></i>4 People</p>

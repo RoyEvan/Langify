@@ -28,7 +28,7 @@ class Course extends Model
         'COURSE_LENGTH'
     ];
 
-    public function Students() {
+    public function Student() {
         return $this->belongsToMany(Student::class, 'courses_taken', 'COURSE_ID', 'STUDENT_ID')
             ->withPivot("IS_FINISHED");
     }
@@ -37,11 +37,11 @@ class Course extends Model
         return $this->belongsTo(Teacher::class, 'TEACHER_ID', 'TEACHER_ID');
     }
 
-    public function Materials() {
+    public function Material() {
         return $this->hasMany(Material::class, 'COURSE_ID', 'COURSE_ID');
     }
 
-    public function Assignments() {
+    public function Assignment() {
         return $this->hasMany(Assignment::class, 'COURSE_ID', 'COURSE_ID');
     }
 }

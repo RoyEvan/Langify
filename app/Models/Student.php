@@ -45,7 +45,8 @@ class Student extends Authenticatable
 
     public function Course()
     {
-        return $this->belongsToMany(Course::class, 'courses_taken', 'STUDENT_ID', 'COURSE_ID');
+        return $this->belongsToMany(Course::class, 'courses_taken', 'STUDENT_ID', 'COURSE_ID')
+            ->withPivot("IS_FINISHED");
     }
 
     public function Assignment()
