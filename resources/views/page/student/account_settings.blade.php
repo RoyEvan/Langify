@@ -19,83 +19,138 @@
     <section class="card-list">
 
         <article class="card">
-          <div class="card-header">
-            <h1>Profile Picture Settings</h1>
-          </div>
-          <div class="card-body">
-            <form action="">
-              <div class="input-group">
-                <label for="">Name</label>
-                <div class="input-text-icon">
-                  <i class="bi bi-person"></i>
-                  <input type="text" name="" id="" placeholder="Name">
-                </div>
-              </div>
+            <div class="card-header">
+                <h1>Profile Picture Settings</h1>
+            </div>
+            <div class="card-body">
+                <form action="">
+                    <div class="input-group">
+                        <label for="">Name</label>
+                        <div class="input-text-icon">
+                            <i class="bi bi-person"></i>
+                            <input type="text" name="" id="" placeholder="Name">
+                        </div>
+                    </div>
 
-              <button>Save</button>
-            </form>
+                    <button>Save</button>
+                </form>
 
 
-          </div>
+            </div>
         </article>
 
         <article class="card">
-          <div class="card-header">
-            <h1>Profile Settings</h1>
-          </div>
-          <div class="card-body">
-            <form action="">
-              <div class="input-group">
-                <label for="">Name</label>
-                <div class="input-text-icon">
-                  <i class="bi bi-person"></i>
-                  <input type="text" name="" id="" placeholder="Name">
-                </div>
-              </div>
-              <div class="input-group">
-                <label for="">Email</label>
-                <div class="input-text-icon">
-                  <i class="bi bi-at"></i>
-                  <input type="email" name="" id="" placeholder="Email">
-                </div>
-              </div>
-              <div class="input-group">
-                <label for="">Address</label>
-                <div class="input-text-icon">
-                  <i class="bi bi-house-gear"></i>
-                  <input type="text" name="" id="" placeholder="Address">
-                </div>
-              </div>
-              <div class="input-group">
-                <label for="">Phone</label>
-                <div class="input-text-icon">
-                  <i class="bi bi-phone"></i>
-                  <input type="text" name="" id="" placeholder="Phone">
-                </div>
-              </div>
-              <button>Save</button>
-            </form>
+            <div class="card-header">
+                <h1>Profile Settings</h1>
+            </div>
+            <div class="card-body">
+                <form action="">
+                    <div class="input-group">
+                        <label for="">Name</label>
+                        <div class="input-text-icon">
+                            <i class="bi bi-person"></i>
+                            <input type="text" name="" id="" placeholder="Name"
+                                value="{{ $accountData->globalname }}">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="">Email</label>
+                        <div class="input-text-icon">
+                            <i class="bi bi-at"></i>
+                            <input type="email" name="" id="" placeholder="Email"
+                                value="{{ $accountData->globalemail }}">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="">Address</label>
+                        <div class="input-text-icon">
+                            <i class="bi bi-house-gear"></i>
+                            <input type="text" name="" id="" placeholder="Address"
+                                value="{{ $accountData->STUDENT_ADDRESS }}">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="">Phone</label>
+                        <div class="input-text-icon">
+                            <i class="bi bi-phone"></i>
+                            <input type="text" name="" id="" placeholder="Phone"
+                                value="{{ $accountData->STUDENT_PHONE }}">
+                        </div>
+                    </div>
+                    <button>Save</button>
+                </form>
 
 
-          </div>
+            </div>
         </article>
 
-        <article class="card">
-          <div class="card-header">
-            <h1>Statistic</h1>
-          </div>
-          <div class="card-body">
-            <div class="icon-text"><i class="bi bi-journal-check"></i>Rata-rata Nilai : </div>
-            <div class="icon-text"><i class="bi bi-book"></i>Total Kelas Diambil :</div>
+        <div class="card-list">
 
-          </div>
-          <div class="card-footer">
-            <span class="tag">English</span>
-            <span class="tag">Spanish</span>
-          </div>
-        </article>
+            <article class="card">
+                <div class="card-header">
+                    <h1>Statistic</h1>
+                </div>
+                <div class="card-body">
+                    <div class="icon-text"><i class="bi bi-journal-check"></i>Rata-rata Nilai : </div>
+                    <div class="icon-text"><i class="bi bi-book"></i>Total Kelas Diambil :</div>
+
+                </div>
+                <div class="card-footer">
+                    @forelse ($courseTaken as $c)
+                        <span class="tag">{{ $c->COURSE_NAME }}</span>
+                    @empty
+                        <span class="tag">You're not in a class yet!</span>
+                    @endforelse ()
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <h1>Join a Class</h1>
+                </div>
+                <div class="card-body">
+                    <form action="">
+                        <div class="input-group">
+                            <label for="">Class Code</label>
+                            <div class="input-text-icon">
+                                <i class="bi bi-hash"></i>
+                                <input type="text" name="" id="" placeholder="Code"
+                                    value="">
+                            </div>
+                        </div>
+                        <button>Join</button>
+                    </form>
+
+                </div>
+
+            </article>
+
+            <article class="card">
+                <div class="card-header">
+                    <h1>Become A Teacher</h1>
+                </div>
+                <div class="card-body">
+                    <form action="">
+                        <div class="input-group">
+                            <label for="">Access Code</label>
+                            <div class="input-text-icon">
+                                <i class="bi bi-hash"></i>
+                                <input type="text" name="" id="" placeholder="Access Code"
+                                    value="">
+                            </div>
+                        </div>
+                        <button>Be a Teacher</button>
+                    </form>
+
+                </div>
+
+            </article>
+
+        </div>
 
 
 
-      </section>
+
+
+    </section>
 @endsection

@@ -50,28 +50,28 @@
                 <label for="">Name</label>
                 <div class="input-text-icon">
                   <i class="bi bi-person"></i>
-                  <input type="text" name="" id="" placeholder="Name">
+                  <input type="text" name="" id="" placeholder="Name" value="{{$accountData->globalname}}">
                 </div>
               </div>
               <div class="input-group">
                 <label for="">Email</label>
                 <div class="input-text-icon">
                   <i class="bi bi-at"></i>
-                  <input type="email" name="" id="" placeholder="Email">
+                  <input type="email" name="" id="" placeholder="Email" value="{{$accountData->globalemail}}">
                 </div>
               </div>
               <div class="input-group">
                 <label for="">Address</label>
                 <div class="input-text-icon">
                   <i class="bi bi-house-gear"></i>
-                  <input type="text" name="" id="" placeholder="Address">
+                  <input type="text" name="" id="" placeholder="Address" value="{{$accountData->TEACHER_ADDRESS}}">
                 </div>
               </div>
               <div class="input-group">
                 <label for="">Phone</label>
                 <div class="input-text-icon">
                   <i class="bi bi-phone"></i>
-                  <input type="text" name="" id="" placeholder="Phone">
+                  <input type="text" name="" id="" placeholder="Phone" value="{{$accountData->TEACHER_ADDRESS}}">
                 </div>
               </div>
               <button>Save</button>

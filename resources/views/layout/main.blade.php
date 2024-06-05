@@ -30,16 +30,16 @@
     <nav class="sidebar closed">
         <h1><i class="bi bi-globe2"></i>Langify</h1>
         <ol>
-            <li class="{{ $active_route == 'dashboard' ? 'active' : '' }}"><a href="{{ url('student/') }}"><i
+            <li class="{{ $active_route == 'dashboard' ? 'active' : '' }}"><a href="{{ url((Auth::guard('student_guard')->check() ? 'student' : 'teacher').'/') }}"><i
                         class="bi bi-house"></i>Dashboard</a></li>
-            <li class="{{ $active_route == 'classroom' ? 'active' : '' }}"><a href="{{ url('student/classroom') }}"><i
+            <li class="{{ $active_route == 'classroom' ? 'active' : '' }}"><a href="{{ url((Auth::guard('student_guard')->check() ? 'student' : 'teacher').'/classroom') }}"><i
                         class="bi bi-book"></i>My Class Room</a></li>
-            <li class=""><a href="{{ url('student/assignment') }}"><i class="bi bi-journal-bookmark"></i>Tugas
+            <li class=""><a href="{{ url((Auth::guard('student_guard')->check() ? 'student' : 'teacher').'/assignment') }}"><i class="bi bi-journal-bookmark"></i>Tugas
                     Kuliah</a></li>
-            <li class=""><a href="{{ url('student/class_detail') }}"><i class="bi bi-clipboard-data"></i>Detail
+            <li class=""><a href="{{ url((Auth::guard('student_guard')->check() ? 'student' : 'teacher').'/class_detail') }}"><i class="bi bi-clipboard-data"></i>Detail
                     Kelas</a></li>
             <li class="{{ $active_route == 'account_settings' ? 'active' : '' }}"><a
-                    href="{{ url('student/account_settings') }}"><i class="bi bi-person-rolodex"></i>Account
+                    href="{{ url((Auth::guard('student_guard')->check() ? 'student' : 'teacher').'/account_settings') }}"><i class="bi bi-person-rolodex"></i>Account
                     Settings</a></li>
             <li class=""><a href="{{ url('logout') }}"><i class="bi bi-door-open"></i>Sign Out</a></li>
         </ol>
