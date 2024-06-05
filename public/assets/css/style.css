@@ -855,14 +855,18 @@ p~.icon-text:first-of-type {
     font-size: 1.2em;
 }
 
-
 .card-list {
     margin-bottom: 32px;
-    padding: 8px 0 4px;
+    padding: 0 0 4px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(272px, 3fr));
     gap: 16px;
 }
+
+section.card-list {
+    padding: 8px 0 4px;
+}
+
 
 
 
