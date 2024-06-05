@@ -19,7 +19,7 @@ class StudentClassroomController extends Controller
 
             if(!$course) return redirect("student/classroom/")->with("msg", "Page Not Found!");
 
-            $materials = $course->Materials()->get();
+            $materials = $course->Material()->get();
 
             return view("page.student.class_detail", compact("active_route", "course", "materials"));
         }

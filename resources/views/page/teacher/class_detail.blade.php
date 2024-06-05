@@ -19,6 +19,22 @@
 @endsection
 
 @section('content')
+    @error("materialtitle")
+        <div class="notification">
+            <span>{{ $message }}</span>
+        </div>
+    @enderror
+    @error("materialfile")
+        <div class="notification">
+            <span>{{ $message }}</span>
+        </div>
+    @enderror
+    @error("materialdesc")
+        <div class="notification">
+            <span>{{ $message }}</span>
+        </div>
+    @enderror
+
     <header class="class-banner card" role="banner">
         <div class="card-body">
             <h2>{{ $course->COURSE_NAME }}</h2>
@@ -45,11 +61,8 @@
 
 
     <div id="class-tabs-content" class="tabs-content-box">
-
-
         <!-- Beranda -->
         <div class="tab-content active">
-
             @foreach ($materials as $m)
                 <div class="card">
                     <div class="card-header space-between">
@@ -224,32 +237,33 @@
                         <h1>Tambah Materi</h1>
                     </div>
                     <div class="card-body">
-                        <form action="{{ url("teacher/classroom/$course->COURSE_ID/uppload/material") }}">
+                        <form action="{{ url("teacher/classroom/$course->COURSE_ID/upload/material") }}" method="post" enctype="multipart/form-data">
+                            @csrf
                             <div class="input-group">
-                                <label for="">Pertemuan</label>
+                                <label for="">Judul Materi</label>
                                 <div class="input-text-icon">
-                                    <input type="text" name="" id="" placeholder="Username">
+                                    <input type="text" name="materialtitle" id="" placeholder="Judul Materi">
                                 </div>
                             </div>
                             <div class="input-group">
-                                <label for="">Nama File</label>
+                                <label for="">File</label>
                                 <div class="input-text-icon">
-                                    <input type="text" name="" id="" placeholder="Username">
+                                    <input class="upload-assignment" type="file" id="formFile" name="materialfile">
                                 </div>
                             </div>
                             <div class="input-group">
                                 <label for="">Deskripsi</label>
                                 <div class="input-text-icon">
-                                    <input type="text" name="" id="" placeholder="Username">
+                                    <input type="text" name="materialdesc" id="" placeholder="Deskripsi Materi">
                                 </div>
                             </div>
 
+                            <button target-modal="materi_modal" class="button-close-modal" type="submit">Tambah</button>
                         </form>
 
                     </div>
                     <div class="card-footer pos-child-right">
                         <button target-modal="materi_modal" class="button-close-modal bg-danger">Close</button>
-                        <button target-modal="materi_modal" class="button-close-modal">Tambah</button>
                     </div>
                 </div>
             </div>
@@ -276,8 +290,11 @@
                                     <td>{{ $m->MATERIAL_DESC }}</td>
                                     <td>
                                         <ul>
-                                            <li><a href="">Info Materi</a></li>
-                                            <li><a href="">Download Materi</a></li>
+                                            @if (count($m->MaterialFile) == 1)
+                                                <li><a href="{{ url("teacher/classroom/$course->COURSE_ID/download/material/" . $m->MaterialFile[0]->MATERIAL_FILE_PATH) }}">Download Materi</a></li>
+                                            @else
+                                                <li>No file was shared</li>
+                                            @endif
                                         </ul>
                                     </td>
                                 </tr>
