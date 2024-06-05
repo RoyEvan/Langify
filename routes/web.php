@@ -51,7 +51,8 @@ Route::prefix("teacher")->middleware(['CekRole:teacher'])->group(function () {
     Route::get('/', [TeacherDashboardController::class, "dashboard"]);
 
     Route::get('/classroom/{course_id?}', [TeacherClassroomController::class, "classroom"]);
-    Route::post('/classroom/{course_id}/upload/material', [TeacherClassroomController::class, "classroom"]);
+    Route::post('/classroom/{course_id}/upload/material', [TeacherClassroomController::class, "upload_material"]);
+    Route::get('/classroom/{course_id}/download/material/{file_id}', [TeacherClassroomController::class, "download_material"]);
 
     Route::get('/account_settings', [TeacherAccountController::class, "account_settings"]);
     Route::get('/account_settings/update', [TeacherAccountController::class, "updateSetting"]);
