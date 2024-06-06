@@ -29,7 +29,7 @@
             <p><i class="bi bi-mortarboard"></i>{{ $course->Teacher->TEACHER_NAME }}</p>
             <p><i class="bi bi-geo-alt"></i>{{ $course->COURSE_CLASS }}</p>
             <p><i class="bi bi-calendar-event"></i>{{ $course->COURSE_DAY }}</p>
-            <p><i class="bi bi-clock"></i>{{ $course->COURSE_LENGTH }}</p>
+            <p><i class="bi bi-clock"></i>{{ $course->COURSE_LENGTH }} hours</p>
         </div>
     </header>
 
@@ -119,39 +119,30 @@
         </div>
 
         <!-- Daftar Mahasiswa -->
-        <div class="tab-content">
 
-            <div class="tabbed-table">
+        <div class="tab-content active">
+            <div class="card">
+                <div class="card-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>NRP</th>
+                                <th>Nama</th>
+                            </tr>
+                        <tbody>
+                            @foreach ($students as $s)
+                                <tr>
+                                    <td>{{ $s->STUDENT_ID }}</td>
+                                    <td>{{ $s->STUDENT_NAME }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-                {{-- <div id="student-tabs-nav" class="tabs-nav-box year-nav-list card">
-										<button class="tabs-item">Tingkat 1</button>
-										<button class="tabs-item active">Tingkat 2</button>
-								</div> --}}
-
-                <div id="student-tabs-content" class="tabs-content-box">
-                    <div class="tab-content active">
-                        <div class="card">
-                            <div class="card-body">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>NRP</th>
-                                            <th>Nama</th>
-                                        </tr>
-                                    <tbody>
-                                        @foreach ($students as $s)
-                                            <tr>
-                                                <td>{{ $s->STUDENT_ID }}</td>
-                                                <td>{{ $s->STUDENT_NAME }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- <div class="tab-content active">
+        {{-- <div class="tab-content active">
 												<div class="card">
 														<div class="card-body">
 																<table>
@@ -174,9 +165,6 @@
 														</div>
 												</div>
 										</div> --}}
-                </div>
-            </div>
-        </div>
 
 
         <!-- Presensi -->
@@ -254,7 +242,8 @@
                     <div class="card-footer pos-child-right">
                         <button target-modal="materi_modal" type="button"
                             class="button-close-modal bg-danger">Close</button>
-                        <button target-modal="materi_modal" type="submit" class="button-close-modal" type="submit">Tambah</button>
+                        <button target-modal="materi_modal" type="submit" class="button-close-modal"
+                            type="submit">Tambah</button>
                     </div>
                 </form>
             </div>

@@ -28,7 +28,7 @@
             <p><i class="bi bi-mortarboard"></i>{{ $course->Teacher->TEACHER_NAME }}</p>
             <p><i class="bi bi-geo-alt"></i>{{ $course->COURSE_CLASS }}</p>
             <p><i class="bi bi-calendar-event"></i>{{ $course->COURSE_DAY }}</p>
-            <p><i class="bi bi-clock"></i>{{ $course->COURSE_LENGTH }}</p>
+            <p><i class="bi bi-clock"></i>{{ $course->COURSE_LENGTH }} hours</p>
         </div>
     </header>
 
@@ -118,61 +118,25 @@
         </div>
 
         <!-- Daftar Mahasiswa -->
+
         <div class="tab-content">
-            <div class="tabbed-table">
-                <div id="student-tabs-content" class="tabs-content-box">
-                    <div class="tab-content">
-                        <div class="card">
-                            <div class="card-body">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>NRP</th>
-                                            <th>Nama</th>
-                                        </tr>
-                                    <tbody>
-                                        @foreach ($students as $s)
-                                            <tr>
-                                                <td>{{ $s->STUDENT_ID }}</td>
-                                                <td>{{ $s->STUDENT_NAME }}</td>
-                                            </tr>
-                                        @endforeach
-                                        <tr>
-                                            <td>123456789</td>
-                                            <td>Budi Meresapi S.epeda</td>
-                                        </tr>
-                                        <tr>
-                                            <td>123456789</td>
-                                            <td>Budi Meresapi S.epeda</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-content active">
-                        <div class="card">
-                            <div class="card-body">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>NRP</th>
-                                            <th>Nama</th>
-                                        </tr>
-                                    <tbody>
-                                        <tr>
-                                            <td>123456789</td>
-                                            <td>Budi Meresapi S.epeda</td>
-                                        </tr>
-                                        <tr>
-                                            <td>123456789</td>
-                                            <td>Budi Meresapi S.epeda</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+            <div class="card">
+                <div class="card-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>NRP</th>
+                                <th>Nama</th>
+                            </tr>
+                        <tbody>
+                            @foreach ($students as $s)
+                                <tr>
+                                    <td>{{ $s->STUDENT_ID }}</td>
+                                    <td>{{ $s->STUDENT_NAME }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -223,16 +187,17 @@
                                 <th>Action</th>
                             </tr>
                         <tbody>
-                            @for ($i=0; $i<count($materials); $i++)
+                            @for ($i = 0; $i < count($materials); $i++)
                                 <tr>
-                                    <td>{{ (1+$i) }}</td>
+                                    <td>{{ 1 + $i }}</td>
                                     <td>{{ $materials[$i]->MATERIAL_TITLE }}</td>
                                     <td>{{ $materials[$i]->MATERIAL_DESC }}</td>
                                     <td>
                                         <ul>
                                             @if (count($materials[$i]->MaterialFile) == 1)
                                                 <li>
-                                                    <a href="{{ url("student/classroom/$course->COURSE_ID/download/material/" . $m->MaterialFile[0]->MATERIAL_FILE_PATH) }}">
+                                                    <a
+                                                        href="{{ url("student/classroom/$course->COURSE_ID/download/material/" . $m->MaterialFile[0]->MATERIAL_FILE_PATH) }}">
                                                         Download Materi
                                                     </a>
                                                 </li>
