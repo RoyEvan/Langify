@@ -283,22 +283,26 @@
                                 <th>Action</th>
                             </tr>
                         <tbody>
-                            @foreach ($materials as $m)
+                            @for ($i=0; $i<count($materials); $i++)
                                 <tr>
-                                    <td>{{ Str::substr($m->MATERIAL_TITLE, 5) }}</td>
-                                    <td>{{ $m->MATERIAL_TITLE }}</td>
-                                    <td>{{ $m->MATERIAL_DESC }}</td>
+                                    <td>{{ $i }}</td>
+                                    <td>{{ $materials[$i]->MATERIAL_TITLE }}</td>
+                                    <td>{{ $materials[$i]->MATERIAL_DESC }}</td>
                                     <td>
                                         <ul>
-                                            @if (count($m->MaterialFile) == 1)
-                                                <li><a href="{{ url("teacher/classroom/$course->COURSE_ID/download/material/" . $m->MaterialFile[0]->MATERIAL_FILE_PATH) }}">Download Materi</a></li>
+                                            @if (count($materials[$i]->MaterialFile) == 1)
+                                                <li>
+                                                    <a href="{{ url("teacher/classroom/$course->COURSE_ID/download/material/" . $m->MaterialFile[0]->MATERIAL_FILE_PATH) }}">
+                                                        Download Materi
+                                                    </a>
+                                                </li>
                                             @else
                                                 <li>No file was shared</li>
                                             @endif
                                         </ul>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @endfor
                         </tbody>
                     </table>
                 </div>

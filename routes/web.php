@@ -39,7 +39,9 @@ Route::prefix("register")->group(function () {
 Route::prefix("student")->middleware(['CekRole:student'])->group(function () {
     Route::get('/', [StudentDashboardController::class, "dashboard"]);
 
-    Route::get('/classroom/{course_id?}', [StudentClassroomController::class, "classroom"]);
+    Route::get('/classroom', [StudentClassroomController::class, "classroom"]);
+    Route::get('/classroom/{course_id}', [StudentClassDetailController::class, "class_detail"]);
+    Route::get('/classroom/{course_id}/download/material/{file_id}', [StudentClassroomController::class, "classroom"]);
 
     Route::get('/account_settings', [StudentAccountController::class, "account_settings"]);
     Route::get('/account_settings/update', [StudentAccountController::class, "updateSetting"]);
