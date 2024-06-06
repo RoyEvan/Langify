@@ -24,6 +24,10 @@ class Assignment extends Model
         'DEADLINE'
     ];
 
+    // public function getFormatedDate(){
+    //     return $this->DEADLINE->format('d.m.y');
+    // }
+
     public function Course() {
         return $this->belongsTo(Course::class, 'COURSE_ID', 'COURSE_ID');
     }
