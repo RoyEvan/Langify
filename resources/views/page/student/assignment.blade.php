@@ -22,15 +22,15 @@
 @section('content')
     <header class="class-banner card" role="banner">
         <div class="card-body">
-            <h2>Bahasa Sapi</h2>
-            <p>Profesional Program of Moology</p>
+            <h2>Bahasa {{$course->COURSE_NAME}}</h2>
+            <p>{{$course->COURSE_DESC}}</p>
         </div>
         <div class="card-footer">
-            <p><i class="bi bi-people"></i>4 People</p>
-            <p><i class="bi bi-person-video3"></i>Budi Meresapi S.epeda</p>
-            <p><i class="bi bi-geo-alt"></i>X-001</p>
-            <p><i class="bi bi-calendar-event"></i>Senin</p>
-            <p><i class="bi bi-clock"></i>24.00</p>
+            <p><i class="bi bi-people"></i>{{ Count($student) }} People</p>
+            <p><i class="bi bi-person-video3"></i>{{$teacher->TEACHER_NAME}}</p>
+            <p><i class="bi bi-geo-alt"></i>{{$course->COURSE_CLASS}}</p>
+            <p><i class="bi bi-calendar-event"></i>{{$course->COURSE_DAY}}</p>
+            <p><i class="bi bi-clock"></i>12.00</p>
         </div>
     </header>
 
@@ -48,10 +48,28 @@
         </div>
         <div class="assignment-status">
             <b>Nilai : </b>
-            <!-- <span> Belum Mengumpulkan!</span> -->
-            <!-- <i class="bi bi-x-circle"></i> -->
-            <span> 90/100</span>
-            <i class="bi bi-check-circle"></i>
+            @php
+                $currStu = false;
+                $mark = '0';
+            @endphp
+
+            @foreach ($studentDone as $sd)
+                @if ($sd->STUDENT_ID == $user->STUDENT_ID)
+                    @php
+                        $currStu = true;
+                        $mark = $sd->pivot->SCORE;
+                        break;
+                    @endphp
+                @endif
+            @endforeach
+
+            @if ($currStu)
+                <span> {{$mark}}/100</span>
+                <i class="bi bi-check-circle"></i>
+            @else
+                <span> Belum Mengumpulkan!</span>
+                <i class="bi bi-x-circle"></i>
+            @endif
         </div>
     </div>
 
@@ -64,19 +82,19 @@
                 <tbody>
                     <tr>
                         <td>Nama Module</td>
-                        <td>Berkomunikasi dengan sapi</td>
+                        <td>{{$assign->ASSIGNMENT_TITLE}}</td>
                     </tr>
                     <tr>
                         <td>Jenis Module</td>
-                        <td>MISI</td>
+                        <td>TUGAS</td>
                     </tr>
                     <tr>
                         <td>Deadline</td>
-                        <td>12 Feb 2012 s/d 12 Feb 2012 24.00</td>
+                        <td>{{$assign->DEADLINE}}</td>
                     </tr>
                     <tr>
                         <td>Keterangan</td>
-                        <td>Berbicaralah dengan sapi lokal selama 3 jam 14 menit</td>
+                        <td>{{$assign->ASSIGNMENT_DESC}}</td>
                     </tr>
                     <tr>
                         <td>Sifat Pengumpulan</td>
@@ -96,7 +114,7 @@
                     </tr>
                     <tr>
                         <td>Total Module Terkumpul</td>
-                        <td>0 / 4</td>
+                        <td>{{ count($studentDone ?? []) }} / {{ Count($student) }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -118,12 +136,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>123456789</td>
-                        <td>Udin Border Solid</td>
-                        <td>-</td>
-                    </tr>
+                    @foreach ($student as $s)
+                        @php
+                            $done = false;
+                            $doneDate = '-';
+                        @endphp
+                        @foreach ($studentDone as $sd)
+                            @if ($s->STUDENT_ID == $sd->STUDENT_ID)
+                                @php
+                                    $done = true;
+                                    $doneDate = $sd->pivot->CREATED_AT;
+                                    break; // Exit the inner loop since we found a match
+                                @endphp
+                            @endif
+                        @endforeach
+                        <tr class="{{ $done ? 'bg-success' : '' }}">
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $s->STUDENT_ID }}</td>
+                            <td>{{ $s->STUDENT_NAME }}</td>
+                            <td>{{ $doneDate }}</td>
+                        </tr>
+                    @endforeach
+{{--
                     <tr>
                         <td>2</td>
                         <td>123456789</td>
@@ -141,7 +175,7 @@
                         <td>123456789</td>
                         <td>Udin Border Solid</td>
                         <td>-</td>
-                    </tr>
+                    </tr> --}}
 
 
                 </tbody>
