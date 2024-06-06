@@ -117,7 +117,6 @@ body {
 .bg-danger:hover {
     background-color: var(--text100);
     color: var(--danger);
-    box-shadow: 0 0 16px 0 var(--danger);
 }
 
 .bg-success {
@@ -163,9 +162,17 @@ body {
     height: fit-content;
     width: fit-content;
     min-width: 480px;
-    max-height: 480px;
     max-width: 720px;
     animation: fade 0.16s ease-in alternate;
+}
+
+.modal.open {
+    display: flex;
+}
+
+.modal .card-body {
+    max-height: 360px;
+    overflow: auto;
 }
 
 @keyframes fade {
@@ -198,11 +205,19 @@ form {
     gap: 16px;
 }
 
+form.card {
+    gap: 0;
+}
+
+form.card .card-body{
+    gap: 16px;
+}
+
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
-input:-webkit-autofill:active{
+input:-webkit-autofill:active {
     background-color: transparent;
 }
 
@@ -259,6 +274,33 @@ form input {
     margin-right: 4px;
     font-size: 1.2em;
 }
+
+
+input[type="file"] {
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    font-size: 0.9em;
+    flex: 1 0 70%;
+    position: relative;
+    margin: 0;
+    border-radius: 8px;
+    padding: 0;
+    background-color: var(--background100);
+}
+
+input[type="file"]::file-selector-button {
+    background-color: var(--background300);
+    pointer-events: none;
+    border: none;
+    color: var(--text100);
+    padding: 8px 16px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    margin-right: 16px;
+    height: 100%;
+    border-radius: 8px 0 0 8px;
+}
+
 
 
 /* END INPUT GROUP */

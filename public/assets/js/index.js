@@ -46,10 +46,11 @@ allOpenModalButton.forEach(element => {
         let idTargetModal = element.getAttribute("target-modal");
         let correspondingModalBox = document.getElementById(idTargetModal);
         correspondingModalBox.style.display = "flex";
+        correspondingModalBox.classList.add("open");
     });
 });
 
-//close modal 
+//close modal
 let allCloseModalButton = select(".button-close-modal", all = true);
 
 
@@ -58,6 +59,7 @@ allCloseModalButton.forEach(element => {
         let idTargetModal = element.getAttribute("target-modal");
         let correspondingModalBox = document.getElementById(idTargetModal);
         correspondingModalBox.style.display = "none";
+        correspondingModalBox.classList.remove("open");
     });
 });
 

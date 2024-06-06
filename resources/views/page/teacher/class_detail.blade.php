@@ -19,22 +19,6 @@
 @endsection
 
 @section('content')
-    @error("materialtitle")
-        <div class="notification">
-            <span>{{ $message }}</span>
-        </div>
-    @enderror
-    @error("materialfile")
-        <div class="notification">
-            <span>{{ $message }}</span>
-        </div>
-    @enderror
-    @error("materialdesc")
-        <div class="notification">
-            <span>{{ $message }}</span>
-        </div>
-    @enderror
-
     <header class="class-banner card" role="banner">
         <div class="card-body">
             <h2>{{ $course->COURSE_NAME }}</h2>
@@ -62,7 +46,7 @@
 
     <div id="class-tabs-content" class="tabs-content-box">
         <!-- Beranda -->
-        <div class="tab-content active">
+        <div class="tab-content @if (!$errors->any()) active @endif">
             @foreach ($materials as $m)
                 <div class="card">
                     <div class="card-header space-between">
@@ -74,7 +58,7 @@
                     </div>
                     <div class="card-footer space-between">
                         <div class="flex-row">
-                            <img src="{{ asset("assets/img/WP62.png") }}" alt="">
+                            <img src="{{ asset('assets/img/WP62.png') }}" alt="">
                             <p>Budi Meresapi S.epeda</p>
                         </div>
                         <span><i class="bi bi-calendar-event"></i>12 Februari 2012 at 24:00</span>
@@ -140,9 +124,9 @@
             <div class="tabbed-table">
 
                 {{-- <div id="student-tabs-nav" class="tabs-nav-box year-nav-list card">
-                    <button class="tabs-item">Tingkat 1</button>
-                    <button class="tabs-item active">Tingkat 2</button>
-                </div> --}}
+										<button class="tabs-item">Tingkat 1</button>
+										<button class="tabs-item active">Tingkat 2</button>
+								</div> --}}
 
                 <div id="student-tabs-content" class="tabs-content-box">
                     <div class="tab-content active">
@@ -168,28 +152,28 @@
                     </div>
 
                     {{-- <div class="tab-content active">
-                        <div class="card">
-                            <div class="card-body">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>NRP</th>
-                                            <th>Nama</th>
-                                        </tr>
-                                    <tbody>
-                                        <tr>
-                                            <td>123456789</td>
-                                            <td>Budi Meresapi S.epeda</td>
-                                        </tr>
-                                        <tr>
-                                            <td>123456789</td>
-                                            <td>Budi Meresapi S.epeda</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div> --}}
+												<div class="card">
+														<div class="card-body">
+																<table>
+																		<thead>
+																				<tr>
+																						<th>NRP</th>
+																						<th>Nama</th>
+																				</tr>
+																		<tbody>
+																				<tr>
+																						<td>123456789</td>
+																						<td>Budi Meresapi S.epeda</td>
+																				</tr>
+																				<tr>
+																						<td>123456789</td>
+																						<td>Budi Meresapi S.epeda</td>
+																				</tr>
+																		</tbody>
+																</table>
+														</div>
+												</div>
+										</div> --}}
                 </div>
             </div>
         </div>
@@ -197,75 +181,82 @@
 
         <!-- Presensi -->
         {{-- <div class="tab-content">
-            <div class="card">
-                <div class="card-body">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Pertemuan</th>
-                                <th>Topik</th>
-                                <th>Rekaman</th>
-                                <th>Absensi</th>
+						<div class="card">
+								<div class="card-body">
+										<table>
+												<thead>
+														<tr>
+																<th>Pertemuan</th>
+																<th>Topik</th>
+																<th>Rekaman</th>
+																<th>Absensi</th>
 
 
-                            </tr>
-                        <tbody>
-                            <tr>
-                                <td class="pos-child-center">1</td>
-                                <td>Memahami intisari pertemuan 1</td>
-                                <td class="pos-child-center">Nihil</td>
-                                <td>
-                                    <div class="tag pos-self-center"><i class="bi bi-check"></i>Hadir</div>
-                                </td>
+														</tr>
+												<tbody>
+														<tr>
+																<td class="pos-child-center">1</td>
+																<td>Memahami intisari pertemuan 1</td>
+																<td class="pos-child-center">Nihil</td>
+																<td>
+																		<div class="tag pos-self-center"><i class="bi bi-check"></i>Hadir</div>
+																</td>
 
 
 
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div> --}}
+												</tbody>
+										</table>
+								</div>
+						</div>
+				</div> --}}
 
         <!-- Materi -->
-        <div class="tab-content">
+        <div class="tab-content @if ($errors->has('materialtitle') || $errors->has('materialfile') || $errors->has('materialdesc')) active @endif">
 
 
             <!-- Materi Modal -->
-            <div id="materi_modal" class="modal">
-                <div class="card">
+            <div id="materi_modal" class="modal @if ($errors->has('materialtitle') || $errors->has('materialfile') || $errors->has('materialdesc')) open @endif">
+                <form class="card" action="{{ url("teacher/classroom/$course->COURSE_ID/upload/material") }}"
+                    method="post" enctype="multipart/form-data">
+                    @csrf
                     <div class="card-header">
                         <h1>Tambah Materi</h1>
                     </div>
                     <div class="card-body">
-                        <form action="{{ url("teacher/classroom/$course->COURSE_ID/upload/material") }}" method="post" enctype="multipart/form-data">
-                            @csrf
-                            <div class="input-group">
-                                <label for="">Judul Materi</label>
-                                <div class="input-text-icon">
-                                    <input type="text" name="materialtitle" id="" placeholder="Judul Materi">
-                                </div>
+                        <div class="input-group @error('materialtitle') input-danger @enderror">
+                            <label for="">Judul Materi</label>
+                            <div class="input-text-icon">
+                                <input type="text" name="materialtitle" id="" placeholder="Judul Materi">
                             </div>
-                            <div class="input-group">
-                                <label for="">File</label>
-                                <div class="input-text-icon">
-                                    <input class="upload-assignment" type="file" id="formFile" name="materialfile">
-                                </div>
+                            @error('materialtitle')
+                                <p>{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="input-group @error('materialfile') input-danger @enderror">
+                            <label for="">File</label>
+                            <input class="upload-assignment" type="file" id="formFile" name="materialfile">
+                            @error('materialfile')
+                                <p>{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="input-group @error('materialdesc') input-danger @enderror">
+                            <label for="">Deskripsi</label>
+                            <div class="input-text-icon">
+                                <input type="text" name="materialdesc" id="" placeholder="Deskripsi Materi">
                             </div>
-                            <div class="input-group">
-                                <label for="">Deskripsi</label>
-                                <div class="input-text-icon">
-                                    <input type="text" name="materialdesc" id="" placeholder="Deskripsi Materi">
-                                </div>
-                            </div>
+                            @error('materialdesc')
+                                <p>{{ $message }}</p>
+                            @enderror
+                        </div>
 
-                            <button target-modal="materi_modal" class="button-close-modal" type="submit">Tambah</button>
-                        </form>
 
                     </div>
                     <div class="card-footer pos-child-right">
-                        <button target-modal="materi_modal" class="button-close-modal bg-danger">Close</button>
+                        <button target-modal="materi_modal" type="button"
+                            class="button-close-modal bg-danger">Close</button>
+                        <button target-modal="materi_modal" type="submit" class="button-close-modal" type="submit">Tambah</button>
                     </div>
-                </div>
+                </form>
             </div>
 
             <button target-modal="materi_modal" class="button-open-modal mb-16 pos-self-right"><i
@@ -283,7 +274,7 @@
                                 <th>Action</th>
                             </tr>
                         <tbody>
-                            @for ($i=0; $i<count($materials); $i++)
+                            @for ($i = 0; $i < count($materials); $i++)
                                 <tr>
                                     <td>{{ $i }}</td>
                                     <td>{{ $materials[$i]->MATERIAL_TITLE }}</td>
@@ -292,7 +283,8 @@
                                         <ul>
                                             @if (count($materials[$i]->MaterialFile) == 1)
                                                 <li>
-                                                    <a href="{{ url("teacher/classroom/$course->COURSE_ID/download/material/" . $m->MaterialFile[0]->MATERIAL_FILE_PATH) }}">
+                                                    <a
+                                                        href="{{ url("teacher/classroom/$course->COURSE_ID/download/material/" . $m->MaterialFile[0]->MATERIAL_FILE_PATH) }}">
                                                         Download Materi
                                                     </a>
                                                 </li>
@@ -313,7 +305,7 @@
         <div class="tab-content">
 
 
-            <!-- Materi Modal -->
+            <!-- Tugas Modal -->
             <div id="tugas_modal" class="modal">
                 <div class="card">
                     <div class="card-header">

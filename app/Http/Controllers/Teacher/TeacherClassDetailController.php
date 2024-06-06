@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
+use App\Models\Material;
+use App\Models\MaterialFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class TeacherClassDetailController extends Controller
 {
@@ -14,7 +18,7 @@ class TeacherClassDetailController extends Controller
         $teacher = Auth::guard('teacher_guard')->user();
 
         $course = $teacher->Course()->find($req->course_id);
-        if(!$course) return redirect("teacher/classroom")->with("msg", "Page Not Found!");
+        if(!$course) return redirect("teacher/classroom")->with("notification", "Page Not Found!");
 
         $students = $course->Student()->wherePivot("IS_FINISHED", 0)->get();
         $materials = $course->Material()->get();
@@ -28,7 +32,7 @@ class TeacherClassDetailController extends Controller
         $cid = $req->course_id;
 
         $course = Course::find($cid);
-        if(!$course) return redirect("teacher/classroom")->with("msg", "Page Not Found!");
+        if(!$course) return redirect("teacher/classroom")->with("notification", "Page Not Found!");
 
         $req->validate([
             "materialfile"  => "file",
@@ -69,7 +73,7 @@ class TeacherClassDetailController extends Controller
             $file->storeAs($foldername, $filename, "local");
         }
 
-        return redirect("teacher/classroom/$cid")->with("msg", "Berhasil menambahkan materi");
+        return redirect("teacher/classroom/$cid")->with("notification", "Berhasil menambahkan materi");
     }
 
     public function download_material(Request $req) {
