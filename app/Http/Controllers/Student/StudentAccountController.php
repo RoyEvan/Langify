@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -58,6 +59,30 @@ class StudentAccountController extends Controller
 
     }
 
+
+    public function join_class(Request $req)
+    {
+
+
+        $req->validate([
+            "COURSE_ID" => 'required',
+        ], [], [
+            "COURSE_ID" => "Class Code"
+        ]);
+
+        $student = Student::find(Auth::guard('student_guard')->user()->STUDENT_ID);
+        $course = Course::find($req->COURSE_ID);
+        $is_finished = 0;
+
+        // ADD
+        $result = $student->Course()->attach($course, ['IS_FINISHED' =>  $is_finished]);
+
+
+        return redirect('student/account_settings')->with('notification', 'Woohoo! Its a success!');
+
+
+
+    }
 
 
 
