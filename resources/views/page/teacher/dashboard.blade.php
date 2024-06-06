@@ -63,7 +63,7 @@
         <section class="scroll-card-list">
             @foreach ($course as $c )
                 @foreach ($assign as $a )
-                    @if ($c->COURSE_ID = $a->COURSE_ID)
+                    @if ($c->COURSE_ID == $a->COURSE_ID)
                         <article class="card">
                             <div class="card-header">
                                 <span class="tag">Tugas</span>
