@@ -50,22 +50,22 @@
             @foreach ($materials as $m)
                 <div class="card">
                     <div class="card-header space-between">
-                        <h3>{{ $m->MATERIAL_TITLE }} telah selesai</h3>
-                        <h4 class="tag bg-success"><i class="bi bi-check"></i>Hadir</h4>
+                        <h3>{{ $m->MATERIAL_TITLE }}</h3>
+                        {{-- <h4 class="tag bg-success"><i class="bi bi-check"></i>Hadir</h4> --}}
                     </div>
                     <div class="card-body">
                         <p>{{ $m->MATERIAL_DESC }}</p>
                     </div>
                     <div class="card-footer space-between">
-                        <div class="flex-row">
+                        {{-- <div class="flex-row">
                             <img src="{{ asset('assets/img/WP62.png') }}" alt="">
                             <p>Budi Meresapi S.epeda</p>
-                        </div>
+                        </div> --}}
                         <span><i class="bi bi-calendar-event"></i>12 Februari 2012 at 24:00</span>
                     </div>
                 </div>
             @endforeach
-            <div class="card">
+            {{-- <div class="card">
                 <div class="card-header space-between">
                     <h3>Materi</h3>
                 </div>
@@ -115,12 +115,12 @@
                     </div>
                     <span><i class="bi bi-calendar-event"></i>12 Februari 2012 at 24:00</span>
                 </div>
-            </div>
+            </div> --}}
         </div>
 
         <!-- Daftar Mahasiswa -->
 
-        <div class="tab-content active">
+        <div class="tab-content">
             <div class="card">
                 <div class="card-body">
                     <table>
@@ -169,6 +169,7 @@
 
         <!-- Presensi -->
         {{-- <div class="tab-content">
+
 						<div class="card">
 								<div class="card-body">
 										<table>
