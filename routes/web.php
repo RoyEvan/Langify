@@ -41,7 +41,7 @@ Route::prefix("student")->middleware(['CekRole:student'])->group(function () {
 
     Route::get('/classroom', [StudentClassroomController::class, "classroom"]);
     Route::get('/classroom/{course_id}', [StudentClassDetailController::class, "class_detail"]);
-    Route::get('/classroom/{course_id}/download/material/{file_id}', [StudentClassroomController::class, "classroom"]);
+    Route::get('/classroom/{course_id}/download/material/{file_id}', [StudentClassroomController::class, "download_material"]);
 
     Route::get('/account_settings', [StudentAccountController::class, "account_settings"]);
     Route::get('/account_settings/update', [StudentAccountController::class, "updateSetting"]);

@@ -197,7 +197,7 @@
                                             @if (count($materials[$i]->MaterialFile) == 1)
                                                 <li>
                                                     <a
-                                                        href="{{ url("student/classroom/$course->COURSE_ID/download/material/" . $m->MaterialFile[0]->MATERIAL_FILE_PATH) }}">
+                                                        href="{{ url("student/classroom/$course->COURSE_ID/download/material/" . $materials[$i]->MaterialFile[0]->MATERIAL_FILE_PATH) }}">
                                                         Download Materi
                                                     </a>
                                                 </li>
