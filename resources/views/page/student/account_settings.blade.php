@@ -146,16 +146,20 @@
                     <h1>Become A Teacher</h1>
                 </div>
                 <div class="card-body">
-                    <form action="">
-                        <div class="input-group">
+                    <form action="account_settings/become_teacher" method="POST">
+                        @csrf
+                        <div class="input-group @error('ACCESS_CODE') input-danger @enderror">
                             <label for="">Access Code</label>
                             <div class="input-text-icon">
                                 <i class="bi bi-hash"></i>
-                                <input type="text" name="" id="" placeholder="Access Code"
+                                <input type="password" name="ACCESS_CODE" id="" placeholder="Access Code"
                                     value="">
                             </div>
+                            @error('ACCESS_CODE')
+                                <p>{{ $message }}</p>
+                            @enderror
                         </div>
-                        <button>Be a Teacher</button>
+                        <button type="submit">Be a Teacher</button>
                     </form>
 
                 </div>

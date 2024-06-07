@@ -46,6 +46,7 @@ Route::prefix("student")->middleware(['CekRole:student'])->group(function () {
     Route::get('/account_settings', [StudentAccountController::class, "account_settings"]);
     Route::get('/account_settings/update', [StudentAccountController::class, "updateSetting"]);
     Route::post('/account_settings/join_class', [StudentAccountController::class, "join_class"]);
+    Route::post('/account_settings/become_teacher', [StudentAccountController::class, "become_teacher"]);
 
     Route::get('/assignment', [StudentAssignmentController::class, "assignment"]);
 });

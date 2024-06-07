@@ -54,6 +54,21 @@ body {
     backdrop-filter: invert(100%) hue-rotate(160deg) brightness(32%);
 }
 
+.notification {
+    /* margin: 16px 24px 8px; */
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--accent);
+    color: var(--text100);
+    border-radius: 4px;
+}
+
+.notification span {
+    padding: 4px 0;
+}
+
 .login-form {
     background-color: var(--background100);
     border: 2px solid var(--primary100);
