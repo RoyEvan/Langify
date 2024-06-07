@@ -24,13 +24,17 @@ class Assignment extends Model
         'DEADLINE'
     ];
 
+    // public function getFormatedDate(){
+    //     return $this->DEADLINE->format('d.m.y');
+    // }
+
     public function Course() {
         return $this->belongsTo(Course::class, 'COURSE_ID', 'COURSE_ID');
     }
 
     public function Student() {
         return $this->belongsToMany(Student::class, 'finished_assignments', 'ASSIGNMENT_ID', 'STUDENT_ID')
-            ->withPivot("SCORE");
+            ->withPivot("SCORE","CREATED_AT");
     }
 
     public function AssignmentFile() {
