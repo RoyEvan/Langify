@@ -19,7 +19,7 @@
     <h3>Kelas Aktif</h3>
     <section class="card-list">
 
-        @foreach ($courses as $c)
+        @forelse ($courses as $c)
             <article class="card">
                 <div class="card-header">
                     <img src="{{ asset("assets/icon/flags/$c->COURSE_NAME.png") }}" alt="">
@@ -45,7 +45,9 @@
                     <p><i class="bi bi-clock"></i>{{ $c->COURSE_LENGTH }} hours</p>
                 </div>
             </article>
-        @endforeach
+        @empty
+            
+        @endforelse
 
 
 

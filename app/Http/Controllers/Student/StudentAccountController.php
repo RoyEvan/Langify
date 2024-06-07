@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\Student;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 
 class StudentAccountController extends Controller
 {
@@ -38,9 +41,8 @@ class StudentAccountController extends Controller
         ]);
 
 
-        $studentLogin = Auth::guard('student_guard')->user();
 
-        $student = Student::find($studentLogin->STUDENT_ID);
+        $student = Auth::guard('student_guard')->user()->STUDENT_ID;
         $result = $student->update([
             "STUDENT_EMAIL" => $req->STUDENT_EMAIL,
             "STUDENT_NAME" => $req->STUDENT_NAME,
@@ -54,12 +56,73 @@ class StudentAccountController extends Controller
         } else {
             return redirect('student/account_settings')->with('notification', 'There is something wrong!');
         }
-
-
     }
 
 
+    public function join_class(Request $req)
+    {
+
+        // Langify reverse card : code teacher
+
+        $req->validate([
+            "COURSE_ID" => 'required',
+        ], [], [
+            "COURSE_ID" => "Class Code"
+        ]);
+
+        $student = Student::find(Auth::guard('student_guard')->user()->STUDENT_ID);
+        $course = Course::find($req->COURSE_ID);
+        $is_finished = 0;
+
+        // ADD
+        $result = $student->Course()->attach($course, ['IS_FINISHED' =>  $is_finished]);
+
+        return redirect('student/account_settings')->with('notification', 'Woohoo! Its a success!');
+    }
+
+    public function become_teacher(Request $req)
+    {
+        $req->validate([
+            "ACCESS_CODE" => 'required',
+        ], [], [
+            "ACCESS_CODE" => "Access Code",
+        ]);
 
 
 
+        if ($req->ACCESS_CODE == "Langify Reverse Card") {
+            $student = Auth::guard('student_guard')->user();
+
+
+            $prefix = 'T' . Date::now()->format('Y');
+            $lastId = Teacher::orderBy('TEACHER_ID', 'desc')->first()->TEACHER_ID;
+            $numericPart = (int) substr($lastId ?? '', strlen($prefix));
+            $newNumericPart = str_pad($numericPart + 1, 3, '0', STR_PAD_LEFT);
+            $newID = $prefix . $newNumericPart;
+
+
+            $result = Teacher::create([
+                "TEACHER_ID" => $newID,
+                "TEACHER_EMAIL" => $student->STUDENT_EMAIL,
+                "TEACHER_NAME" => $student->STUDENT_NAME,
+                "TEACHER_PASSWORD" => $student->STUDENT_PASSWORD,
+                "TEACHER_USERNAME" => $student->STUDENT_USERNAME,
+                "TEACHER_ADDRESS" => $student->STUDENT_ADDRESS,
+                "TEACHER_PHONE" => $student->STUDENT_PHONE,
+            ]);
+
+            $result = $student->delete();
+
+            if (Auth::guard('student_guard')->check()) {
+                Auth::guard('student_guard')->logout();
+            }
+
+            return redirect('login')->with('notification', "Great! You've been promoted to Minimum Wage.");
+        } else {
+            return redirect('student/account_settings')->with('notification', "Wrong Access Code!");
+        }
+
+
+
+    }
 }

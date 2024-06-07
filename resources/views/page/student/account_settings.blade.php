@@ -44,7 +44,7 @@
                 <h1>Profile Settings</h1>
             </div>
             <div class="card-body">
-                <form action="{{url('student/account_settings/update')}}" action="POST">
+                <form action="{{ url('student/account_settings/update') }}" action="POST">
                     <div class="input-group @error('STUDENT_NAME') input-danger @enderror">
                         <label for="">Name</label>
                         <div class="input-text-icon">
@@ -122,13 +122,17 @@
                     <h1>Join a Class</h1>
                 </div>
                 <div class="card-body">
-                    <form action="">
-                        <div class="input-group">
+                    <form action="{{ url('student/account_settings/join_class') }}" method="POST">
+                        @csrf
+                        <div class="input-group  @error('COURSE_ID') input-danger @enderror">
                             <label for="">Class Code</label>
                             <div class="input-text-icon">
                                 <i class="bi bi-hash"></i>
-                                <input type="text" name="" id="" placeholder="Code" value="">
+                                <input type="text" name="COURSE_ID" id="" placeholder="Code" value="">
                             </div>
+                            @error('COURSE_ID')
+                                <p>{{ $message }}</p>
+                            @enderror
                         </div>
                         <button>Join</button>
                     </form>
@@ -142,16 +146,20 @@
                     <h1>Become A Teacher</h1>
                 </div>
                 <div class="card-body">
-                    <form action="">
-                        <div class="input-group">
+                    <form action="account_settings/become_teacher" method="POST">
+                        @csrf
+                        <div class="input-group @error('ACCESS_CODE') input-danger @enderror">
                             <label for="">Access Code</label>
                             <div class="input-text-icon">
                                 <i class="bi bi-hash"></i>
-                                <input type="text" name="" id="" placeholder="Access Code"
+                                <input type="password" name="ACCESS_CODE" id="" placeholder="Access Code"
                                     value="">
                             </div>
+                            @error('ACCESS_CODE')
+                                <p>{{ $message }}</p>
+                            @enderror
                         </div>
-                        <button>Be a Teacher</button>
+                        <button type="submit">Be a Teacher</button>
                     </form>
 
                 </div>

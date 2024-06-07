@@ -923,12 +923,17 @@ footer {
 }
 
 @media (max-width: 992px) {
+    main {
+        min-height: 90vh;
+    }
+
     main:has(.scroll-card-list) {
         grid-template-columns: 1fr;
     }
 
     .modal {
         max-width: 80%;
+        min-width: 320px;
     }
 
     .header-card-list {
@@ -942,6 +947,7 @@ footer {
 
     .content {
         height: fit-content;
+        margin-top: 56px;
     }
 
     .sidebar {

@@ -49,7 +49,7 @@ class RegisterController extends Controller
         ]);
 
         if ($result) {
-            return redirect('login');
+            return redirect('login')->with('notification', "Register Success! Start your first journey.");
         } else {
             return redirect('register');
         }
