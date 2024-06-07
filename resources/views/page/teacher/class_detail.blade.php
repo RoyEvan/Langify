@@ -261,6 +261,7 @@
                                 <th>Pertemuan</th>
                                 <th>Nama File</th>
                                 <th>Deskripsi</th>
+                                <th>Url</th>
                                 <th>Action</th>
                             </tr>
                         <tbody>
@@ -283,6 +284,8 @@
                                             @endif
                                         </ul>
                                     </td>
+                                    <td><a href=""><button class="bg-danger" type="button">Delete</button></a></td>
+
                                 </tr>
                             @endfor
                         </tbody>

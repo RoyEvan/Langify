@@ -130,6 +130,9 @@ body {
     gap: 8px;
 }
 
+.grid-2 {
+    grid-column: span 2;
+}
 
 /* END HELPER */
 
@@ -209,7 +212,7 @@ form.card {
     gap: 0;
 }
 
-form.card .card-body{
+form.card .card-body {
     gap: 16px;
 }
 
@@ -593,6 +596,10 @@ button {
     font-family: 'Poppins', sans-serif;
 }
 
+a:has(button) {
+    text-decoration: none !important;
+}
+
 button:hover {
     color: var(--primary100);
     background-color: var(--text100);
@@ -845,7 +852,8 @@ main:has(.scroll-card-list) {
 }
 
 .desc-3-lines {
-    height: 4.2em;
+    height: fit-content;
+    max-height: 4.2em;
     line-height: 1.4em;
     overflow: hidden;
 }
