@@ -261,7 +261,7 @@
                                 <th>Pertemuan</th>
                                 <th>Nama File</th>
                                 <th>Deskripsi</th>
-                                <th>Url</th>
+                                <th>File</th>
                                 <th>Action</th>
                             </tr>
                         <tbody>
@@ -275,16 +275,16 @@
                                             @if (count($materials[$i]->MaterialFile) == 1)
                                                 <li>
                                                     <a
-                                                        href="{{ url("teacher/classroom/$course->COURSE_ID/download/material/" . $m->MaterialFile[0]->MATERIAL_FILE_PATH) }}">
+                                                        href="{{ url("teacher/classroom/$course->COURSE_ID/download/material/" . $materials[$i]->MaterialFile[0]->MATERIAL_FILE_PATH) }}">
                                                         Download Materi
                                                     </a>
                                                 </li>
                                             @else
-                                                <li>No file was shared</li>
+                                                <li>Tidak ada File</li>
                                             @endif
                                         </ul>
                                     </td>
-                                    <td><a href=""><button class="bg-danger" type="button">Delete</button></a></td>
+                                    <td><a href="{{ url("teacher/classroom/$course->COURSE_ID/delete/material/" . $m->MATERIAL_ID) }}"><button class="bg-danger" type="button">Delete</button></a></td>
 
                                 </tr>
                             @endfor

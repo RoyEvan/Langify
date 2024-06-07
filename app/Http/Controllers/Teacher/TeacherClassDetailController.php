@@ -12,8 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 class TeacherClassDetailController extends Controller
 {
-    public function class_detail(Request $req)
-    {
+    public function class_detail(Request $req) {
         $active_route = "classroom";
         $teacher = Auth::guard('teacher_guard')->user();
 
@@ -74,6 +73,24 @@ class TeacherClassDetailController extends Controller
         }
 
         return redirect("teacher/classroom/$cid")->with("notification", "Berhasil menambahkan materi");
+    }
+
+    public function delete_material(Request $req) {
+        $cid = $req->course_id;
+        $mid = $req->material_id;
+
+
+        $materialfile = MaterialFile::where("MATERIAL_ID", '=', $mid)->first();
+        if($materialfile) {
+            Storage::disk("local")->delete("materials/" . $materialfile->MATERIAL_FILE_PATH);
+            MaterialFile::where("MATERIAL_ID", '=', $mid)->delete();
+        }
+
+
+        $material = Material::find($mid);
+        $material->delete();
+
+        return redirect("teacher/classroom/$cid")->with("notification", "Berhasil menghapus materi");
     }
 
     public function download_material(Request $req) {

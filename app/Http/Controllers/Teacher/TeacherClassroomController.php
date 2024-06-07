@@ -29,15 +29,7 @@ class TeacherClassroomController extends Controller
             }
 
             $students = $course->Student()->wherePivot("IS_FINISHED", 0)->get();
-
-
             $materials = $course->Material()->get();
-
-            // foreach($materials as $m) {
-            //     dump($m->MaterialFile);
-            // }
-            // dd("..");
-
             $files = Storage::disk("local")->files("assignments");
 
             return view("page.teacher.class_detail", compact("active_route", "course", "materials", "students", "files"));
