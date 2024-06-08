@@ -19,10 +19,27 @@ class TeacherDashboardController extends Controller
         $teacherLogin = Auth::guard('teacher_guard')->user();
         $teacher = Teacher::find($teacherLogin->TEACHER_ID);
         $course = $teacher->Course()->get();
+<<<<<<< HEAD
         $assign = Assignment::where('DEADLINE', '>=',  $today)->get();
         $materi = Material::get();
         $active_route = "dashboard";
         //dd($assign->COURSE_ID);
         return view('page.teacher.dashboard', compact('active_route','teacher','course','assign','materi','today'));
+=======
+        $assign = Assignment::get();
+        $active_route = "dashboard";
+
+
+        $materials = [];
+        $material_files = [];
+        foreach($course as $c) {
+            foreach($c->Material()->limit(2)->get() as $m) {
+                $materials[] = $m;
+
+                if(count($m->MaterialFile) > 0) $material_files[] = $m->MaterialFile()->first();
+            }
+        }
+        return view('page.teacher.dashboard', compact('active_route','teacher','course','assign','materials','material_files'));
+>>>>>>> 6fc0e8bc6c0214d9bb2900e87aee225dbd7cf46f
     }
 }

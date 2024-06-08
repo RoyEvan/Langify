@@ -17,35 +17,128 @@
 
 @section('content')
     <h3>Kelas Aktif</h3>
+
+
+
     <section class="card-list">
 
-        @foreach ($courses as $c)
+        <div class="card-list grid-2">
+            @forelse ($courses as $c)
+                <article class="card">
+                    <div class="card-header">
+                        <img src="{{ asset("assets/icon/flags/$c->COURSE_NAME.png") }}" alt="">
+                        <div class="level-badge">
+                            {{ $c->COURSE_LEVEL }}
+                        </div>
+                        {{-- <span class="tag">100 SKS</span>
+                    <h1>Bahasa Sapi</h1> --}}
+                    </div>
+                    <div class="card-body">
+                        <div class="icon-text">
+                            <i class="bi bi-mortarboard"></i>
+                            {{ $c->Teacher->TEACHER_NAME }}
+                        </div>
+                        <div class="icon-text">
+                            <i class="bi bi-person-video3"></i>
+                            <a href="{{ url("teacher/classroom/$c->COURSE_ID") }}">Lihat Detail Kelas</a>
+                        </div>
+                    </div>
+                    <div class="card-footer space-between">
+                        <p><i class="bi bi-geo-alt"></i>{{ $c->COURSE_CLASS }}</p>
+                        <p><i class="bi bi-calendar-event"></i>{{ $c->COURSE_DAY }}</p>
+                        <p><i class="bi bi-clock"></i>{{ $c->COURSE_LENGTH }} hours</p>
+                    </div>
+                </article>
+            @empty
+            @endforelse
+        </div>
+
+
+        <div class="card-list">
             <article class="card">
                 <div class="card-header">
-                    <img src="{{ asset("assets/icon/flags/$c->COURSE_NAME.png") }}" alt="">
-                    <div class="level-badge">
-                        {{ $c->COURSE_LEVEL }}
-                    </div>
-                    {{-- <span class="tag">100 SKS</span>
-                    <h1>Bahasa Sapi</h1> --}}
+                    <h1>Create Class</h1>
                 </div>
+
+
                 <div class="card-body">
-                    <div class="icon-text">
-                        <i class="bi bi-mortarboard"></i>
-                        {{ $c->Teacher->TEACHER_NAME }}
-                    </div>
-                    <div class="icon-text">
-                        <i class="bi bi-person-video3"></i>
-                        <a href="{{ url("teacher/classroom/$c->COURSE_ID") }}">Lihat Detail Kelas</a>
-                    </div>
-                </div>
-                <div class="card-footer space-between">
-                    <p><i class="bi bi-geo-alt"></i>{{ $c->COURSE_CLASS }}</p>
-                    <p><i class="bi bi-calendar-event"></i>{{ $c->COURSE_DAY }}</p>
-                    <p><i class="bi bi-clock"></i>{{ $c->COURSE_LENGTH }} hours</p>
+                    <form action="{{ url('teacher/add/classroom') }}" method="post">
+                        @csrf
+                        <div class="input-group @error('COURSE_NAME') input-danger @enderror">
+                            <label for="">Course Name</label>
+                            <div class="input-text-icon">
+                                <i class="bi bi-quote"></i>
+                                <input type="text" name="COURSE_NAME" id="" placeholder="Course Name" value="">
+                            </div>
+                            @error('COURSE_NAME')
+                                <p>{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="input-group @error('COURSE_DESC') input-danger @enderror">
+                            <label for="">Course Description</label>
+                            <div class="input-text-icon">
+                                <i class="bi bi-text-paragraph"></i>
+                                <input type="text" name="COURSE_DESC" id="" placeholder="Course Desc"
+                                    value="">
+                            </div>
+                            @error('COURSE_DESC')
+                                <p>{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="input-group @error('COURSE_LEVEL') input-danger @enderror">
+                            <label for="">Course Level</label>
+                            <div class="input-text-icon">
+                                <i class="bi bi-suit-diamond"></i>
+                                <input type="number" min="1" max="4" name="COURSE_LEVEL" id="" placeholder="Course Level"
+                                    value="">
+                            </div>
+                            @error('COURSE_LEVEL')
+                                <p>{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="input-group @error('COURSE_CLASS') input-danger @enderror">
+                            <label for="">Course Class</label>
+                            <div class="input-text-icon">
+                                <i class="bi bi-geo-alt"></i>
+                                <input type="text" name="COURSE_CLASS" id="" placeholder="Course Day"
+                                    value="">
+                            </div>
+                            @error('COURSE_CLASS')
+                                <p>{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="input-group @error('COURSE_DAY') input-danger @enderror">
+                            <label for="">Course Day</label>
+                            <div class="input-text-icon">
+                                <i class="bi bi-calendar2-event"></i>
+                                <input type="text" name="COURSE_DAY" id="" placeholder="Course Day"
+                                    value="">
+                            </div>
+                            @error('COURSE_DAY')
+                                <p>{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="input-group @error('COURSE_LENGTH') input-danger @enderror">
+                            <label for="">Course Length</label>
+                            <div class="input-text-icon">
+                                <i class="bi bi-clock"></i>
+                                <input type="text" name="COURSE_LENGTH" id="" placeholder="Course Length"
+                                    value="">
+                            </div>
+                            @error('COURSE_LENGTH')
+                                <p>{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <button type="submit">Create</button>
+                    </form>
+
+
                 </div>
             </article>
-        @endforeach
+        </div>
+
+
 
 
 

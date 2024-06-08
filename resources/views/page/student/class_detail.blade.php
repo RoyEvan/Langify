@@ -24,11 +24,11 @@
             <p>{{ $course->COURSE_DESC }}</p>
         </div>
         <div class="card-footer">
-            <p><i class="bi bi-people"></i>4 People</p>
+            <p><i class="bi bi-people"></i>{{ count($students) }} People</p>
             <p><i class="bi bi-mortarboard"></i>{{ $course->Teacher->TEACHER_NAME }}</p>
             <p><i class="bi bi-geo-alt"></i>{{ $course->COURSE_CLASS }}</p>
             <p><i class="bi bi-calendar-event"></i>{{ $course->COURSE_DAY }}</p>
-            <p><i class="bi bi-clock"></i>{{ $course->COURSE_LENGTH }}</p>
+            <p><i class="bi bi-clock"></i>{{ $course->COURSE_LENGTH }} hours</p>
         </div>
     </header>
 
@@ -118,62 +118,25 @@
         </div>
 
         <!-- Daftar Mahasiswa -->
+
         <div class="tab-content">
-
-            <div class="tabbed-table">
-
-                <div id="student-tabs-nav" class="tabs-nav-box year-nav-list card">
-                    <button class="tabs-item">Tingkat 1</button>
-                    <button class="tabs-item active">Tingkat 2</button>
-                </div>
-
-                <div id="student-tabs-content" class="tabs-content-box">
-                    <div class="tab-content">
-                        <div class="card">
-                            <div class="card-body">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>NRP</th>
-                                            <th>Nama</th>
-                                        </tr>
-                                    <tbody>
-                                        <tr>
-                                            <td>123456789</td>
-                                            <td>Budi Meresapi S.epeda</td>
-                                        </tr>
-                                        <tr>
-                                            <td>123456789</td>
-                                            <td>Budi Meresapi S.epeda</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-content active">
-                        <div class="card">
-                            <div class="card-body">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>NRP</th>
-                                            <th>Nama</th>
-                                        </tr>
-                                    <tbody>
-                                        <tr>
-                                            <td>123456789</td>
-                                            <td>Budi Meresapi S.epeda</td>
-                                        </tr>
-                                        <tr>
-                                            <td>123456789</td>
-                                            <td>Budi Meresapi S.epeda</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+            <div class="card">
+                <div class="card-body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>NRP</th>
+                                <th>Nama</th>
+                            </tr>
+                        <tbody>
+                            @foreach ($students as $s)
+                                <tr>
+                                    <td>{{ $s->STUDENT_ID }}</td>
+                                    <td>{{ $s->STUDENT_NAME }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -213,49 +176,6 @@
         <!-- Materi -->
         <div class="tab-content">
 
-
-            <!-- Materi Modal -->
-            <div id="materi_modal" class="modal">
-                <div class="card">
-                    <div class="card-header">
-                        <h1>Tambah Materi</h1>
-                    </div>
-                    <div class="card-body">
-                        <form action="">
-
-                            <div class="input-group">
-                                <label for="">Pertemuan</label>
-                                <div class="input-text-icon">
-                                    <input type="text" name="" id="" placeholder="Username">
-                                </div>
-                            </div>
-                            <div class="input-group">
-                                <label for="">Nama File</label>
-                                <div class="input-text-icon">
-                                    <input type="text" name="" id="" placeholder="Username">
-                                </div>
-                            </div>
-                            <div class="input-group">
-                                <label for="">Deskripsi</label>
-                                <div class="input-text-icon">
-                                    <input type="text" name="" id="" placeholder="Username">
-                                </div>
-                            </div>
-
-                        </form>
-
-                    </div>
-                    <div class="card-footer pos-child-right">
-                        <button target-modal="materi_modal" class="button-close-modal bg-danger">Close</button>
-                        <button target-modal="materi_modal" class="button-close-modal">Tambah</button>
-                    </div>
-                </div>
-            </div>
-
-            <button target-modal="materi_modal" class="button-open-modal mb-16 pos-self-right"><i
-                    class="bi bi-plus-circle"></i>Tambah Materi</button>
-            <!-- End Materi Modal  -->
-
             <div class="card">
                 <div class="card-body">
                     <table class="file-pertemuan-table">
@@ -267,40 +187,27 @@
                                 <th>Action</th>
                             </tr>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Ini adalah nama file 1</td>
-                                <td>Deksripsi dari file ini adalah dokumen pertemuan 1</td>
-                                <td>
-                                    <ul>
-                                        <li><a href="">Info Materi</a></li>
-                                        <li><a href="">Download Materi</a></li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Ini adalah nama file 1</td>
-                                <td>Deksripsi dari file ini adalah dokumen pertemuan 1</td>
-                                <td>
-                                    <ul>
-                                        <li><a href="">Info Materi</a></li>
-                                        <li><a href="">Download Materi</a></li>
-                                    </ul>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Ini adalah nama file 1</td>
-                                <td>Deksripsi dari file ini adalah dokumen pertemuan 1</td>
-                                <td>
-                                    <ul>
-                                        <li><a href="">Info Materi</a></li>
-                                        <li><a href="">Download Materi</a></li>
-                                    </ul>
-                                </td>
-                            </tr>
-
+                            @for ($i = 0; $i < count($materials); $i++)
+                                <tr>
+                                    <td>{{ 1 + $i }}</td>
+                                    <td>{{ $materials[$i]->MATERIAL_TITLE }}</td>
+                                    <td>{{ $materials[$i]->MATERIAL_DESC }}</td>
+                                    <td>
+                                        <ul>
+                                            @if (count($materials[$i]->MaterialFile) == 1)
+                                                <li>
+                                                    <a
+                                                        href="{{ url("student/classroom/$course->COURSE_ID/download/material/" . $materials[$i]->MaterialFile[0]->MATERIAL_FILE_PATH) }}">
+                                                        Download Materi
+                                                    </a>
+                                                </li>
+                                            @else
+                                                <li>No file was shared</li>
+                                            @endif
+                                        </ul>
+                                    </td>
+                                </tr>
+                            @endfor
                         </tbody>
                     </table>
                 </div>

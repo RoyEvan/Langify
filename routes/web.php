@@ -39,10 +39,14 @@ Route::prefix("register")->group(function () {
 Route::prefix("student")->middleware(['CekRole:student'])->group(function () {
     Route::get('/', [StudentDashboardController::class, "dashboard"]);
 
-    Route::get('/classroom/{course_id?}', [StudentClassroomController::class, "classroom"]);
+    Route::get('/classroom', [StudentClassroomController::class, "classroom"]);
+    Route::get('/classroom/{course_id}', [StudentClassDetailController::class, "class_detail"]);
+    Route::get('/classroom/{course_id}/download/material/{file_id}', [StudentClassroomController::class, "download_material"]);
 
     Route::get('/account_settings', [StudentAccountController::class, "account_settings"]);
     Route::get('/account_settings/update', [StudentAccountController::class, "updateSetting"]);
+    Route::post('/account_settings/join_class', [StudentAccountController::class, "join_class"]);
+    Route::post('/account_settings/become_teacher', [StudentAccountController::class, "become_teacher"]);
 
     Route::get('/assignment/{assignment_id?}', [StudentAssignmentController::class, "assignment"]);
     //Route::get('/assignment', [StudentAssignmentController::class, "assignment"]);
@@ -51,16 +55,24 @@ Route::prefix("student")->middleware(['CekRole:student'])->group(function () {
 Route::prefix("teacher")->middleware(['CekRole:teacher'])->group(function () {
     Route::get('/', [TeacherDashboardController::class, "dashboard"]);
 
+
+    Route::post('/add/classroom', [TeacherClassroomController::class, "create_classroom"]);
+
     Route::get('/classroom/{course_id?}', [TeacherClassroomController::class, "classroom"]);
-    Route::post('/classroom/{course_id}/upload/material', [TeacherClassroomController::class, "upload_material"]);
-    Route::get('/classroom/{course_id}/download/material/{file_id}', [TeacherClassroomController::class, "download_material"]);
+    Route::post('/classroom/{course_id}/upload/material', [TeacherClassDetailController::class, "upload_material"]);
+    Route::get('/classroom/{course_id}/delete/material/{material_id}', [TeacherClassDetailController::class, "delete_material"]);
+    Route::get('/classroom/{course_id}/download/material/{file_id}', [TeacherClassDetailController::class, "download_material"]);
 
     Route::get('/account_settings', [TeacherAccountController::class, "account_settings"]);
     Route::get('/account_settings/update', [TeacherAccountController::class, "updateSetting"]);
 
 
+<<<<<<< HEAD
     Route::get('/assignment/{assignment_id?}', [TeacherAssignmentController::class, "assignment"]);
     Route::get('/class_detail', [TeacherClassDetailController::class, "class_detail"]);
+=======
+    Route::get('/assignment', [TeacherAssignmentController::class, "assignment"]);
+>>>>>>> 6fc0e8bc6c0214d9bb2900e87aee225dbd7cf46f
 });
 
 Route::prefix("admin")->group(function () {

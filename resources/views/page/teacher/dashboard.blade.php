@@ -117,22 +117,29 @@
 
 
         <section class="scroll-card-list">
-            @foreach ($course as $c )
-                @foreach ($materi as $m )
-                    <article class="card">
-                        <div class="card-header">
-                            <span class="tag">Bhs. {{$c->COURSE_NAME}}</span>
-                            <h3>Pertemuan 432</h3>
-                        </div>
-                        <div class="card-body">
-                            <h2>{{$m->MATERIAL_TITLE}}</h2>
-                            <p class="desc-3-lines">{{$m->MATERIAL_DESC}}</p>
-                        </div>
-                        <div class="card-footer">
-                            <div class="icon-text"><i class="bi bi-download"></i><a href="">Download File (mp3)</a></div>
-                        </div>
-                    </article>
-                @endforeach
+            @foreach ($materials as $m)
+                <article class="card">
+                    <div class="card-header">
+                        <span class="tag">{{ $m->Course->COURSE_NAME }}</span>
+                        <h3>{{ $m->MATERIAL_TITLE }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <h2>{{ $m->MATERIAL_TITLE }}</h2>
+                        <p class="desc-3-lines">{{ $m->MATERIAL_DESC }}</p>
+                    </div>
+
+                    @foreach ($material_files as $file)
+                        @if ($file->MATERIAL_ID == $m->MATERIAL_ID)
+                            <div class="card-footer">
+                                <div class="icon-text"><i class="bi bi-download"></i><a href="{{ url("student/classroom/".$m->Course->COURSE_ID."/download/material/$file->MATERIAL_FILE_PATH") }}">Download File Materi</a></div>
+                            </div>
+                        @else
+                            <div class="card-footer">
+                                <div class="icon-text"><p>Tidak ada file</p></div>
+                            </div>
+                        @endif
+                    @endforeach
+                </article>
             @endforeach
         </section>
     </section>

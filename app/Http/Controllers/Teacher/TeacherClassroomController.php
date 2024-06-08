@@ -14,31 +14,26 @@ use Illuminate\Support\Facades\Storage;
 
 class TeacherClassroomController extends Controller
 {
+
+
     public function classroom(Request $req)
     {
         $active_route = "classroom";
 
-        if($req->course_id) {
+        if ($req->course_id) {
 
             $course = Auth::guard('teacher_guard')->user()->Course()->find($req->course_id);
             // $course = Course::find($req->course_id);
-            if(!$course) return redirect("teacher/classroom")->with("msg", "Page Not Found!");
+            if (!$course) {
+                abort(404);
+            }
 
             $students = $course->Student()->wherePivot("IS_FINISHED", 0)->get();
-
-
             $materials = $course->Material()->get();
-
-            // foreach($materials as $m) {
-            //     dump($m->MaterialFile);
-            // }
-            // dd("..");
-
             $files = Storage::disk("local")->files("assignments");
 
             return view("page.teacher.class_detail", compact("active_route", "course", "materials", "students", "files"));
-        }
-        else {
+        } else {
             $courses = Auth::guard('teacher_guard')->user()->Course()->get();
             $teacher = Auth::guard('teacher_guard');
 
@@ -46,55 +41,43 @@ class TeacherClassroomController extends Controller
         }
     }
 
-    public function upload_material(Request $req) {
-        $cid = $req->course_id;
-
-        $course = Course::find($cid);
-        if(!$course) return redirect("teacher/classroom")->with("msg", "Page Not Found!");
-
+    public function create_classroom(Request $req)
+    {
         $req->validate([
-            "materialfile"  => "file",
-            "materialtitle" => "required|string|min:6|max:32",
-            "materialdesc"  => "required|string|max:255"
-        ],[
-            "materialfile.file"  => "File tidak valid",
-            "materialtitle.required" => "Judul materi wajib diisi!",
-            "materialtitle.string" => "Judul Materi hanya boleh string!",
-            "materialtitle.min" => "Panjang minimal judul materi yaitu 6 karakter!",
-            "materialtitle.max" => "Panjang maksimal judul materi yaitu 32 karakter!",
-            "materialdesc.required" => "Deskripsi materi wajib diisi!",
-            "materialdesc.string" => "Deskripsi materi hanya boleh string!",
-            "materialdesc.max" => "Panjang maksimal deskripsi materi yaitu 255 karakter!"
-        ],[]);
+            "COURSE_NAME" => 'required',
+            "COURSE_DESC" => 'required',
+            "COURSE_LEVEL" => 'required',
+            "COURSE_CLASS" => 'required',
+            "COURSE_DAY" => 'required',
+            "COURSE_LENGTH" => 'required',
+        ], [], []);
 
 
-        $material = new Material([
-            'COURSE_ID' => $cid,
-            'MATERIAL_TITLE' => $req->materialtitle,
-            'MATERIAL_DESC' => $req->materialdesc
+        // Create New ID
+        $prefix = 'C';
+        $lastId = Course::orderBy('COURSE_ID', 'desc')->first()->COURSE_ID;
+
+
+        $numericPart = (int) substr($lastId ?? '', strlen($prefix));
+        $newNumericPart = str_pad($numericPart + 1, 4, '0', STR_PAD_LEFT);
+        $newID = $prefix . $newNumericPart;
+
+        // Insert New Account as Studen
+        $result = Course::create([
+            "COURSE_ID" => $newID,
+            "TEACHER_ID" => Auth::guard('teacher_guard')->user()->TEACHER_ID,
+            "COURSE_NAME" => $req->COURSE_NAME,
+            "COURSE_DESC" => $req->COURSE_DESC,
+            "COURSE_LEVEL" => $req->COURSE_LEVEL,
+            "COURSE_CLASS" => $req->COURSE_CLASS,
+            "COURSE_DAY" => $req->COURSE_DAY,
+            "COURSE_LENGTH" => $req->COURSE_LENGTH,
         ]);
-        $material->save();
 
-
-        $file = $req->file("materialfile");
-        if($file) {
-            $mid = Material::orderBy("created_at", "desc")->first()->MATERIAL_ID;
-            $filename = $mid . "_" . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . "." . $file->getClientOriginalExtension();
-            $foldername = "materials";
-
-            $materialFile = new MaterialFile([
-                'MATERIAL_ID' => $material->MATERIAL_ID,
-                'MATERIAL_FILE_PATH' => "$filename"
-            ]);
-            $materialFile->save();
-
-            $file->storeAs($foldername, $filename, "local");
+        if ($result) {
+            return redirect('teacher/classroom')->with('notification', "You have new class to teach!");
+        } else {
+            return redirect('teacher/classroom')->with('notification', "There is something wrong!");
         }
-
-        return redirect("teacher/classroom/$cid")->with("msg", "Berhasil menambahkan materi");
-    }
-
-    public function download_material(Request $req) {
-        return Storage::disk("local")->download("materials/$req->file_id");;
     }
 }
