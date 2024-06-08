@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\Material;
 use App\Models\MaterialFile;
 use App\Models\Teacher;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -32,7 +33,10 @@ class TeacherClassroomController extends Controller
             $materials = $course->Material()->get();
             $files = Storage::disk("local")->files("assignments");
 
-            return view("page.teacher.class_detail", compact("active_route", "course", "materials", "students", "files"));
+            $assign = Assignment::withTrashed()->get();
+            $student = $course->Student()->wherePivot("IS_FINISHED", 0)->get();
+            //$studentDone = $assign->Student()->get();
+            return view("page.teacher.class_detail", compact("active_route", "course", "materials", "students", "files","assign","student"));
         } else {
             $courses = Auth::guard('teacher_guard')->user()->Course()->get();
             $teacher = Auth::guard('teacher_guard');

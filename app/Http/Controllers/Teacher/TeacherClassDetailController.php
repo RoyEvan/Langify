@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
+use App\Models\Assignment;
 use App\Models\Course;
 use App\Models\Material;
 use App\Models\MaterialFile;
@@ -16,9 +17,6 @@ class TeacherClassDetailController extends Controller
         $active_route = "classroom";
         $teacher = Auth::guard('teacher_guard')->user();
 
-<<<<<<< HEAD
-        return view('page.teacher.class_detail', compact('active_route'));
-=======
         $course = $teacher->Course()->find($req->course_id);
         if(!$course) return redirect("teacher/classroom")->with("notification", "Page Not Found!");
 
@@ -28,6 +26,36 @@ class TeacherClassDetailController extends Controller
         $files = Storage::disk("local")->files("materials");
 
         return view("page.teacher.class_detail", compact("active_route", "course", "materials", "students", "files"));
+    }
+
+    public function add_tugas(Request $req){
+        $cid = $req->course_id;
+
+        $course = Course::find($cid);
+        if(!$course) return redirect("teacher/classroom")->with("notification", "Page Not Found!");
+        $req->validate([
+            "assignment_title" => "required|string",
+            "assignment_desc" => "required|string",
+            "deadline" => "required|date"
+        ],[
+            "assignment_title.required" => "Judul tugas wajib diisi!!",
+            "assignment_title.string" => "Judul tugas hanya boleh string/varchar!!",
+            "assignment_desc.required" => "Deskripsi tugas wajib diisi!!",
+            "assignment_desc.string" => "Judul tugas hanya boleh string/varchar!!",
+            "deadline.required" => "Deadline tugas wajib diisi!!",
+            "deadline.date" => "Deadline tugas hanya boleh Tanggal!!",
+
+        ],[]);
+
+        $assignment = new Assignment([
+            'COURSE_ID' => $cid,
+            'ASSIGNMENT_TITLE' => $req->assignment_title,
+            'ASSIGNMENT_DESC' => $req->assignment_desc,
+            'DEADLINE' => $req->deadline,
+        ]);
+        $assignment->save();
+
+        return redirect("teacher/classroom/$cid")->with("notification", "Berhasil menambahkan tugas");
     }
 
     public function upload_material(Request $req) {
@@ -98,6 +126,5 @@ class TeacherClassDetailController extends Controller
 
     public function download_material(Request $req) {
         return Storage::disk("local")->download("materials/$req->file_id");;
->>>>>>> 6fc0e8bc6c0214d9bb2900e87aee225dbd7cf46f
     }
 }
