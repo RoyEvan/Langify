@@ -34,12 +34,20 @@
         </div>
     </header>
 
-    <div class="alert-box">
-        <div class="alert">
-            <h3>Waktu tersisa 3 jam lagi</h3>
-            <p>Segera kumpulkan Tugas anda!</p>
+    @if ($today->isSameDay($assign->DEADLINE))
+        <div class="alert-box">
+            <div class="alert">
+            @php
+                $deadline = strtotime($assign->DEADLINE);
+                $todays = strtotime($today);
+                $diff = abs($deadline - $todays)/3600;
+            @endphp
+                <h3>Waktu tersisa {{ $diff }} jam lagi</h3>
+                <p>Segera kumpulkan Tugas anda!</p>
+            </div>
         </div>
-    </div>
+    @endif
+
 
     <div class="assignment-submit-box">
         <div class="assignment-action">

@@ -48,8 +48,8 @@ Route::prefix("student")->middleware(['CekRole:student'])->group(function () {
     Route::post('/account_settings/join_class', [StudentAccountController::class, "join_class"]);
     Route::post('/account_settings/become_teacher', [StudentAccountController::class, "become_teacher"]);
 
-    Route::get('/assignment/{assignment_id?}', [StudentAssignmentController::class, "assignmentDetail"]);
-    Route::get('/assignments', [StudentAssignmentController::class, "assignment"]);
+    Route::get('/assignment/{assignment_id?}', [StudentAssignmentController::class, "assignment"]);
+    //Route::get('/assignment', [StudentAssignmentController::class, "assignment"]);
 });
 
 Route::prefix("teacher")->middleware(['CekRole:teacher'])->group(function () {
@@ -67,7 +67,12 @@ Route::prefix("teacher")->middleware(['CekRole:teacher'])->group(function () {
     Route::get('/account_settings/update', [TeacherAccountController::class, "updateSetting"]);
 
 
+<<<<<<< HEAD
+    Route::get('/assignment/{assignment_id?}', [TeacherAssignmentController::class, "assignment"]);
+    Route::get('/class_detail', [TeacherClassDetailController::class, "class_detail"]);
+=======
     Route::get('/assignment', [TeacherAssignmentController::class, "assignment"]);
+>>>>>>> 6fc0e8bc6c0214d9bb2900e87aee225dbd7cf46f
 });
 
 Route::prefix("admin")->group(function () {

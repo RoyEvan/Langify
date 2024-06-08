@@ -20,10 +20,10 @@
         <div class="card header-card-list">
             <i class="bi bi-exclamation-triangle"></i>
             <h3>Deadline Aktif</h3>
-            <div class="badge">
+            {{-- <div class="badge">
                 <span>3</span>
                 Jam lagi
-            </div>
+            </div> --}}
         </div>
 
         <section class="scroll-card-list">
@@ -92,7 +92,7 @@
                                 <p class="desc-3-lines">{{$a->ASSIGNMENT_DESC}}</p>
                                 <div class="icon-text"><i class="bi bi-calendar2-event"></i>{{$c->COURSE_CLASS}} , {{$c->COURSE_DAY}}</div>
                                 <div class="icon-text"><i class="bi bi-clock"></i>{{$a->DEADLINE}}</div>
-                                <div class="icon-text"><i class="bi bi-folder2-open"></i><a href="">lihat detail tugas</a>
+                                <div class="icon-text"><i class="bi bi-folder2-open"></i><a href="{{url("student/assignment/$a->ASSIGNMENT_ID")}}">lihat detail tugas</a>
                                 </div>
                             </div>
                             {{-- <div class="card-footer">
