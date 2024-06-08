@@ -11,6 +11,6 @@ class TeacherClassDetailController extends Controller
     {
         $active_route = "class_detail";
 
-        return view('page.student.class_detail', compact('active_route'));
+        return view('page.teacher.class_detail', compact('active_route'));
     }
 }
