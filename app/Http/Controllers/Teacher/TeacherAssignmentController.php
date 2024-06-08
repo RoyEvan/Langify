@@ -21,7 +21,6 @@ class TeacherAssignmentController extends Controller
         if ($req->assignment_id) {
             $today = Carbon::today();
             $assign =  Assignment::find($req->assignment_id);
-            dd($assign);
             $course = Course::find($assign->COURSE_ID);
             $student = $course->Student()->wherePivot("IS_FINISHED", 0)->get();
             $studentDone = $assign->Student()->get();

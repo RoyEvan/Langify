@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Student;
 use App\Models\Assignment;
 use App\Models\Student;
 use App\Http\Controllers\Controller;
+use App\Models\AssignmentFile;
 use App\Models\Course;
 use App\Models\Teacher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Expr\Assign;
 
 class StudentAssignmentController extends Controller
 {
@@ -46,4 +48,35 @@ class StudentAssignmentController extends Controller
             return redirect("student/")->with(compact('active_route','course', 'assign' ,'today'));
         }
     }
+
+    public function upload_assign (Request $req){
+        $cid = $req->assignment_id;
+
+        $assign = Assignment::find($cid);
+
+        if(!$assign) return redirect("student/")->with("notification", "Page Not Found!");
+
+        $req->validate([
+            "fileAssign"  => "file"
+        ],[
+            "fileAssign.file"  => "File tidak valid"
+        ],[]);
+
+        $file = $req->file("fileAssign");
+        if($file) {
+            $mid = $assign->ASSIGNMENT_ID;
+            $filename = $mid . "_" . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . "." . $file->getClientOriginalExtension();
+            $foldername = "FileAssignments";
+
+            $assignmentFile = new AssignmentFile([
+                'ASSIGNMENT_ID' => $mid,
+                'ASSIGNMENT_FILE_PATH' => "$filename"
+            ]);
+            $assignmentFile->save();
+
+            $file->storeAs($foldername, $filename, "local");
+            return redirect("student/assignment/$cid")->with("notification", "Berhasil Mengumpulkan Tugas");
+        }
+    }
+
 }
