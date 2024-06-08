@@ -33,6 +33,7 @@ class StudentAssignmentController extends Controller
             $student = $course->Student()->wherePivot("IS_FINISHED", 0)->get();
             $studentDone = $assign->Student()->get();
             $teacher = Teacher::find($course->TEACHER_ID);
+            
             if (!$assign) {
                 $today = Carbon::today();
                 $course = Auth::guard('student_guard')->user()->Course()->wherePivot("IS_FINISHED", 0)->get();

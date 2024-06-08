@@ -70,7 +70,7 @@ Route::prefix("teacher")->middleware(['CekRole:teacher'])->group(function () {
 
 
     Route::get('/assignment/{assignment_id?}', [TeacherAssignmentController::class, "assignment"]);
-    Route::get('/class_detail', [TeacherClassDetailController::class, "class_detail"]);
+
 });
 
 Route::prefix("admin")->group(function () {

@@ -420,6 +420,7 @@ nav.sidebar h1 {
     min-width: 24px;
     color: var(--text100);
     min-height: 24px;
+    padding: 0 8px;
     font-weight: bold;
     font-size: 0.88em;
     border-radius: 2px;

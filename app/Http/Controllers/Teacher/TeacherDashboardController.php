@@ -15,14 +15,18 @@ class TeacherDashboardController extends Controller
 {
     public function dashboard(Request $req)
     {
+        $active_route = "dashboard";
+
+
         $today  = Carbon::now();
         $teacherLogin = Auth::guard('teacher_guard')->user();
         $teacher = Teacher::find($teacherLogin->TEACHER_ID);
         $course = $teacher->Course()->get();
-        $assign = Assignment::get();
-        $active_route = "dashboard";
+        $assign = Assignment::where('DEADLINE', '>=',  $today)->get();
 
 
+
+        $materi = Material::get();
         $materials = [];
         $material_files = [];
         foreach($course as $c) {
@@ -32,6 +36,7 @@ class TeacherDashboardController extends Controller
                 if(count($m->MaterialFile) > 0) $material_files[] = $m->MaterialFile()->first();
             }
         }
-        return view('page.teacher.dashboard', compact('active_route','teacher','course','assign','materials','material_files','today'));
+        return view('page.teacher.dashboard', compact('active_route','teacher','course','assign','materials','material_files','assign','materi','today'));
+
     }
 }

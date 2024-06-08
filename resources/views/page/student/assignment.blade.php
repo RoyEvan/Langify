@@ -30,7 +30,7 @@
             <p><i class="bi bi-person-video3"></i>{{$teacher->TEACHER_NAME}}</p>
             <p><i class="bi bi-geo-alt"></i>{{$course->COURSE_CLASS}}</p>
             <p><i class="bi bi-calendar-event"></i>{{$course->COURSE_DAY}}</p>
-            <p><i class="bi bi-clock"></i>12.00</p>
+            <p><i class="bi bi-clock"></i>{{$course->COURSE_LENGTH}} hours</p>
         </div>
     </header>
 
@@ -96,10 +96,10 @@
                         <td>Nama Module</td>
                         <td>{{$assign->ASSIGNMENT_TITLE}}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <td>Jenis Module</td>
                         <td>TUGAS</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <td>Deadline</td>
                         <td>{{$assign->DEADLINE}}</td>
@@ -108,7 +108,7 @@
                         <td>Keterangan</td>
                         <td>{{$assign->ASSIGNMENT_DESC}}</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <td>Sifat Pengumpulan</td>
                         <td>Online</td>
                     </tr>
@@ -123,7 +123,7 @@
                     <tr>
                         <td>Status Module</td>
                         <td>Aktif</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <td>Total Module Terkumpul</td>
                         <td>{{ count($studentDone ?? []) }} / {{ Count($student) }}</td>
@@ -142,7 +142,7 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>NRP</th>
+                        <th>Student ID</th>
                         <th>Nama</th>
                         <th>Waktu Kumpul</th>
                     </tr>
