@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Teacher;
 use App\Http\Controllers\Controller;
 use App\Models\Assignment;
 use App\Models\Course;
+use App\Models\Material;
 use App\Models\Teacher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
