@@ -305,34 +305,44 @@
                         <h1>Tambah Tugas</h1>
                     </div>
                     <div class="card-body">
-                        <form action="">
-
+                        <form action="{{url("teacher/classroom/$course->COURSE_ID/add/tugas")}}"
+                            method="POST" enctype="multipart/form-data">
                             <div class="input-group">
-                                <label for="">Pertemuan</label>
+                                <label for="">Judul Tugas</label>
                                 <div class="input-text-icon">
-                                    <input type="text" name="" id="" placeholder="Username">
-                                </div>
-                            </div>
-                            <div class="input-group">
-                                <label for="">Nama File</label>
-                                <div class="input-text-icon">
-                                    <input type="text" name="" id="" placeholder="Username">
+                                    <input type="text" name="assignment_title" id="assignment_title" placeholder="Judul Tugas">
+                                    @error('assignment_title')
+                                        <p>{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="input-group">
                                 <label for="">Deskripsi</label>
                                 <div class="input-text-icon">
-                                    <input type="text" name="" id="" placeholder="Username">
+                                    <input type="text" name="assignment_desc" id="assignment_desc" placeholder="Deskripsi Tugas">
+                                    @error('assignment_desc')
+                                        <p>{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label for="">Deadline</label>
+                                <div class="input-text-icon">
+                                    <input type="date" name="deadline" id="deadline" placeholder="Deadline Tugas">
+                                    @error('deadline')
+                                        <p>{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
 
-                        </form>
+
 
                     </div>
                     <div class="card-footer pos-child-right">
                         <button target-modal="tugas_modal" class="button-close-modal bg-danger">Close</button>
-                        <button target-modal="tugas_modal" class="button-close-modal">Tambah</button>
+                        <button target-modal="tugas_modal" type="submit" class="button-close-modal">Tambah</button>
                     </div>
+                    </form>
                 </div>
             </div>
 
@@ -345,23 +355,32 @@
                     <table class="file-pertemuan-table">
                         <thead>
                             <tr>
-                                <th>Pertemuan</th>
-                                <th>Nama File</th>
+                                <th>No</th>
+                                <th>Tugas</th>
                                 <th>Deskripsi</th>
                                 <th>Action</th>
                             </tr>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Ini adalah nama file 1</td>
-                                <td>Deksripsi dari file ini adalah dokumen pertemuan 1</td>
-                                <td>
-                                    <ul>
-                                        <li><a href="">Lihat Detail Tugas</a></li>
-                                    </ul>
-                                </td>
-                            </tr>
-
+                            @php
+                                $no = 1;
+                            @endphp
+                                @foreach ($assign as $a )
+                                    @if ($course->COURSE_ID == $a->COURSE_ID)
+                                        <tr>
+                                            <td>{{$no}}</td>
+                                            <td>{{$a->ASSIGNMENT_TITLE}}</td>
+                                            <td>{{$a->ASSIGNMENT_DESC}}</td>
+                                            <td>
+                                                <ul>
+                                                    <li><a href="{{url("teacher/assignment/$a->ASSIGNMENT_ID")}}">Lihat Detail Tugas</a></li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        @php
+                                            $no++;
+                                        @endphp
+                                    @endif
+                                @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -386,19 +405,32 @@
                                 <th>Action</th>
                             </tr>
                         <tbody>
-                            <tr>
-                                <td class="pos-child-left">Berbicara dengan Sapi</td>
-                                <td>Misi</td>
-                                <td>Online</td>
-                                <td>12 Februari 2012, 00:00:00 s/d 12 Februari 2012, 24:00:00</td>
-                                <td>Berkelompok dengan Sapi</td>
-                                <td>1 / 4</td>
-                                <td>
-                                    <ul>
-                                        <li><a href="">Lihat Module</a></li>
-                                    </ul>
-                                </td>
-                            </tr>
+                            @foreach ($assign as $a )
+                                    @if ($course->COURSE_ID == $a->COURSE_ID)
+                                        <tr>
+                                            <td class="pos-child-left">{{$a->ASSIGNMENT_TITLE}}</td>
+                                            <td>Misi</td>
+                                            <td>Online</td>
+                                            <td>{{$a->DEADLINE}}</td>
+                                            @php
+                                                $date = new dateTime($a->DEADLINE);
+                                                $now = new dateTime();
+                                            @endphp
+                                            @if ($date < $now)
+                                                <td>NON-AKTIF</td>
+                                            @else
+                                                <td>AKTIF</td>
+                                            @endif
+                                            <td> 0  / {{ Count($student) }}</td>
+                                            <td>
+                                                <ul>
+                                                    <li><a href="{{ url("teacher/assignment/$a->ASSIGNMENT_ID") }}">Lihat Module</a></li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                @endforeach
+
 
 
                         </tbody>

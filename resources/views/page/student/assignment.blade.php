@@ -51,8 +51,12 @@
 
     <div class="assignment-submit-box">
         <div class="assignment-action">
-            <input class="upload-assignment" type="file" id="formFile">
-            <label for="formFile"><button>Submit</button></label>
+            <form  action="{{url("student/assignment/$assign->ASSIGNMENT_ID/upload/tugas")}}"
+                method="POST" enctype="multipart/form-data" >
+                <input class="upload-assignment" type="file" name="fileAssign" id="formFile">
+                <label for="formFile"><button type="submit">Submit</button></label>
+            </form>
+
         </div>
         <div class="assignment-status">
             <b>Nilai : </b>

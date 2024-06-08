@@ -25,6 +25,7 @@ class TeacherDashboardController extends Controller
         $assign = Assignment::where('DEADLINE', '>=',  $today)->get();
 
 
+
         $materi = Material::get();
         $materials = [];
         $material_files = [];
@@ -36,5 +37,6 @@ class TeacherDashboardController extends Controller
             }
         }
         return view('page.teacher.dashboard', compact('active_route','teacher','course','assign','materials','material_files','assign','materi','today'));
+
     }
 }
