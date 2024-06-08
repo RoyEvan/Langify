@@ -34,10 +34,6 @@ class Assignment extends Model
 
     public function Student() {
         return $this->belongsToMany(Student::class, 'finished_assignments', 'ASSIGNMENT_ID', 'STUDENT_ID')
-            ->withPivot("SCORE","CREATED_AT");
-    }
-
-    public function AssignmentFile() {
-        return $this->hasMany(AssignmentFile::class, 'ASSIGNMENT_ID', 'ASSIGNMENT_ID');
+            ->withPivot("SCORE","FILE_PATH","CREATED_AT");
     }
 }

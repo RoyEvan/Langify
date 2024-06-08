@@ -15,14 +15,14 @@ class StudentDashboardController extends Controller
     public function dashboard(Request $req)
     {
         $today = Carbon::now();
-        $accountData = Auth::guard('student_guard')->user();
-        $siswa = Student::find($accountData->STUDENT_ID);
+        $siswa = Auth::guard('student_guard')->user();
         $course = $siswa->Course()->wherePivot("IS_FINISHED", 0)->get();
-        $assign = Assignment::where('DEADLINE', '>=',  $today)->get();
+
+        // dd($assign);
         $active_route = "dashboard";
-        //dd($assign);
 
 
+        $assign = [];
         $materials = [];
         $material_files = [];
         foreach($course as $c) {
@@ -33,6 +33,11 @@ class StudentDashboardController extends Controller
             }
         }
 
+        foreach($course as $c) {
+            foreach($c->Assignment()->where('DEADLINE', '>=',  $today)->get() as $a) {
+                $assign[] = $a;
+            }
+        }
         return view('page.student.dashboard', compact('active_route','course','assign','today','materials','material_files'));
     }
 }

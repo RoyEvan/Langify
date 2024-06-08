@@ -27,40 +27,34 @@
         </div>
 
         <section class="scroll-card-list">
-            @foreach ($course as $c )
-                @foreach ($assign as $a )
-                    @if ($c->COURSE_ID == $a->COURSE_ID)
-                        @if ($today->isSameDay($a->DEADLINE))
-                            <article class="card">
-                                <div class="card-header">
-                                    <span class="tag">Tugas</span>
-                                    <h3>{{$c->COURSE_NAME}}</h3>
-                                    <div class="badge">
-                                        @php
-                                            $deadline = strtotime($a->DEADLINE);
-                                            $todays = strtotime($today);
-                                            $diff = abs($deadline - $todays)/3600;
-
-                                        @endphp
-                                        <span>{{ round($diff) }}</span> &nbsp; Jam lagi
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <h2>{{$a->ASSIGNMENT_TITLE}}</h2>
-                                    <p class="desc-3-lines">{{$a->ASSIGNMENT_DESC}}</p>
-                                    <div class="icon-text"><i class="bi bi-calendar2-event"></i>{{$c->COURSE_CLASS}} , {{$c->COURSE_DAY}}</div>
-                                    <div class="icon-text"><i class="bi bi-clock"></i>{{$a->DEADLINE}}</div>
-                                    <div class="icon-text"><i class="bi bi-folder2-open"></i><a href="{{url("student/assignment/$a->ASSIGNMENT_ID")}}">lihat detail tugas</a>
-                                    </div>
-                                </div>
-                                {{-- <div class="card-footer">
-                                    <span class="tag">mp4</span>
-                                    <span class="tag">Berkelompok dengan Sapi</span>
-                                </div> --}}
-                            </article>
-                        @endif
-                    @endif
-                @endforeach
+            @foreach ($assign as $a)
+                @php
+                    $deadline = new DateTime($a->DEADLINE, new DateTimeZone("Asia/Jakarta"));
+                    $now = new DateTime("", new DateTimeZone("Asia/Jakarta"));
+                @endphp
+                @if ($now->diff($deadline)->days == 0)
+                    <article class="card">
+                        <div class="card-header">
+                            <span class="tag">Tugas</span>
+                            <h3>{{$a->Course->COURSE_NAME}}</h3>
+                            <div class="badge">
+                                <span>{{ $now->diff($deadline)->h }}</span> &nbsp; Jam lagi
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h2>{{$a->ASSIGNMENT_TITLE}}</h2>
+                            <p class="desc-3-lines">{{$a->ASSIGNMENT_DESC}}</p>
+                            <div class="icon-text"><i class="bi bi-calendar2-event"></i>{{$a->Course->COURSE_CLASS}} , {{$a->Course->COURSE_DAY}}</div>
+                            <div class="icon-text"><i class="bi bi-clock"></i>{{$a->DEADLINE}}</div>
+                            <div class="icon-text"><i class="bi bi-folder2-open"></i><a href="{{url("student/assignment/$a->ASSIGNMENT_ID")}}">lihat detail tugas</a>
+                            </div>
+                        </div>
+                        {{-- <div class="card-footer">
+                            <span class="tag">mp4</span>
+                            <span class="tag">Berkelompok dengan Sapi</span>
+                        </div> --}}
+                    </article>
+                @endif
             @endforeach
         </section>
     </section>

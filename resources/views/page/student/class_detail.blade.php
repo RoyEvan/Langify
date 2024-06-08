@@ -24,7 +24,7 @@
             <p>{{ $course->COURSE_DESC }}</p>
         </div>
         <div class="card-footer">
-            <p><i class="bi bi-people"></i>{{ count($students) }} People</p>
+            <p><i class="bi bi-people"></i>{{ count($course->Student) }} People</p>
             <p><i class="bi bi-mortarboard"></i>{{ $course->Teacher->TEACHER_NAME }}</p>
             <p><i class="bi bi-geo-alt"></i>{{ $course->COURSE_CLASS }}</p>
             <p><i class="bi bi-calendar-event"></i>{{ $course->COURSE_DAY }}</p>
@@ -36,7 +36,6 @@
     <div id="class-tabs-nav" class="tabs-nav-box card">
         <button class="tabs-item active">Beranda</button>
         <button class="tabs-item">Daftar Mahasiswa</button>
-        {{-- <button class="tabs-item">Presensi</button> --}}
         <button class="tabs-item">Materi</button>
         <button class="tabs-item">Tugas</button>
         <button class="tabs-item">Module</button>
@@ -118,7 +117,6 @@
         </div>
 
         <!-- Daftar Mahasiswa -->
-
         <div class="tab-content">
             <div class="card">
                 <div class="card-body">
@@ -129,7 +127,7 @@
                                 <th>Nama</th>
                             </tr>
                         <tbody>
-                            @foreach ($students as $s)
+                            @foreach ($course->Student as $s)
                                 <tr>
                                     <td>{{ $s->STUDENT_ID }}</td>
                                     <td>{{ $s->STUDENT_NAME }}</td>
@@ -141,38 +139,6 @@
             </div>
         </div>
 
-
-        <!-- Presensi -->
-        {{-- <div class="tab-content">
-            <div class="card">
-                <div class="card-body">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Pertemuan</th>
-                                <th>Topik</th>
-                                <th>Rekaman</th>
-                                <th>Absensi</th>
-
-
-                            </tr>
-                        <tbody>
-                            <tr>
-                                <td class="pos-child-center">1</td>
-                                <td>Memahami intisari pertemuan 1</td>
-                                <td class="pos-child-center">Nihil</td>
-                                <td>
-                                    <div class="tag pos-self-center"><i class="bi bi-check"></i>Hadir</div>
-                                </td>
-
-
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div> --}}
-
         <!-- Materi -->
         <div class="tab-content">
 
@@ -182,7 +148,7 @@
                         <thead>
                             <tr>
                                 <th>Pertemuan</th>
-                                <th>Nama File</th>
+                                <th>Nama Materi</th>
                                 <th>Deskripsi</th>
                                 <th>Action</th>
                             </tr>
@@ -202,7 +168,7 @@
                                                     </a>
                                                 </li>
                                             @else
-                                                <li>No file was shared</li>
+                                                <li>Tidak ada file</li>
                                             @endif
                                         </ul>
                                     </td>
@@ -216,72 +182,38 @@
 
         <!-- Tugas -->
         <div class="tab-content">
-
-
-            <!-- Materi Modal -->
-            <div id="tugas_modal" class="modal">
-                <div class="card">
-                    <div class="card-header">
-                        <h1>Tambah Tugas</h1>
-                    </div>
-                    <div class="card-body">
-                        <form action="">
-
-                            <div class="input-group">
-                                <label for="">Pertemuan</label>
-                                <div class="input-text-icon">
-                                    <input type="text" name="" id="" placeholder="Username">
-                                </div>
-                            </div>
-                            <div class="input-group">
-                                <label for="">Nama File</label>
-                                <div class="input-text-icon">
-                                    <input type="text" name="" id="" placeholder="Username">
-                                </div>
-                            </div>
-                            <div class="input-group">
-                                <label for="">Deskripsi</label>
-                                <div class="input-text-icon">
-                                    <input type="text" name="" id="" placeholder="Username">
-                                </div>
-                            </div>
-
-                        </form>
-
-                    </div>
-                    <div class="card-footer pos-child-right">
-                        <button target-modal="tugas_modal" class="button-close-modal bg-danger">Close</button>
-                        <button target-modal="tugas_modal" class="button-close-modal">Tambah</button>
-                    </div>
-                </div>
-            </div>
-
-            <button target-modal="tugas_modal" class="button-open-modal mb-16 pos-self-right"><i
-                    class="bi bi-plus-circle"></i>Tambah Tugas</button>
-            <!-- End Materi Modal  -->
-
             <div class="card">
                 <div class="card-body">
                     <table class="file-pertemuan-table">
                         <thead>
                             <tr>
                                 <th>Pertemuan</th>
-                                <th>Nama File</th>
+                                <th>Nama Tugas</th>
                                 <th>Deskripsi</th>
                                 <th>Action</th>
                             </tr>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Ini adalah nama file 1</td>
-                                <td>Deksripsi dari file ini adalah dokumen pertemuan 1</td>
-                                <td>
-                                    <ul>
-                                        <li><a href="">Lihat Detail Tugas</a></li>
-                                    </ul>
-                                </td>
-                            </tr>
+                            @php
+                                $no = 1;
+                            @endphp
 
+                            @foreach ($assign as $a)
+                                @if ($course->COURSE_ID == $a->COURSE_ID)
+                                    <tr>
+                                        <td>{{$no}}</td>
+                                        <td>{{$a->ASSIGNMENT_TITLE}}</td>
+                                        <td>{{$a->ASSIGNMENT_DESC}}</td>
+                                        <td>
+                                            <ul>
+                                                <li><a href="{{url("student/assignment/$a->ASSIGNMENT_ID")}}">Lihat Detail Tugas</a></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    @php
+                                        $no++;
+                                    @endphp
+                                @endif
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -298,29 +230,39 @@
                         <thead>
                             <tr>
                                 <th>Nama Module</th>
-                                <th>Jenis Module</th>
-                                <th>Sifat</th>
+                                {{-- <th>Jenis Module</th>
+                                <th>Sifat</th> --}}
                                 <th>Deadline</th>
                                 <th>Status</th>
                                 <th>Banyak Pengumpulan</th>
                                 <th>Action</th>
                             </tr>
                         <tbody>
-                            <tr>
-                                <td class="pos-child-left">Berbicara dengan Sapi</td>
-                                <td>Misi</td>
-                                <td>Online</td>
-                                <td>12 Februari 2012, 00:00:00 s/d 12 Februari 2012, 24:00:00</td>
-                                <td>Berkelompok dengan Sapi</td>
-                                <td>1 / 4</td>
-                                <td>
-                                    <ul>
-                                        <li><a href="">Lihat Module</a></li>
-                                    </ul>
-                                </td>
-                            </tr>
-
-
+                            @foreach ($assign as $a)
+                                @if ($course->COURSE_ID == $a->COURSE_ID)
+                                    <tr>
+                                        <td class="pos-child-left">{{$a->ASSIGNMENT_TITLE}}</td>
+                                        {{-- <td>Misi</td> --}}
+                                        {{-- <td>Online</td> --}}
+                                        <td>{{$a->DEADLINE}}</td>
+                                        @php
+                                            $date = new dateTime($a->DEADLINE);
+                                            $now = new dateTime();
+                                        @endphp
+                                        @if ($date < $now)
+                                            <td>NON-AKTIF</td>
+                                        @else
+                                            <td>AKTIF</td>
+                                        @endif
+                                        <td> 0  / {{ Count($course->Student) }}</td>
+                                        <td>
+                                            <ul>
+                                                <li><a href="{{ url("teacher/assignment/$a->ASSIGNMENT_ID") }}">Lihat Module</a></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

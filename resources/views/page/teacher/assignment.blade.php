@@ -48,38 +48,6 @@
         </div>
     @endif
 
-    {{-- <div class="assignment-submit-box">
-        <div class="assignment-action">
-            <input class="upload-assignment" type="file" id="formFile">
-            <label for="formFile"><button>Submit</button></label>
-        </div>
-        <div class="assignment-status">
-            <b>Nilai : </b>
-            @php
-            $currStu = false;
-            $mark = '0';
-            @endphp
-
-            @foreach ($studentDone as $sd)
-                @if ($sd->STUDENT_ID == $user->STUDENT_ID)
-                    @php
-                        $currStu = true;
-                        $mark = $sd->pivot->SCORE;
-                        break;
-                    @endphp
-                @endif
-            @endforeach
-
-            @if ($currStu)
-                <span> {{$mark}}/100</span>
-                <i class="bi bi-check-circle"></i>
-            @else
-                <span> Belum Mengumpulkan!</span>
-                <i class="bi bi-x-circle"></i>
-            @endif
-        </div>
-    </div> --}}
-
     <article class="card assignment-description">
         <div class="card-header">
             <h3>Informasi Module</h3>
@@ -111,10 +79,10 @@
                         <td>Sifat Module</td>
                         <td>Berkelompok dengan sapi</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <td>Jenis File Module</td>
                         <td>mp4</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <td>Status Module</td>
                         <td>Aktif</td>
@@ -164,31 +132,6 @@
                             <td>{{ $doneDate }}</td>
                         </tr>
                     @endforeach
-                    {{-- <tr>
-                        <td>1</td>
-                        <td>123456789</td>
-                        <td>Udin Border Solid</td>
-                        <td>-</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>123456789</td>
-                        <td>Udin Border Solid</td>
-                        <td>-</td>
-                    </tr>
-                    <tr class="bg-success">
-                        <td>3</td>
-                        <td>123456789</td>
-                        <td>Udin Border Solid</td>
-                        <td>12 February 2012 24:00:00</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>123456789</td>
-                        <td>Udin Border Solid</td>
-                        <td>-</td>
-                    </tr> --}}
-
                 </tbody>
             </table>
         </div>

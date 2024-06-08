@@ -33,8 +33,6 @@
                     <div class="level-badge">
                         {{ $c->COURSE_LEVEL }}
                     </div>
-                    {{-- <span class="tag">100 SKS</span>
-                    <h1>Bahasa Sapi</h1> --}}
                 </div>
                 <div class="card-body">
                     <div class="icon-text">
@@ -53,91 +51,5 @@
                 </div>
             </article>
         @endforeach
-
-        {{-- <article class="card">
-            <div class="card-header">
-                <img src="{{ asset('assets/icon/flags/Spanish.png') }}" alt="">
-                <div class="level-badge">
-                    3
-                </div>
-                <span class="tag">100 SKS</span>
-                <h1>Bahasa Sapi</h1>
-            </div>
-            <div class="card-body">
-                <div class="icon-text">
-                    <i class="bi bi-mortarboard"></i>
-                    Jupri Meresapi, S.epeda
-                </div>
-                <div class="icon-text">
-                    <i class="bi bi-person-video3"></i>
-                    <a href="">Lihat Detail Kelas</a>
-                </div>
-            </div>
-            <div class="card-footer space-between">
-                <p><i class="bi bi-geo-alt"></i>X-001</p>
-                <p><i class="bi bi-calendar-event"></i>Senin</p>
-                <p><i class="bi bi-clock"></i>24.00</p>
-            </div>
-        </article>
-
-
-        <article class="card">
-            <div class="card-header">
-                <img src="{{ asset('assets/icon/flags/Mandarin.png') }}" alt="">
-                <div class="level-badge">
-                    3
-                </div>
-                <span class="tag">100 SKS</span>
-                <h1>Bahasa Sapi</h1>
-            </div>
-            <div class="card-body">
-                <div class="icon-text">
-                    <i class="bi bi-mortarboard"></i>
-                    Jupri Meresapi, S.epeda
-                </div>
-                <div class="icon-text">
-                    <i class="bi bi-person-video3"></i>
-                    <a href="">Lihat Detail Kelas</a>
-                </div>
-            </div>
-            <div class="card-footer space-between">
-                <p><i class="bi bi-geo-alt"></i>X-001</p>
-                <p><i class="bi bi-calendar-event"></i>Senin</p>
-                <p><i class="bi bi-clock"></i>24.00</p>
-            </div>
-        </article>
-
-
-        <article class="card">
-            <div class="card-header">
-                <img src="{{ asset('assets/icon/flags/Japanese.png') }}" alt="">
-                <div class="level-badge">
-                    3
-                </div>
-                <span class="tag">100 SKS</span>
-                <h1>Bahasa Sapi</h1>
-            </div>
-            <div class="card-body">
-                <div class="icon-text">
-                    <i class="bi bi-mortarboard"></i>
-                    Jupri Meresapi, S.epeda
-                </div>
-                <div class="icon-text">
-                    <i class="bi bi-person-video3"></i>
-                    <a href="">Lihat Detail Kelas</a>
-                </div>
-            </div>
-            <div class="card-footer space-between">
-                <p><i class="bi bi-geo-alt"></i>X-001</p>
-                <p><i class="bi bi-calendar-event"></i>Senin</p>
-                <p><i class="bi bi-clock"></i>24.00</p>
-            </div>
-        </article> --}}
-
-
-
-
-
-
     </section>
 @endsection

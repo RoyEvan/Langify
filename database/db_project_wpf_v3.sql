@@ -1,59 +1,42 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: May 12, 2024 at 02:17 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+/*
+SQLyog Community v13.2.0 (64 bit)
+MySQL - 10.4.32-MariaDB : Database - db_project_wpf
+*********************************************************************
+*/
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
+/*!40101 SET NAMES utf8 */;
 
+/*!40101 SET SQL_MODE=''*/;
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`db_project_wpf` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
 
---
--- Database: `db_project_wpf`
---
+USE `db_project_wpf`;
 
--- --------------------------------------------------------
+/*Table structure for table `assignments` */
 
---
--- Table structure for table `assignments`
---
+DROP TABLE IF EXISTS `assignments`;
 
 CREATE TABLE `assignments` (
-  `ASSIGNMENT_ID` int(11) NOT NULL,
+  `ASSIGNMENT_ID` int(11) NOT NULL AUTO_INCREMENT,
   `COURSE_ID` varchar(5) NOT NULL,
   `ASSIGNMENT_TITLE` varchar(32) NOT NULL,
   `ASSIGNMENT_DESC` varchar(255) NOT NULL,
   `DEADLINE` datetime DEFAULT NULL,
   `CREATED_AT` datetime DEFAULT NULL,
   `UPDATED_AT` datetime DEFAULT NULL,
-  `DELETED_AT` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `DELETED_AT` datetime DEFAULT NULL,
+  PRIMARY KEY (`ASSIGNMENT_ID`),
+  KEY `FK_RELATIONSHIP_5` (`COURSE_ID`),
+  CONSTRAINT `FK_RELATIONSHIP_5` FOREIGN KEY (`COURSE_ID`) REFERENCES `courses` (`COURSE_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
+/*Table structure for table `courses` */
 
---
--- Table structure for table `assignment_files`
---
-
-CREATE TABLE `assignment_files` (
-  `ASSIGNMENT_ID` int(11) NOT NULL,
-  `ASSIGNMENT_FILE_PATH` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `courses`
---
+DROP TABLE IF EXISTS `courses`;
 
 CREATE TABLE `courses` (
   `COURSE_ID` varchar(5) NOT NULL,
@@ -66,68 +49,76 @@ CREATE TABLE `courses` (
   `COURSE_LENGTH` float NOT NULL,
   `CREATED_AT` datetime DEFAULT NULL,
   `UPDATED_AT` datetime DEFAULT NULL,
-  `DELETED_AT` datetime DEFAULT NULL
+  `DELETED_AT` datetime DEFAULT NULL,
+  PRIMARY KEY (`COURSE_ID`),
+  KEY `FK_RELATIONSHIP_3` (`TEACHER_ID`),
+  CONSTRAINT `FK_RELATIONSHIP_3` FOREIGN KEY (`TEACHER_ID`) REFERENCES `teachers` (`TEACHER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
+/*Table structure for table `courses_taken` */
 
---
--- Table structure for table `courses_taken`
---
+DROP TABLE IF EXISTS `courses_taken`;
 
 CREATE TABLE `courses_taken` (
   `STUDENT_ID` varchar(8) NOT NULL,
   `COURSE_ID` varchar(5) NOT NULL,
-  `IS_FINISHED` tinyint(1) NOT NULL
+  `IS_FINISHED` tinyint(1) NOT NULL,
+  PRIMARY KEY (`STUDENT_ID`,`COURSE_ID`),
+  KEY `FK_RELATIONSHIP_2` (`COURSE_ID`),
+  CONSTRAINT `FK_RELATIONSHIP_1` FOREIGN KEY (`STUDENT_ID`) REFERENCES `students` (`STUDENT_ID`),
+  CONSTRAINT `FK_RELATIONSHIP_2` FOREIGN KEY (`COURSE_ID`) REFERENCES `courses` (`COURSE_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
+/*Table structure for table `finished_assignments` */
 
---
--- Table structure for table `finished_assignments`
---
+DROP TABLE IF EXISTS `finished_assignments`;
 
 CREATE TABLE `finished_assignments` (
-  `STUDENT_ID` varchar(8) NOT NULL,
   `ASSIGNMENT_ID` int(11) NOT NULL,
+  `STUDENT_ID` varchar(8) NOT NULL,
+  `FILE_PATH` varchar(255) NOT NULL,
   `SCORE` float NOT NULL,
   `CREATED_AT` datetime DEFAULT NULL,
   `UPDATED_AT` datetime DEFAULT NULL,
-  `DELETED_AT` datetime DEFAULT NULL
+  `DELETED_AT` datetime DEFAULT NULL,
+  PRIMARY KEY (`STUDENT_ID`),
+  KEY `FK_RELATIONSHIP_9` (`FILE_PATH`),
+  KEY `FK_ASSIGN_STUDENT` (`ASSIGNMENT_ID`),
+  CONSTRAINT `FK_ASSIGN_STUDENT` FOREIGN KEY (`ASSIGNMENT_ID`) REFERENCES `assignments` (`ASSIGNMENT_ID`),
+  CONSTRAINT `FK_RELATIONSHIP_7` FOREIGN KEY (`STUDENT_ID`) REFERENCES `students` (`STUDENT_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
+/*Table structure for table `material_files` */
 
---
--- Table structure for table `materials`
---
+DROP TABLE IF EXISTS `material_files`;
+
+CREATE TABLE `material_files` (
+  `MATERIAL_ID` int(11) NOT NULL,
+  `MATERIAL_FILE_PATH` varchar(256) NOT NULL,
+  KEY `FK_RELATIONSHIP_6` (`MATERIAL_ID`),
+  CONSTRAINT `FK_RELATIONSHIP_6` FOREIGN KEY (`MATERIAL_ID`) REFERENCES `materials` (`MATERIAL_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/*Table structure for table `materials` */
+
+DROP TABLE IF EXISTS `materials`;
 
 CREATE TABLE `materials` (
-  `MATERIAL_ID` int(11) NOT NULL,
+  `MATERIAL_ID` int(11) NOT NULL AUTO_INCREMENT,
   `COURSE_ID` varchar(5) NOT NULL,
   `MATERIAL_TITLE` varchar(32) NOT NULL,
   `MATERIAL_DESC` varchar(256) NOT NULL,
   `CREATED_AT` datetime DEFAULT NULL,
   `UPDATED_AT` datetime DEFAULT NULL,
-  `DELETED_AT` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `DELETED_AT` datetime DEFAULT NULL,
+  PRIMARY KEY (`MATERIAL_ID`),
+  KEY `FK_RELATIONSHIP_4` (`COURSE_ID`),
+  CONSTRAINT `FK_RELATIONSHIP_4` FOREIGN KEY (`COURSE_ID`) REFERENCES `courses` (`COURSE_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
+/*Table structure for table `students` */
 
---
--- Table structure for table `material_files`
---
-
-CREATE TABLE `material_files` (
-  `MATERIAL_ID` int(11) NOT NULL,
-  `MATERIAL_FILE_PATH` varchar(256) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `students`
---
+DROP TABLE IF EXISTS `students`;
 
 CREATE TABLE `students` (
   `STUDENT_ID` varchar(8) NOT NULL,
@@ -139,14 +130,13 @@ CREATE TABLE `students` (
   `STUDENT_PHONE` varchar(13) NOT NULL,
   `CREATED_AT` datetime DEFAULT NULL,
   `UPDATED_AT` datetime DEFAULT NULL,
-  `DELETED_AT` datetime DEFAULT NULL
+  `DELETED_AT` datetime DEFAULT NULL,
+  PRIMARY KEY (`STUDENT_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
+/*Table structure for table `teachers` */
 
---
--- Table structure for table `teachers`
---
+DROP TABLE IF EXISTS `teachers`;
 
 CREATE TABLE `teachers` (
   `TEACHER_ID` varchar(8) NOT NULL,
@@ -158,137 +148,11 @@ CREATE TABLE `teachers` (
   `TEACHER_PHONE` varchar(13) NOT NULL,
   `CREATED_AT` datetime DEFAULT NULL,
   `UPDATED_AT` datetime DEFAULT NULL,
-  `DELETED_AT` datetime DEFAULT NULL
+  `DELETED_AT` datetime DEFAULT NULL,
+  PRIMARY KEY (`TEACHER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `assignments`
---
-ALTER TABLE `assignments`
-  ADD PRIMARY KEY (`ASSIGNMENT_ID`),
-  ADD KEY `FK_RELATIONSHIP_5` (`COURSE_ID`);
-
---
--- Indexes for table `assignment_files`
---
-ALTER TABLE `assignment_files`
-  ADD KEY `FK_RELATIONSHIP_8` (`ASSIGNMENT_ID`);
-
---
--- Indexes for table `courses`
---
-ALTER TABLE `courses`
-  ADD PRIMARY KEY (`COURSE_ID`),
-  ADD KEY `FK_RELATIONSHIP_3` (`TEACHER_ID`);
-
---
--- Indexes for table `courses_taken`
---
-ALTER TABLE `courses_taken`
-  ADD PRIMARY KEY (`STUDENT_ID`,`COURSE_ID`),
-  ADD KEY `FK_RELATIONSHIP_2` (`COURSE_ID`);
-
---
--- Indexes for table `finished_assignments`
---
-ALTER TABLE `finished_assignments`
-  ADD PRIMARY KEY (`STUDENT_ID`,`ASSIGNMENT_ID`),
-  ADD KEY `FK_RELATIONSHIP_9` (`ASSIGNMENT_ID`);
-
---
--- Indexes for table `materials`
---
-ALTER TABLE `materials`
-  ADD PRIMARY KEY (`MATERIAL_ID`),
-  ADD KEY `FK_RELATIONSHIP_4` (`COURSE_ID`);
-
---
--- Indexes for table `material_files`
---
-ALTER TABLE `material_files`
-  ADD KEY `FK_RELATIONSHIP_6` (`MATERIAL_ID`);
-
---
--- Indexes for table `students`
---
-ALTER TABLE `students`
-  ADD PRIMARY KEY (`STUDENT_ID`);
-
---
--- Indexes for table `teachers`
---
-ALTER TABLE `teachers`
-  ADD PRIMARY KEY (`TEACHER_ID`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `assignments`
---
-ALTER TABLE `assignments`
-  MODIFY `ASSIGNMENT_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-
---
--- AUTO_INCREMENT for table `materials`
---
-ALTER TABLE `materials`
-  MODIFY `MATERIAL_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=0;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `assignments`
---
-ALTER TABLE `assignments`
-  ADD CONSTRAINT `FK_RELATIONSHIP_5` FOREIGN KEY (`COURSE_ID`) REFERENCES `courses` (`COURSE_ID`);
-
---
--- Constraints for table `assignment_files`
---
-ALTER TABLE `assignment_files`
-  ADD CONSTRAINT `FK_RELATIONSHIP_8` FOREIGN KEY (`ASSIGNMENT_ID`) REFERENCES `assignments` (`ASSIGNMENT_ID`);
-
---
--- Constraints for table `courses`
---
-ALTER TABLE `courses`
-  ADD CONSTRAINT `FK_RELATIONSHIP_3` FOREIGN KEY (`TEACHER_ID`) REFERENCES `teachers` (`TEACHER_ID`);
-
---
--- Constraints for table `courses_taken`
---
-ALTER TABLE `courses_taken`
-  ADD CONSTRAINT `FK_RELATIONSHIP_1` FOREIGN KEY (`STUDENT_ID`) REFERENCES `students` (`STUDENT_ID`),
-  ADD CONSTRAINT `FK_RELATIONSHIP_2` FOREIGN KEY (`COURSE_ID`) REFERENCES `courses` (`COURSE_ID`);
-
---
--- Constraints for table `finished_assignments`
---
-ALTER TABLE `finished_assignments`
-  ADD CONSTRAINT `FK_RELATIONSHIP_7` FOREIGN KEY (`STUDENT_ID`) REFERENCES `students` (`STUDENT_ID`),
-  ADD CONSTRAINT `FK_RELATIONSHIP_9` FOREIGN KEY (`ASSIGNMENT_ID`) REFERENCES `assignments` (`ASSIGNMENT_ID`);
-
---
--- Constraints for table `materials`
---
-ALTER TABLE `materials`
-  ADD CONSTRAINT `FK_RELATIONSHIP_4` FOREIGN KEY (`COURSE_ID`) REFERENCES `courses` (`COURSE_ID`);
-
---
--- Constraints for table `material_files`
---
-ALTER TABLE `material_files`
-  ADD CONSTRAINT `FK_RELATIONSHIP_6` FOREIGN KEY (`MATERIAL_ID`) REFERENCES `materials` (`MATERIAL_ID`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

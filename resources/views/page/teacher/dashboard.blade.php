@@ -87,7 +87,7 @@
                         <article class="card">
                             <div class="card-header">
                                 <span class="tag">Tugas</span>
-                                <h3>Bahasa {{$c->COURSE_NAME}}</h3>
+                                <h3>{{$c->COURSE_NAME}}</h3>
                             </div>
                             <div class="card-body">
                                 <h2>{{$a->ASSIGNMENT_TITLE}}</h2>
@@ -97,10 +97,6 @@
                                 <div class="icon-text"><i class="bi bi-folder2-open"></i><a href="{{url("teacher/assignment/$a->ASSIGNMENT_ID")}}">lihat detail tugas</a>
                                 </div>
                             </div>
-                            {{-- <div class="card-footer">
-                                <span class="tag">mp4</span>
-                                <span class="tag">Berkelompok dengan Sapi</span>
-                            </div> --}}
                         </article>
                     @endif
                 @endforeach

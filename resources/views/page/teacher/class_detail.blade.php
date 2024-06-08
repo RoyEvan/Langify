@@ -65,61 +65,9 @@
                     </div>
                 </div>
             @endforeach
-            {{-- <div class="card">
-                <div class="card-header space-between">
-                    <h3>Materi</h3>
-                </div>
-                <div class="card-body">
-                    <p>Tutorial Full ASMR berbicara dengan sapi lokal
-                    </p>
-                    <ul>
-                        <li><a href="">Lihat Detail Materi</a></li>
-                        <li><a href="">Download Materi</a></li>
-                    </ul>
-                </div>
-                <div class="card-footer space-between">
-                    <div class="flex-row">
-                        <img src="{{ asset('assets/img/WP62.png') }}" alt="">
-                        <p>Budi Meresapi S.epeda</p>
-                    </div>
-                    <span><i class="bi bi-calendar-event"></i>12 Februari 2012 at 24:00</span>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header space-between">
-                    <h3>Tugas</h3>
-                </div>
-                <div class="card-body">
-                    <p>Mendengarkan sapi selama 24 jam</p>
-                    <ul>
-                        <li><a href="">Lihat Detail</a></li>
-                    </ul>
-                </div>
-                <div class="card-footer space-between">
-                    <div class="flex-row">
-                        <img src="{{ asset('assets/img/WP62.png') }}" alt="">
-                        <p>Budi Meresapi S.epeda</p>
-                    </div>
-                    <span><i class="bi bi-calendar-event"></i>12 Februari 2012 at 24:00</span>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header space-between">
-                    <h3>Pertemuan 1 telah selesai</h3>
-                    <h4 class="tag"><i class="bi bi-check"></i>Hadir</h4>
-                </div>
-                <div class="card-footer space-between">
-                    <div class="flex-row">
-                        <img src="{{ asset('assets/img/WP62.png') }}" alt="">
-                        <p>Budi Meresapi S.epeda</p>
-                    </div>
-                    <span><i class="bi bi-calendar-event"></i>12 Februari 2012 at 24:00</span>
-                </div>
-            </div> --}}
         </div>
 
         <!-- Daftar Mahasiswa -->
-
         <div class="tab-content">
             <div class="card">
                 <div class="card-body">
@@ -141,63 +89,6 @@
                 </div>
             </div>
         </div>
-
-        {{-- <div class="tab-content active">
-												<div class="card">
-														<div class="card-body">
-																<table>
-																		<thead>
-																				<tr>
-																						<th>NRP</th>
-																						<th>Nama</th>
-																				</tr>
-																		<tbody>
-																				<tr>
-																						<td>123456789</td>
-																						<td>Budi Meresapi S.epeda</td>
-																				</tr>
-																				<tr>
-																						<td>123456789</td>
-																						<td>Budi Meresapi S.epeda</td>
-																				</tr>
-																		</tbody>
-																</table>
-														</div>
-												</div>
-										</div> --}}
-
-
-        <!-- Presensi -->
-        {{-- <div class="tab-content">
-
-						<div class="card">
-								<div class="card-body">
-										<table>
-												<thead>
-														<tr>
-																<th>Pertemuan</th>
-																<th>Topik</th>
-																<th>Rekaman</th>
-																<th>Absensi</th>
-
-
-														</tr>
-												<tbody>
-														<tr>
-																<td class="pos-child-center">1</td>
-																<td>Memahami intisari pertemuan 1</td>
-																<td class="pos-child-center">Nihil</td>
-																<td>
-																		<div class="tag pos-self-center"><i class="bi bi-check"></i>Hadir</div>
-																</td>
-
-
-
-												</tbody>
-										</table>
-								</div>
-						</div>
-				</div> --}}
 
         <!-- Materi -->
         <div class="tab-content @if ($errors->has('materialtitle') || $errors->has('materialfile') || $errors->has('materialdesc')) active @endif">
@@ -259,7 +150,7 @@
                         <thead>
                             <tr>
                                 <th>Pertemuan</th>
-                                <th>Nama File</th>
+                                <th>Nama Materi</th>
                                 <th>Deskripsi</th>
                                 <th>File</th>
                                 <th>Action</th>
@@ -364,23 +255,24 @@
                             @php
                                 $no = 1;
                             @endphp
-                                @foreach ($assign as $a )
-                                    @if ($course->COURSE_ID == $a->COURSE_ID)
-                                        <tr>
-                                            <td>{{$no}}</td>
-                                            <td>{{$a->ASSIGNMENT_TITLE}}</td>
-                                            <td>{{$a->ASSIGNMENT_DESC}}</td>
-                                            <td>
-                                                <ul>
-                                                    <li><a href="{{url("teacher/assignment/$a->ASSIGNMENT_ID")}}">Lihat Detail Tugas</a></li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                        @php
-                                            $no++;
-                                        @endphp
-                                    @endif
-                                @endforeach
+
+                            @foreach ($assign as $a )
+                                @if ($course->COURSE_ID == $a->COURSE_ID)
+                                    <tr>
+                                        <td>{{$no}}</td>
+                                        <td>{{$a->ASSIGNMENT_TITLE}}</td>
+                                        <td>{{$a->ASSIGNMENT_DESC}}</td>
+                                        <td>
+                                            <ul>
+                                                <li><a href="{{url("teacher/assignment/$a->ASSIGNMENT_ID")}}">Lihat Detail Tugas</a></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    @php
+                                        $no++;
+                                    @endphp
+                                @endif
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -397,42 +289,39 @@
                         <thead>
                             <tr>
                                 <th>Nama Module</th>
-                                <th>Jenis Module</th>
-                                <th>Sifat</th>
+                                {{-- <th>Jenis Module</th> --}}
+                                {{-- <th>Sifat</th> --}}
                                 <th>Deadline</th>
                                 <th>Status</th>
                                 <th>Banyak Pengumpulan</th>
                                 <th>Action</th>
                             </tr>
                         <tbody>
-                            @foreach ($assign as $a )
-                                    @if ($course->COURSE_ID == $a->COURSE_ID)
-                                        <tr>
-                                            <td class="pos-child-left">{{$a->ASSIGNMENT_TITLE}}</td>
-                                            <td>Misi</td>
-                                            <td>Online</td>
-                                            <td>{{$a->DEADLINE}}</td>
-                                            @php
-                                                $date = new dateTime($a->DEADLINE);
-                                                $now = new dateTime();
-                                            @endphp
-                                            @if ($date < $now)
-                                                <td>NON-AKTIF</td>
-                                            @else
-                                                <td>AKTIF</td>
-                                            @endif
-                                            <td> 0  / {{ Count($student) }}</td>
-                                            <td>
-                                                <ul>
-                                                    <li><a href="{{ url("teacher/assignment/$a->ASSIGNMENT_ID") }}">Lihat Module</a></li>
-                                                </ul>
-                                            </td>
-                                        </tr>
-                                    @endif
-                                @endforeach
-
-
-
+                            @foreach ($assign as $a)
+                                @if ($course->COURSE_ID == $a->COURSE_ID)
+                                    <tr>
+                                        <td class="pos-child-left">{{$a->ASSIGNMENT_TITLE}}</td>
+                                        {{-- <td>Misi</td> --}}
+                                        {{-- <td>Online</td> --}}
+                                        <td>{{$a->DEADLINE}}</td>
+                                        @php
+                                            $date = new dateTime($a->DEADLINE);
+                                            $now = new dateTime();
+                                        @endphp
+                                        @if ($date < $now)
+                                            <td>NON-AKTIF</td>
+                                        @else
+                                            <td>AKTIF</td>
+                                        @endif
+                                        <td> 0  / {{ Count($student) }}</td>
+                                        <td>
+                                            <ul>
+                                                <li><a href="{{ url("teacher/assignment/$a->ASSIGNMENT_ID") }}">Lihat Module</a></li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

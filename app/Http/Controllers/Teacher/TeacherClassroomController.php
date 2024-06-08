@@ -24,7 +24,6 @@ class TeacherClassroomController extends Controller
         if ($req->course_id) {
 
             $course = Auth::guard('teacher_guard')->user()->Course()->find($req->course_id);
-            // $course = Course::find($req->course_id);
             if (!$course) {
                 abort(404);
             }

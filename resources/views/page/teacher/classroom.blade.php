@@ -30,8 +30,6 @@
                         <div class="level-badge">
                             {{ $c->COURSE_LEVEL }}
                         </div>
-                        {{-- <span class="tag">100 SKS</span>
-                    <h1>Bahasa Sapi</h1> --}}
                     </div>
                     <div class="card-body">
                         <div class="icon-text">
@@ -132,18 +130,8 @@
 
                         <button type="submit">Create</button>
                     </form>
-
-
                 </div>
             </article>
         </div>
-
-
-
-
-
-
-
-
     </section>
 @endsection

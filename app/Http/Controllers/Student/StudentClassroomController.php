@@ -21,16 +21,6 @@ class StudentClassroomController extends Controller
         $student = Auth::guard('student_guard')->user();
         $courses = $student->Course()->wherePivot("IS_FINISHED", 0)->get();
 
-
-
-        // $a = Assignment::first();
-        // $date1 = new DateTime($a->DEADLINE);
-        // $now = new DateTime();
-        // dump($a->DEADLINE);
-        // dump($now);
-        // dump($now->diff($date1)->invert);
-        // dd("..");
-
         return view('page.student.classroom', compact('active_route', 'courses', 'student'));
     }
 

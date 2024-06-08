@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Models\Assignment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class StudentClassDetailController extends Controller
 {
@@ -20,8 +20,9 @@ class StudentClassDetailController extends Controller
         $students = $course->Student()->wherePivot("IS_FINISHED", 0)->get();
         $materials = $course->Material()->get();
 
-        $files = Storage::disk("local")->files("materials");
+        $assign = $course->Assignment()->get();
 
-        return view("page.student.class_detail", compact("active_route", "course", "materials", "students", "files"));
+
+        return view("page.student.class_detail", compact("active_route", "course", "materials", "student", "assign"));
     }
 }

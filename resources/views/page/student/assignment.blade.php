@@ -22,15 +22,15 @@
 @section('content')
     <header class="class-banner card" role="banner">
         <div class="card-body">
-            <h2>Bahasa {{$course->COURSE_NAME}}</h2>
-            <p>{{$course->COURSE_DESC}}</p>
+            <h2>{{$assign->Course->COURSE_NAME}}</h2>
+            <p>{{$assign->Course->COURSE_DESC}}</p>
         </div>
         <div class="card-footer">
             <p><i class="bi bi-people"></i>{{ Count($student) }} People</p>
-            <p><i class="bi bi-person-video3"></i>{{$teacher->TEACHER_NAME}}</p>
-            <p><i class="bi bi-geo-alt"></i>{{$course->COURSE_CLASS}}</p>
-            <p><i class="bi bi-calendar-event"></i>{{$course->COURSE_DAY}}</p>
-            <p><i class="bi bi-clock"></i>{{$course->COURSE_LENGTH}} hours</p>
+            <p><i class="bi bi-person-video3"></i>{{$assign->Course->Teacher->TEACHER_NAME}}</p>
+            <p><i class="bi bi-geo-alt"></i>{{$assign->Course->COURSE_CLASS}}</p>
+            <p><i class="bi bi-calendar-event"></i>{{$assign->Course->COURSE_DAY}}</p>
+            <p><i class="bi bi-clock"></i>{{$assign->Course->COURSE_LENGTH}} hours</p>
         </div>
     </header>
 
@@ -50,11 +50,19 @@
 
 
     <div class="assignment-submit-box">
+        @php
+            $deadline = new DateTime($assign->DEADLINE, new DateTimeZone("Asia/Jakarta"));
+            $now = new DateTime("", new DateTimeZone("Asia/Jakarta"));
+        @endphp
+        @if ($now->diff($deadline)->invert == 0)
             <form class="assignment-action" action="{{url("student/assignment/$assign->ASSIGNMENT_ID/upload/tugas")}}"
                 method="POST" enctype="multipart/form-data" >
+
+                @csrf
                 <input class="upload-assignment" type="file" name="fileAssign" id="formFile">
                 <label for="formFile"><button type="submit">Submit</button></label>
             </form>
+        @endif
 
         <div class="assignment-status">
             <b>Nilai : </b>
