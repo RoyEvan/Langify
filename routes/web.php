@@ -67,12 +67,7 @@ Route::prefix("teacher")->middleware(['CekRole:teacher'])->group(function () {
     Route::get('/account_settings/update', [TeacherAccountController::class, "updateSetting"]);
 
 
-<<<<<<< HEAD
     Route::get('/assignment/{assignment_id?}', [TeacherAssignmentController::class, "assignment"]);
-    Route::get('/class_detail', [TeacherClassDetailController::class, "class_detail"]);
-=======
-    Route::get('/assignment', [TeacherAssignmentController::class, "assignment"]);
->>>>>>> 6fc0e8bc6c0214d9bb2900e87aee225dbd7cf46f
 });
 
 Route::prefix("admin")->group(function () {

@@ -34,7 +34,7 @@
                             <article class="card">
                                 <div class="card-header">
                                     <span class="tag">Tugas</span>
-                                    <h3>Bahasa {{$c->COURSE_NAME}}</h3>
+                                    <h3>{{$c->COURSE_NAME}}</h3>
                                     <div class="badge">
                                         @php
                                             $deadline = strtotime($a->DEADLINE);
@@ -42,8 +42,7 @@
                                             $diff = abs($deadline - $todays)/3600;
 
                                         @endphp
-                                        <span>{{ round($diff) }} </span>
-                                         Jam lagi
+                                        <span>{{ round($diff) }}</span> &nbsp; Jam lagi
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -85,7 +84,7 @@
                         <article class="card">
                             <div class="card-header">
                                 <span class="tag">Tugas</span>
-                                <h3>Bahasa {{$c->COURSE_NAME}}</h3>
+                                <h3>{{$c->COURSE_NAME}}</h3>
                             </div>
                             <div class="card-body">
                                 <h2>{{$a->ASSIGNMENT_TITLE}}</h2>

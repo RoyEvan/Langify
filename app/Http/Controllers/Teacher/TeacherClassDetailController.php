@@ -16,9 +16,6 @@ class TeacherClassDetailController extends Controller
         $active_route = "classroom";
         $teacher = Auth::guard('teacher_guard')->user();
 
-<<<<<<< HEAD
-        return view('page.teacher.class_detail', compact('active_route'));
-=======
         $course = $teacher->Course()->find($req->course_id);
         if(!$course) return redirect("teacher/classroom")->with("notification", "Page Not Found!");
 
@@ -98,6 +95,5 @@ class TeacherClassDetailController extends Controller
 
     public function download_material(Request $req) {
         return Storage::disk("local")->download("materials/$req->file_id");;
->>>>>>> 6fc0e8bc6c0214d9bb2900e87aee225dbd7cf46f
     }
 }
