@@ -47,74 +47,47 @@
 
         <!-- Beranda -->
         <div class="tab-content active">
+        @php
+        use Carbon\Carbon;
+        use Illuminate\Support\Str;
+        Carbon::setLocale('en');
+        @endphp
+
+            @foreach($combined as $c)
             <div class="card">
                 <div class="card-header space-between">
-                    <h3>Pertemuan 1 telah selesai</h3>
-                    <h4 class="tag bg-success"><i class="bi bi-check"></i>Hadir</h4>
+                    <h3>{{ $c->ASSIGNMENT_TITLE }}</h3>
+                    {{-- pengecekan kalo ada week pada desc berarti materi --}}
+                    @if (Str::contains(strtolower($c->ASSIGNMENT_DESC), 'week'))
+                    @else
+                        <h4 class="tag bg-success"><i class="bi bi-check"></i>Hadir</h4>
+                    @endif
                 </div>
                 <div class="card-body">
-                    <p>Mempelajari cara berkomunikasi dengan Sapi</p>
+                    <p>{{ $c->ASSIGNMENT_DESC }}</p>
+                    @if (Str::contains(strtolower($c->ASSIGNMENT_DESC), 'week'))
+                    {{-- materi file --}}
+                    {{-- <ul>
+                        <li><a href="{{/student/material/{$c->ASSIGNMENT_ID}}}">Lihat Detail Materi</a></li>
+                        <li><a href="{{/student/material/{$c->ASSIGNMENT_ID}}}">Download Materi</a></li>
+                    </ul> --}}
+                    @else
+                    {{-- assignmen file --}}
+                    <ul>
+                        <li><a href="{{url("/student/assignment/{$c->ASSIGNMENT_ID}")}}">Lihat Detail</a></li>
+                    </ul>
+                    @endif
+                    
                 </div>
                 <div class="card-footer space-between">
                     <div class="flex-row">
                         <img src="assets/img/WP62.png" alt="">
                         <p>Budi Meresapi S.epeda</p>
                     </div>
-                    <span><i class="bi bi-calendar-event"></i>12 Februari 2012 at 24:00</span>
+                    <span><i class="bi bi-calendar-event"></i>{{ Carbon::parse($c->CREATED_AT)->translatedFormat('d F Y \a\t H:i') }}</span>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-header space-between">
-                    <h3>Materi</h3>
-                </div>
-                <div class="card-body">
-                    <p>Tutorial Full ASMR berbicara dengan sapi lokal
-                    </p>
-                    <ul>
-                        <li><a href="">Lihat Detail Materi</a></li>
-                        <li><a href="">Download Materi</a></li>
-                    </ul>
-                </div>
-                <div class="card-footer space-between">
-                    <div class="flex-row">
-                        <img src="{{ asset('assets/img/WP62.png') }}" alt="">
-                        <p>Budi Meresapi S.epeda</p>
-                    </div>
-                    <span><i class="bi bi-calendar-event"></i>12 Februari 2012 at 24:00</span>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header space-between">
-                    <h3>Tugas</h3>
-                </div>
-                <div class="card-body">
-                    <p>Mendengarkan sapi selama 24 jam</p>
-                    <ul>
-                        <li><a href="">Lihat Detail</a></li>
-                    </ul>
-                </div>
-                <div class="card-footer space-between">
-                    <div class="flex-row">
-                        <img src="{{ asset('assets/img/WP62.png') }}" alt="">
-                        <p>Budi Meresapi S.epeda</p>
-                    </div>
-                    <span><i class="bi bi-calendar-event"></i>12 Februari 2012 at 24:00</span>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-header space-between">
-                    <h3>Pertemuan 1 telah selesai</h3>
-                    <h4 class="tag"><i class="bi bi-check"></i>Hadir</h4>
-                </div>
-                <div class="card-footer space-between">
-                    <div class="flex-row">
-                        <img src="{{ asset('assets/img/WP62.png') }}" alt="">
-                        <p>Budi Meresapi S.epeda</p>
-                    </div>
-                    <span><i class="bi bi-calendar-event"></i>12 Februari 2012 at 24:00</span>
-                </div>
-            </div>
-        </div>
+            @endforeach
 
         <!-- Daftar Mahasiswa -->
         <div class="tab-content">
