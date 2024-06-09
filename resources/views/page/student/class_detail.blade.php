@@ -38,7 +38,7 @@
         <button class="tabs-item">Daftar Mahasiswa</button>
         <button class="tabs-item">Materi</button>
         <button class="tabs-item">Tugas</button>
-        <button class="tabs-item">Module</button>
+        {{-- <button class="tabs-item">Module</button> --}}
     </div>
 
 
@@ -58,7 +58,7 @@
                     <div class="card-header space-between">
                         <h3>{{ $c->ASSIGNMENT_TITLE }}</h3>
                         {{-- pengecekan kalo ada week pada desc berarti materi --}}
-                        @if (Str::contains(strtolower($c->ASSIGNMENT_DESC), 'week'))
+                        @if ($c->DEADLINE == null)
                             <h4 class="tag bg-success"><i class="bi bi-book"></i>Materi</h4>
                         @else
                             <h4 class="tag bg-success"><i class="bi bi-journal-code"></i>Tugas</h4>
@@ -66,16 +66,20 @@
                     </div>
                     <div class="card-body">
                         <p>{{ $c->ASSIGNMENT_DESC }}</p>
-                        @if (Str::contains(strtolower($c->ASSIGNMENT_DESC), 'week'))
+                        @if ($c->DEADLINE == null)
                             {{-- materi file --}}
-                            {{-- <ul>
-                        <li><a href="{{/student/material/{$c->ASSIGNMENT_ID}}}">Lihat Detail Materi</a></li>
-                        <li><a href="{{/student/material/{$c->ASSIGNMENT_ID}}}">Download Materi</a></li>
-                    </ul> --}}
-                        @else
-                            {{-- assignmen file --}}
                             <ul>
-                                <li><a href="{{ url("/student/assignment/{$c->ASSIGNMENT_ID}") }}">Lihat Detail</a></li>
+                                @php
+                                    $file = App\Models\Material::find($c->ASSIGNMENT_ID)->MaterialFile;
+                                @endphp
+                                @if (count($file) == 1)
+                                    <li><a href="{{ url("student/classroom/$c->COURSE_ID/download/material/" . $file[0]->MATERIAL_FILE_PATH ) }}">Download Materi</a></li>
+                                @endif
+                            </ul>
+                        @else
+                            {{-- assignment --}}
+                            <ul>
+                                <li><a href="{{ url("student/assignment/$c->ASSIGNMENT_ID") }}">Lihat Detail</a></li>
                             </ul>
                         @endif
 
@@ -183,7 +187,7 @@
                                         <td>
                                             <ul>
                                                 <li><a href="{{ url("student/assignment/$a->ASSIGNMENT_ID") }}">Lihat
-                                                        Detail Tugas</a></li>
+                                                    Detail Tugas</a></li>
                                             </ul>
                                         </td>
                                     </tr>
@@ -198,10 +202,8 @@
             </div>
         </div>
 
-
-
         <!-- Module -->
-        <div class="tab-content">
+        {{-- <div class="tab-content">
             <div class="card">
                 <div class="card-body">
                     <table>
@@ -242,6 +244,6 @@
                     </table>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection

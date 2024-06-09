@@ -39,7 +39,7 @@
         <button class="tabs-item">Daftar Mahasiswa</button>
         <button class="tabs-item">Materi</button>
         <button class="tabs-item">Tugas</button>
-        <button class="tabs-item">Module</button>
+        {{-- <button class="tabs-item">Module</button> --}}
     </div>
 
 
@@ -55,7 +55,7 @@
                         <p>{{ $m->MATERIAL_DESC }}</p>
                     </div>
                     <div class="card-footer space-between">
-                        <span><i class="bi bi-calendar-event"></i>12 Februari 2012 at 24:00</span>
+                        <span><i class="bi bi-calendar-event"></i>{{ $m->CREATED_AT }}</span>
                     </div>
                 </div>
             @endforeach
@@ -170,7 +170,6 @@
                                         </ul>
                                     </td>
                                     <td><a href="{{ url("teacher/classroom/$course->COURSE_ID/delete/material/" . $m->MATERIAL_ID) }}"><button class="bg-danger" type="button">Delete</button></a></td>
-
                                 </tr>
                             @endfor
                         </tbody>
@@ -272,7 +271,7 @@
         </div>
 
         <!-- Module -->
-        <div class="tab-content">
+        {{-- <div class="tab-content">
             <div class="card">
                 <div class="card-body">
                     <table>
@@ -312,6 +311,6 @@
                     </table>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 @endsection

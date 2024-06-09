@@ -3,13 +3,9 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
-use App\Models\Assignment;
-use App\Models\Material;
-use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-// use Carbon\Carbon;
 
 class StudentClassDetailController extends Controller
 {

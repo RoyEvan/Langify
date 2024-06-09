@@ -75,6 +75,7 @@
                         <th>No</th>
                         <th>NRP</th>
                         <th>Nama</th>
+                        <th>Nilai</th>
                         <th>Waktu Kumpul</th>
                         <th>File</th>
                         <th>Action</th>
@@ -99,6 +100,14 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $s->STUDENT_ID }}</td>
                             <td>{{ $s->STUDENT_NAME }}</td>
+                            <td>
+                                @php
+                                    $scoreData = $s->Assignment()->wherePivot("ASSIGNMENT_ID", '=', $assign->ASSIGNMENT_ID)->first();
+                                @endphp
+                                @if ($scoreData)
+                                    {{ $scoreData->pivot->SCORE }}
+                                @endif
+                            </td>
                             <td>{{ $doneDate }}</td>
                             <td>
                                 @if ($s->Assignment->find($assign->ASSIGNMENT_ID))
@@ -116,7 +125,7 @@
                             <td>
                                 <!-- Materi Modal -->
                                 <div id="nilai_modal" class="modal">
-                                    <form class="card" action="{{ url('') }}" method="post"">
+                                    <form class="card" action="{{ url('') }}" method="post">
                                         @csrf
                                         <div class="card-header">
                                             <h1>Beri Nilai</h1>

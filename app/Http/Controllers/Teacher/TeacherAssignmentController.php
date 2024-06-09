@@ -38,6 +38,7 @@ class TeacherAssignmentController extends Controller
     }
 
     public function download_assignment(Request $req) {
-        return Storage::disk("local")->download("FileAssignment/$req->");
+
+        // return Storage::disk("local")->download("FileAssignment/".$req->);
     }
 }
