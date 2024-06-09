@@ -137,9 +137,9 @@
 
                                         </div>
                                         <div class="card-footer pos-child-right">
-                                            <button target-modal="materi_modal" type="button"
+                                            <button target-modal="nilai_modal" type="button"
                                                 class="button-close-modal bg-danger">Close</button>
-                                            <button target-modal="materi_modal" type="submit" class="button-close-modal"
+                                            <button target-modal="nilai_modal" type="submit" class="button-close-modal"
                                                 type="submit">Beri Nilai</button>
                                         </div>
                                     </form>
