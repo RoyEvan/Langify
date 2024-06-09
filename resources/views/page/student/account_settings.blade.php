@@ -19,17 +19,14 @@
     <section class="card-list">
 
         <article class="card">
-            <div class="card-header">
-                <h1>Profile Picture Settings</h1>
-            </div>
-            <article class="card">
+
                 <div class="card-header">
                     <h1>Profile</h1>
                 </div>
                 <div class="card-body">
                     <div class="flex-row">Your now login as : <span class="tag">Student</span></div>
                 </div>
-            </article>
+
         </article>
 
         <article class="card">
