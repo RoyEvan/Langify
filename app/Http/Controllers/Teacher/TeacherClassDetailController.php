@@ -19,7 +19,8 @@ class TeacherClassDetailController extends Controller
         $teacher = Auth::guard('teacher_guard')->user();
 
         $course = $teacher->Course()->find($req->course_id);
-        if (!$course) return redirect("teacher/classroom")->with("notification", "Page Not Found!");
+
+        if(!$course) return abort(403);
 
         $students = $course->Student()->wherePivot("IS_FINISHED", 0)->get();
         $materials = $course->Material()->get();
@@ -29,12 +30,8 @@ class TeacherClassDetailController extends Controller
         return view("page.teacher.class_detail", compact("active_route", "course", "materials", "students", "files"));
     }
 
-    public function add_tugas(Request $req)
-    {
-        $cid = $req->course_id;
 
-        $course = Course::find($cid);
-        if (!$course) return redirect("teacher/classroom")->with("notification", "Page Not Found!");
+    public function add_tugas(Request $req){
         $req->validate([
             "assignment_title" => "required|string",
             "assignment_desc" => "required|string",
@@ -49,12 +46,20 @@ class TeacherClassDetailController extends Controller
 
         ], []);
 
+
+        $cid = $req->course_id;
+        $teacher = Auth::guard("teacher_guard")->user();
+        $course = $teacher->Course->find($cid);
+        if(!$course) return abort(403);
+
+
         $assignment = new Assignment([
             'COURSE_ID' => $cid,
             'ASSIGNMENT_TITLE' => $req->assignment_title,
             'ASSIGNMENT_DESC' => $req->assignment_desc,
             'DEADLINE' => $req->deadline,
         ]);
+
         $assignment->save();
 
         return redirect("teacher/classroom/$cid")->with("notification", "Berhasil menambahkan tugas");

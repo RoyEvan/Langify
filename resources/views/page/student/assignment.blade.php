@@ -34,15 +34,14 @@
         </div>
     </header>
 
-    @if ($today->isSameDay($assign->DEADLINE))
+    @if ($today->isSameDay($assign->DEADLINE) && !($studentDone->find(Auth::guard("student_guard")->user()->STUDENT_ID)))
         <div class="alert-box">
             <div class="alert">
-                @php
-                    $deadline = strtotime($assign->DEADLINE);
-                    $todays = strtotime($today);
-                    $diff = abs($deadline - $todays) / 3600;
-                @endphp
-                <h3>Waktu tersisa {{ $diff }} jam lagi</h3>
+            @php
+                $deadline = new DateTime($assign->DEADLINE, new DateTimeZone("Asia/Jakarta"));
+                $now = new DateTime("", new DateTimeZone("Asia/Jakarta"));
+            @endphp
+                <h3>Waktu tersisa {{ $now->diff($deadline)->h }} jam lagi</h3>
                 <p>Segera kumpulkan Tugas anda!</p>
             </div>
         </div>

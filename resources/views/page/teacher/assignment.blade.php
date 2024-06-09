@@ -22,31 +22,18 @@
 @section('content')
     <header class="class-banner card" role="banner">
         <div class="card-body">
-            <h2>Bahasa {{$course->COURSE_NAME}}</h2>
-            <p>{{$course->COURSE_DESC}}</p>
+            <h2>{{$assign->Course->COURSE_NAME}}</h2>
+            <p>{{$assign->Course->COURSE_DESC}}</p>
         </div>
         <div class="card-footer">
             <p><i class="bi bi-people"></i>{{ Count($student) }} People</p>
-            <p><i class="bi bi-person-video3"></i>{{$assign->Course->Teacher->TEACHER_NAME}}</p>
-            <p><i class="bi bi-geo-alt"></i>{{$course->COURSE_CLASS}}</p>
-            <p><i class="bi bi-calendar-event"></i>{{$course->COURSE_DAY}}</p>
-            <p><i class="bi bi-clock"></i>12.00</p>
+
+            <p><i class="bi bi-person-video3"></i>{{$teacher->TEACHER_NAME}}</p>
+            <p><i class="bi bi-geo-alt"></i>{{$assign->Course->COURSE_CLASS}}</p>
+            <p><i class="bi bi-calendar-event"></i>{{$assign->Course->COURSE_DAY}}</p>
+            <p><i class="bi bi-clock"></i>{{ $assign->Course->COURSE_LENGTH }} Hours</p>
         </div>
     </header>
-
-    @if ($today->isSameDay($assign->DEADLINE))
-        <div class="alert-box">
-            <div class="alert">
-            @php
-                $deadline = strtotime($assign->DEADLINE);
-                $todays = strtotime($today);
-                $diff = abs($deadline - $todays)/3600;
-            @endphp
-                <h3>Waktu tersisa {{ $diff }} jam lagi</h3>
-                <p>Segera kumpulkan Tugas anda!</p>
-            </div>
-        </div>
-    @endif
 
     <article class="card assignment-description">
         <div class="card-header">
@@ -89,6 +76,7 @@
                         <th>NRP</th>
                         <th>Nama</th>
                         <th>Waktu Kumpul</th>
+                        <th>File</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -111,6 +99,18 @@
                             <td>{{ $s->STUDENT_ID }}</td>
                             <td>{{ $s->STUDENT_NAME }}</td>
                             <td>{{ $doneDate }}</td>
+                            <td>
+                                @if ($s->Assignment->find($assign->ASSIGNMENT_ID))
+                                    <div class="icon-text">
+                                        <i class="bi bi-download"></i>
+                                        <a href="{{ url("teacher/assignment/".$assign->ASSIGNMENT_ID."/download"."/".$s->Assignment->find($assign->ASSIGNMENT_ID)->pivot->FILE_PATH) }}">
+                                            Tugas Siswa
+                                        </a>
+                                    </div>
+                                @else
+                                -
+                                @endif
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

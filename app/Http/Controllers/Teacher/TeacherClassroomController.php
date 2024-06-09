@@ -5,10 +5,6 @@ namespace App\Http\Controllers\Teacher;
 use App\Http\Controllers\Controller;
 use App\Models\Assignment;
 use App\Models\Course;
-use App\Models\Material;
-use App\Models\MaterialFile;
-use App\Models\Teacher;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -25,7 +21,7 @@ class TeacherClassroomController extends Controller
 
             $course = Auth::guard('teacher_guard')->user()->Course()->find($req->course_id);
             if (!$course) {
-                abort(404);
+                return abort(403);
             }
 
             $students = $course->Student()->wherePivot("IS_FINISHED", 0)->get();
@@ -37,8 +33,8 @@ class TeacherClassroomController extends Controller
             //$studentDone = $assign->Student()->get();
             return view("page.teacher.class_detail", compact("active_route", "course", "materials", "students", "files","assign","student"));
         } else {
-            $courses = Auth::guard('teacher_guard')->user()->Course()->get();
-            $teacher = Auth::guard('teacher_guard');
+            $teacher = Auth::guard('teacher_guard')->user();
+            $courses = $teacher->Course()->get();
 
             return view('page.teacher.classroom', compact('active_route', 'courses', 'teacher'));
         }

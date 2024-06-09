@@ -180,7 +180,7 @@
         </div>
 
         <!-- Tugas -->
-        <div class="tab-content">
+        <div class="tab-content @if ($errors->has('assignment_title') || $errors->has('deadline') || $errors->has('assignment_desc')) active @endif">
 
 
             <!-- Tugas Modal -->
@@ -190,8 +190,9 @@
                         <h1>Tambah Tugas</h1>
                     </div>
                     <div class="card-body">
-                        <form action="{{url("teacher/classroom/$course->COURSE_ID/add/tugas")}}"
+                        <form action="{{url("teacher/classroom/$course->COURSE_ID/add/assignment")}}"
                             method="POST" enctype="multipart/form-data">
+                            @csrf
                             <div class="input-group">
                                 <label for="">Judul Tugas</label>
                                 <div class="input-text-icon">
@@ -213,20 +214,17 @@
                             <div class="input-group">
                                 <label for="">Deadline</label>
                                 <div class="input-text-icon">
-                                    <input type="date" name="deadline" id="deadline" placeholder="Deadline Tugas">
+                                    <input type="date" name="deadline" id="deadline">
                                     @error('deadline')
                                         <p>{{ $message }}</p>
                                     @enderror
                                 </div>
                             </div>
-
-
-
-                    </div>
-                    <div class="card-footer pos-child-right">
-                        <button target-modal="tugas_modal" class="button-close-modal bg-danger">Close</button>
-                        <button target-modal="tugas_modal" type="submit" class="button-close-modal">Tambah</button>
-                    </div>
+                        </div>
+                        <div class="card-footer pos-child-right">
+                            <button target-modal="tugas_modal" class="button-close-modal bg-danger">Close</button>
+                            <button target-modal="tugas_modal" type="submit" class="button-close-modal">Tambah</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -250,7 +248,7 @@
                                 $no = 1;
                             @endphp
 
-                            @foreach ($assign as $a )
+                            @foreach ($assign as $a)
                                 @if ($course->COURSE_ID == $a->COURSE_ID)
                                     <tr>
                                         <td>{{$no}}</td>
@@ -272,8 +270,6 @@
                 </div>
             </div>
         </div>
-
-
 
         <!-- Module -->
         <div class="tab-content">
