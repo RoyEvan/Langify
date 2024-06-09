@@ -5,6 +5,7 @@ use App\Models\Assignment;
 use App\Http\Controllers\Controller;
 use App\Models\AssignmentFile;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,11 +39,11 @@ class StudentAssignmentController extends Controller
     }
 
     public function upload_assign (Request $req){
-        $cid = $req->assignment_id;
+        $aid = $req->assignment_id;
 
-        $assign = Assignment::find($cid);
+        $assign = Assignment::find($aid);
 
-        if(!$assign) return redirect("student/")->with("notification", "Page Not Found!");
+        if(!$assign) return back()->with("notification", "You don't have this assignment!");
 
         $req->validate([
             "fileAssign"  => "file"
@@ -51,19 +52,16 @@ class StudentAssignmentController extends Controller
         ],[]);
 
         $file = $req->file("fileAssign");
-        if($file) {
-            $mid = $assign->ASSIGNMENT_ID;
-            $filename = $mid . "_" . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . "." . $file->getClientOriginalExtension();
-            $foldername = "FileAssignments";
+        if(!$file) return back()->with("notification", "You have not uploaded any file!");
 
-            $assignmentFile = new AssignmentFile([
-                'ASSIGNMENT_ID' => $mid,
-                'ASSIGNMENT_FILE_PATH' => "$filename"
-            ]);
-            $assignmentFile->save();
+        $aid = $assign->ASSIGNMENT_ID;
+        $filename = $aid . "_" . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . "." . $file->getClientOriginalExtension();
+        $foldername = "FileAssignments";
 
-            $file->storeAs($foldername, $filename, "local");
-            return redirect("student/assignment/$cid")->with("notification", "Berhasil Mengumpulkan Tugas");
-        }
+        $student = Auth::guard("student_guard")->user();
+        $result = $student->Assignment()->attach($assign, ['FILE_PATH' => $filename, "SCORE" => 0, "CREATED_AT" => new DateTime()]);
+
+        $file->storeAs($foldername, $filename, "local");
+        return redirect("student/assignment/$aid")->with("notification", "Berhasil Mengumpulkan Tugas");
     }
 }

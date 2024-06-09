@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Assignment;
 use App\Models\Material;
 use App\Models\Teacher;
-use Carbon\Carbon;
+use DateTime;
+use DateTimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use PhpParser\Node\Expr\Assign;
@@ -17,16 +18,12 @@ class TeacherDashboardController extends Controller
     {
         $active_route = "dashboard";
 
+        $teacher = Auth::guard('teacher_guard')->user();
+        $today  = new DateTime("", new DateTimeZone("Asia/Jakarta"));
 
-        $today  = Carbon::now();
-        $teacherLogin = Auth::guard('teacher_guard')->user();
-        $teacher = Teacher::find($teacherLogin->TEACHER_ID);
         $course = $teacher->Course()->get();
-        $assign = Assignment::where('DEADLINE', '>=',  $today)->get();
 
-
-
-        $materi = Material::get();
+        $assign = [];
         $materials = [];
         $material_files = [];
         foreach($course as $c) {
@@ -35,8 +32,12 @@ class TeacherDashboardController extends Controller
 
                 if(count($m->MaterialFile) > 0) $material_files[] = $m->MaterialFile()->first();
             }
+
+            foreach($c->Assignment()->where('DEADLINE', '>=',  $today)->get() as $a) {
+                $assign[] = $a;
+            }
         }
-        return view('page.teacher.dashboard', compact('active_route','teacher','course','assign','materials','material_files','assign','materi','today'));
+        return view('page.teacher.dashboard', compact('active_route','teacher','course','assign','materials','material_files','assign','today'));
 
     }
 }
