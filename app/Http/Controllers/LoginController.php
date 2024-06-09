@@ -59,6 +59,6 @@ class LoginController extends Controller
             return redirect('teacher');
         }
 
-        return redirect('login');
+        return redirect('login')->with('notification', "Login failed! Please try again.");
     }
 }

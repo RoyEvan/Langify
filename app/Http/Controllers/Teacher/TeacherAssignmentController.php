@@ -16,6 +16,7 @@ class TeacherAssignmentController extends Controller
         $teacher = Auth::guard('teacher_guard')->user();
         $today = Carbon::today();
 
+
         $course = $teacher->Course;
 
         if ($req->assignment_id) {
@@ -26,6 +27,7 @@ class TeacherAssignmentController extends Controller
             $assign = Assignment::find($req->assignment_id);
             $student = $course_taught->Student()->wherePivot("IS_FINISHED", 0)->get();
             $studentDone = $assign->Student;
+
 
 
             return view('page.teacher.assignment', compact('active_route','assign','course','teacher','student','studentDone','today'));

@@ -22,15 +22,15 @@
 @section('content')
     <header class="class-banner card" role="banner">
         <div class="card-body">
-            <h2>{{$assign->Course->COURSE_NAME}}</h2>
-            <p>{{$assign->Course->COURSE_DESC}}</p>
+            <h2>{{ $assign->Course->COURSE_NAME }}</h2>
+            <p>{{ $assign->Course->COURSE_DESC }}</p>
         </div>
         <div class="card-footer">
             <p><i class="bi bi-people"></i>{{ Count($student) }} People</p>
-            <p><i class="bi bi-person-video3"></i>{{$assign->Course->Teacher->TEACHER_NAME}}</p>
-            <p><i class="bi bi-geo-alt"></i>{{$assign->Course->COURSE_CLASS}}</p>
-            <p><i class="bi bi-calendar-event"></i>{{$assign->Course->COURSE_DAY}}</p>
-            <p><i class="bi bi-clock"></i>{{$assign->Course->COURSE_LENGTH}} hours</p>
+            <p><i class="bi bi-person-video3"></i>{{ $assign->Course->Teacher->TEACHER_NAME }}</p>
+            <p><i class="bi bi-geo-alt"></i>{{ $assign->Course->COURSE_CLASS }}</p>
+            <p><i class="bi bi-calendar-event"></i>{{ $assign->Course->COURSE_DAY }}</p>
+            <p><i class="bi bi-clock"></i>{{ $assign->Course->COURSE_LENGTH }} hours</p>
         </div>
     </header>
 
@@ -50,12 +50,12 @@
 
     <div class="assignment-submit-box">
         @php
-            $deadline = new DateTime($assign->DEADLINE, new DateTimeZone("Asia/Jakarta"));
-            $now = new DateTime("", new DateTimeZone("Asia/Jakarta"));
+            $deadline = new DateTime($assign->DEADLINE, new DateTimeZone('Asia/Jakarta'));
+            $now = new DateTime('', new DateTimeZone('Asia/Jakarta'));
         @endphp
         @if ($now->diff($deadline)->invert == 0)
-            <form class="assignment-action" action="{{url("student/assignment/$assign->ASSIGNMENT_ID/upload/tugas")}}"
-                method="POST" enctype="multipart/form-data" >
+            <form class="assignment-action" action="{{ url("student/assignment/$assign->ASSIGNMENT_ID/upload/tugas") }}"
+                method="POST" enctype="multipart/form-data">
 
                 @csrf
                 <input class="upload-assignment" type="file" name="fileAssign" id="formFile">
@@ -81,7 +81,7 @@
             @endforeach
 
             @if ($currStu)
-                <span> {{$mark}}/100</span>
+                <span> {{ $mark }}/100</span>
                 <i class="bi bi-check-circle"></i>
             @else
                 <span> Belum Mengumpulkan!</span>
@@ -99,36 +99,16 @@
                 <tbody>
                     <tr>
                         <td>Nama Module</td>
-                        <td>{{$assign->ASSIGNMENT_TITLE}}</td>
+                        <td>{{ $assign->ASSIGNMENT_TITLE }}</td>
                     </tr>
-                    {{-- <tr>
-                        <td>Jenis Module</td>
-                        <td>TUGAS</td>
-                    </tr> --}}
                     <tr>
                         <td>Deadline</td>
-                        <td>{{$assign->DEADLINE}}</td>
+                        <td>{{ $assign->DEADLINE }}</td>
                     </tr>
                     <tr>
                         <td>Keterangan</td>
-                        <td>{{$assign->ASSIGNMENT_DESC}}</td>
+                        <td>{{ $assign->ASSIGNMENT_DESC }}</td>
                     </tr>
-                    {{-- <tr>
-                        <td>Sifat Pengumpulan</td>
-                        <td>Online</td>
-                    </tr>
-                    <tr>
-                        <td>Sifat Module</td>
-                        <td>Berkelompok dengan sapi</td>
-                    </tr>
-                    <tr>
-                        <td>Jenis File Module</td>
-                        <td>mp4</td>
-                    </tr>
-                    <tr>
-                        <td>Status Module</td>
-                        <td>Aktif</td>
-                    </tr> --}}
                     <tr>
                         <td>Total Module Terkumpul</td>
                         <td>{{ count($studentDone ?? []) }} / {{ Count($student) }}</td>
@@ -174,27 +154,7 @@
                             <td>{{ $doneDate }}</td>
                         </tr>
                     @endforeach
-{{--
-                    <tr>
-                        <td>2</td>
-                        <td>123456789</td>
-                        <td>Udin Border Solid</td>
-                        <td>-</td>
-                    </tr>
-                    <tr class="bg-success">
-                        <td>3</td>
-                        <td>123456789</td>
-                        <td>Udin Border Solid</td>
-                        <td>12 February 2012 24:00:00</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>123456789</td>
-                        <td>Udin Border Solid</td>
-                        <td>-</td>
-                    </tr> --}}
-
-
+                    
                 </tbody>
             </table>
         </div>

@@ -21,22 +21,10 @@
 
         <article class="card">
             <div class="card-header">
-                <h1>Profile Picture Settings</h1>
+                <h1>Profile</h1>
             </div>
             <div class="card-body">
-                <form action="">
-                    <div class="input-group">
-                        <label for="">Name</label>
-                        <div class="input-text-icon">
-                            <i class="bi bi-person"></i>
-                            <input type="text" name="" id="" placeholder="Name">
-                        </div>
-                    </div>
-
-                    <button>Save</button>
-                </form>
-
-
+                <div class="flex-row">Your now login as : <span class="tag">Teacher</span></div>
             </div>
         </article>
 
@@ -103,7 +91,6 @@
                 <h1>Statistic</h1>
             </div>
             <div class="card-body">
-                <div class="icon-text"><i class="bi bi-journal-check"></i>Rata-rata Nilai : </div>
                 <div class="icon-text"><i class="bi bi-book"></i>Total Kelas Diambil : {{ count($courseTaken) }}</div>
 
             </div>

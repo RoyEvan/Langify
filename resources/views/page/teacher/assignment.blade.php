@@ -27,6 +27,7 @@
         </div>
         <div class="card-footer">
             <p><i class="bi bi-people"></i>{{ Count($student) }} People</p>
+
             <p><i class="bi bi-person-video3"></i>{{$teacher->TEACHER_NAME}}</p>
             <p><i class="bi bi-geo-alt"></i>{{$assign->Course->COURSE_CLASS}}</p>
             <p><i class="bi bi-calendar-event"></i>{{$assign->Course->COURSE_DAY}}</p>
@@ -46,10 +47,6 @@
                         <td>{{$assign->ASSIGNMENT_TITLE}}</td>
                     </tr>
                     <tr>
-                        <td>Jenis Module</td>
-                        <td>TUGAS</td>
-                    </tr>
-                    <tr>
                         <td>Deadline</td>
                         <td>{{$assign->DEADLINE}}</td>
                     </tr>
@@ -57,22 +54,7 @@
                         <td>Keterangan</td>
                         <td>{{$assign->ASSIGNMENT_DESC}}</td>
                     </tr>
-                    <tr>
-                        <td>Sifat Pengumpulan</td>
-                        <td>Online</td>
-                    </tr>
-                    <tr>
-                        <td>Sifat Module</td>
-                        <td>Berkelompok dengan sapi</td>
-                    </tr>
-                    {{-- <tr>
-                        <td>Jenis File Module</td>
-                        <td>mp4</td>
-                    </tr> --}}
-                    <tr>
-                        <td>Status Module</td>
-                        <td>Aktif</td>
-                    </tr>
+
                     <tr>
                         <td>Total Module Terkumpul</td>
                         <td>{{ count($studentDone ?? []) }} / {{ Count($student) }}</td>
