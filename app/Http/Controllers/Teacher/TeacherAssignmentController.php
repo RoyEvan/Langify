@@ -19,7 +19,7 @@ class TeacherAssignmentController extends Controller
         $user = Auth::guard('teacher_guard')->user();
         $today = Carbon::today();
 
-        $course = $user->Course()->wherePivot("IS_FINISHED", 0)->get();
+        // $course = $user->Course()->wherePivot("IS_FINISHED", 0)->get();
 
         if ($req->assignment_id) {
 
@@ -30,7 +30,7 @@ class TeacherAssignmentController extends Controller
 
             if (!$assign) return back()->with("notification", "You don't have this task!.");
 
-            return view('page.teacher.assignment', compact('active_route','assign','course','teacher','student','studentDone','user','today'));
+            return view('page.teacher.assignment', compact('active_route','assign','course','student','studentDone','user','today'));
         }
         else {
             return back();

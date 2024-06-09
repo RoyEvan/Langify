@@ -20,51 +20,39 @@
         <div class="card header-card-list">
             <i class="bi bi-exclamation-triangle"></i>
             <h3>Deadline Aktif</h3>
-            {{-- <div class="badge">
-                <span>3</span>
-                Jam lagi
-            </div> --}}
         </div>
 
         <section class="scroll-card-list">
-            @foreach ($course as $c )
-                @foreach ($assign as $a )
+            @foreach ($course as $c)
+                @foreach ($assign as $a)
                     @if ($c->COURSE_ID == $a->COURSE_ID)
                         @if ($today->isSameDay($a->DEADLINE))
                             <article class="card">
                                 <div class="card-header">
                                     <span class="tag">Tugas</span>
-                                    <h3>Bahasa {{$c->COURSE_NAME}}</h3>
+                                    <h3>{{ $c->COURSE_NAME }}</h3>
                                     <div class="badge">
                                         @php
                                             $deadline = strtotime($a->DEADLINE);
                                             $todays = strtotime($today);
-                                            $diff = abs($deadline - $todays)/3600;
+                                            $diff = abs($deadline - $todays) / 3600;
 
                                         @endphp
-                                        <span>{{ round($diff) }} </span>
-                                        Jam lagi
+                                        <span>{{ round($diff) }}</span> &nbsp; Jam lagi
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <h2>{{$a->ASSIGNMENT_TITLE}}</h2>
-                                    <p class="desc-3-lines">{{$a->ASSIGNMENT_DESC}}</p>
-                                    <div class="icon-text"><i class="bi bi-calendar2-event"></i>{{$c->COURSE_CLASS}} , {{$c->COURSE_DAY}}</div>
-                                    <div class="icon-text"><i class="bi bi-clock"></i>{{$a->DEADLINE}}</div>
-                                    <div class="icon-text"><i class="bi bi-folder2-open"></i><a href="{{url("student/assignment/$a->ASSIGNMENT_ID")}}">lihat detail tugas</a>
+                                    <h2>{{ $a->ASSIGNMENT_TITLE }}</h2>
+                                    <p class="desc-3-lines">{{ $a->ASSIGNMENT_DESC }}</p>
+                                    <div class="icon-text"><i class="bi bi-calendar2-event"></i>{{ $c->COURSE_CLASS }} ,
+                                        {{ $c->COURSE_DAY }}</div>
+                                    <div class="icon-text"><i class="bi bi-clock"></i>{{ $a->DEADLINE }}</div>
+                                    <div class="icon-text"><i class="bi bi-folder2-open"></i><a
+                                            href="{{ url("student/assignment/$a->ASSIGNMENT_ID") }}">lihat detail tugas</a>
                                     </div>
                                 </div>
-                                {{-- <div class="card-footer">
-                                    <span class="tag">mp4</span>
-                                    <span class="tag">Berkelompok dengan Sapi</span>
-                                </div> --}}
                             </article>
                         @else
-                            {{-- <article>
-                                <div class="card-header">
-                                    <h3> Today There's No Deadline</h3>
-                                </div>
-                            </article> --}}
                         @endif
                     @endif
                 @endforeach
@@ -81,20 +69,22 @@
         </div>
 
         <section class="scroll-card-list">
-            @foreach ($course as $c )
-                @foreach ($assign as $a )
+            @foreach ($course as $c)
+                @foreach ($assign as $a)
                     @if ($c->COURSE_ID == $a->COURSE_ID)
                         <article class="card">
                             <div class="card-header">
                                 <span class="tag">Tugas</span>
-                                <h3>{{$c->COURSE_NAME}}</h3>
+                                <h3>{{ $c->COURSE_NAME }}</h3>
                             </div>
                             <div class="card-body">
-                                <h2>{{$a->ASSIGNMENT_TITLE}}</h2>
-                                <p class="desc-3-lines">{{$a->ASSIGNMENT_DESC}}</p>
-                                <div class="icon-text"><i class="bi bi-calendar2-event"></i>{{$c->COURSE_CLASS}} , {{$c->COURSE_DAY}}</div>
-                                <div class="icon-text"><i class="bi bi-clock"></i>{{$a->DEADLINE}}</div>
-                                <div class="icon-text"><i class="bi bi-folder2-open"></i><a href="{{url("teacher/assignment/$a->ASSIGNMENT_ID")}}">lihat detail tugas</a>
+                                <h2>{{ $a->ASSIGNMENT_TITLE }}</h2>
+                                <p class="desc-3-lines">{{ $a->ASSIGNMENT_DESC }}</p>
+                                <div class="icon-text"><i class="bi bi-calendar2-event"></i>{{ $c->COURSE_CLASS }} ,
+                                    {{ $c->COURSE_DAY }}</div>
+                                <div class="icon-text"><i class="bi bi-clock"></i>{{ $a->DEADLINE }}</div>
+                                <div class="icon-text"><i class="bi bi-folder2-open"></i><a
+                                        href="{{ url("teacher/assignment/$a->ASSIGNMENT_ID") }}">lihat detail tugas</a>
                                 </div>
                             </div>
                         </article>
@@ -127,11 +117,15 @@
                     @foreach ($material_files as $file)
                         @if ($file->MATERIAL_ID == $m->MATERIAL_ID)
                             <div class="card-footer">
-                                <div class="icon-text"><i class="bi bi-download"></i><a href="{{ url("student/classroom/".$m->Course->COURSE_ID."/download/material/$file->MATERIAL_FILE_PATH") }}">Download File Materi</a></div>
+                                <div class="icon-text"><i class="bi bi-download"></i><a
+                                        href="{{ url('student/classroom/' . $m->Course->COURSE_ID . "/download/material/$file->MATERIAL_FILE_PATH") }}">Download
+                                        File Materi</a></div>
                             </div>
                         @else
                             <div class="card-footer">
-                                <div class="icon-text"><p>Tidak ada file</p></div>
+                                <div class="icon-text">
+                                    <p>Tidak ada file</p>
+                                </div>
                             </div>
                         @endif
                     @endforeach

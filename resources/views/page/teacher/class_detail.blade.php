@@ -37,7 +37,6 @@
     <div id="class-tabs-nav" class="tabs-nav-box card">
         <button class="tabs-item active">Beranda</button>
         <button class="tabs-item">Daftar Mahasiswa</button>
-        {{-- <button class="tabs-item">Presensi</button> --}}
         <button class="tabs-item">Materi</button>
         <button class="tabs-item">Tugas</button>
         <button class="tabs-item">Module</button>
@@ -51,16 +50,11 @@
                 <div class="card">
                     <div class="card-header space-between">
                         <h3>{{ $m->MATERIAL_TITLE }}</h3>
-                        {{-- <h4 class="tag bg-success"><i class="bi bi-check"></i>Hadir</h4> --}}
                     </div>
                     <div class="card-body">
                         <p>{{ $m->MATERIAL_DESC }}</p>
                     </div>
                     <div class="card-footer space-between">
-                        {{-- <div class="flex-row">
-                            <img src="{{ asset('assets/img/WP62.png') }}" alt="">
-                            <p>Budi Meresapi S.epeda</p>
-                        </div> --}}
                         <span><i class="bi bi-calendar-event"></i>12 Februari 2012 at 24:00</span>
                     </div>
                 </div>
@@ -289,8 +283,6 @@
                         <thead>
                             <tr>
                                 <th>Nama Module</th>
-                                {{-- <th>Jenis Module</th> --}}
-                                {{-- <th>Sifat</th> --}}
                                 <th>Deadline</th>
                                 <th>Status</th>
                                 <th>Banyak Pengumpulan</th>
@@ -301,8 +293,6 @@
                                 @if ($course->COURSE_ID == $a->COURSE_ID)
                                     <tr>
                                         <td class="pos-child-left">{{$a->ASSIGNMENT_TITLE}}</td>
-                                        {{-- <td>Misi</td> --}}
-                                        {{-- <td>Online</td> --}}
                                         <td>{{$a->DEADLINE}}</td>
                                         @php
                                             $date = new dateTime($a->DEADLINE);

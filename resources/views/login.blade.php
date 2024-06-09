@@ -28,10 +28,6 @@
         @if (Session::has('notification'))
         <div class="notification">
             <span>{{ Session::get('notification') }}</span>
-            {{-- <div class="dynamic-action">
-                <button aria-label="Close Notification"><i class="bi bi-x-lg"></i></button>
-            </div> --}}
-        </div>
         @endif
 
         <div class="input-group @error('email') input-danger @enderror">

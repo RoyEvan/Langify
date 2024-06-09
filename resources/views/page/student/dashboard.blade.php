@@ -20,10 +20,7 @@
         <div class="card header-card-list">
             <i class="bi bi-exclamation-triangle"></i>
             <h3>Deadline Aktif</h3>
-            {{-- <div class="badge">
-                <span>3</span>
-                Jam lagi
-            </div> --}}
+
         </div>
 
         <section class="scroll-card-list">
@@ -49,10 +46,6 @@
                             <div class="icon-text"><i class="bi bi-folder2-open"></i><a href="{{url("student/assignment/$a->ASSIGNMENT_ID")}}">lihat detail tugas</a>
                             </div>
                         </div>
-                        {{-- <div class="card-footer">
-                            <span class="tag">mp4</span>
-                            <span class="tag">Berkelompok dengan Sapi</span>
-                        </div> --}}
                     </article>
                 @endif
             @endforeach
@@ -88,10 +81,7 @@
                                 <div class="icon-text"><i class="bi bi-folder2-open"></i><a href="{{url("student/assignment/$a->ASSIGNMENT_ID")}}">lihat detail tugas</a>
                                 </div>
                             </div>
-                            {{-- <div class="card-footer">
-                                <span class="tag">mp4</span>
-                                <span class="tag">Berkelompok dengan Sapi</span>
-                            </div> --}}
+
                         </article>
                     @endif
                 @endforeach
