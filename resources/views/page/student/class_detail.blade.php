@@ -230,8 +230,6 @@
                         <thead>
                             <tr>
                                 <th>Nama Module</th>
-                                {{-- <th>Jenis Module</th>
-                                <th>Sifat</th> --}}
                                 <th>Deadline</th>
                                 <th>Status</th>
                                 <th>Banyak Pengumpulan</th>
@@ -242,8 +240,6 @@
                                 @if ($course->COURSE_ID == $a->COURSE_ID)
                                     <tr>
                                         <td class="pos-child-left">{{$a->ASSIGNMENT_TITLE}}</td>
-                                        {{-- <td>Misi</td> --}}
-                                        {{-- <td>Online</td> --}}
                                         <td>{{$a->DEADLINE}}</td>
                                         @php
                                             $date = new dateTime($a->DEADLINE);

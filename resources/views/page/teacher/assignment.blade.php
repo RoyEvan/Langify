@@ -22,15 +22,15 @@
 @section('content')
     <header class="class-banner card" role="banner">
         <div class="card-body">
-            <h2>{{$assign->Course->COURSE_NAME}}</h2>
-            <p>{{$assign->Course->COURSE_DESC}}</p>
+            <h2>{{ $assign->Course->COURSE_NAME }}</h2>
+            <p>{{ $assign->Course->COURSE_DESC }}</p>
         </div>
         <div class="card-footer">
             <p><i class="bi bi-people"></i>{{ Count($student) }} People</p>
 
-            <p><i class="bi bi-person-video3"></i>{{$teacher->TEACHER_NAME}}</p>
-            <p><i class="bi bi-geo-alt"></i>{{$assign->Course->COURSE_CLASS}}</p>
-            <p><i class="bi bi-calendar-event"></i>{{$assign->Course->COURSE_DAY}}</p>
+            <p><i class="bi bi-person-video3"></i>{{ $teacher->TEACHER_NAME }}</p>
+            <p><i class="bi bi-geo-alt"></i>{{ $assign->Course->COURSE_CLASS }}</p>
+            <p><i class="bi bi-calendar-event"></i>{{ $assign->Course->COURSE_DAY }}</p>
             <p><i class="bi bi-clock"></i>{{ $assign->Course->COURSE_LENGTH }} Hours</p>
         </div>
     </header>
@@ -44,15 +44,15 @@
                 <tbody>
                     <tr>
                         <td>Nama Module</td>
-                        <td>{{$assign->ASSIGNMENT_TITLE}}</td>
+                        <td>{{ $assign->ASSIGNMENT_TITLE }}</td>
                     </tr>
                     <tr>
                         <td>Deadline</td>
-                        <td>{{$assign->DEADLINE}}</td>
+                        <td>{{ $assign->DEADLINE }}</td>
                     </tr>
                     <tr>
                         <td>Keterangan</td>
-                        <td>{{$assign->ASSIGNMENT_DESC}}</td>
+                        <td>{{ $assign->ASSIGNMENT_DESC }}</td>
                     </tr>
 
                     <tr>
@@ -77,6 +77,7 @@
                         <th>Nama</th>
                         <th>Waktu Kumpul</th>
                         <th>File</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -103,14 +104,52 @@
                                 @if ($s->Assignment->find($assign->ASSIGNMENT_ID))
                                     <div class="icon-text">
                                         <i class="bi bi-download"></i>
-                                        <a href="{{ url("teacher/assignment/".$assign->ASSIGNMENT_ID."/download"."/".$s->Assignment->find($assign->ASSIGNMENT_ID)->pivot->FILE_PATH) }}">
+                                        <a
+                                            href="{{ url('teacher/assignment/' . $assign->ASSIGNMENT_ID . '/download' . '/' . $s->Assignment->find($assign->ASSIGNMENT_ID)->pivot->FILE_PATH) }}">
                                             Tugas Siswa
                                         </a>
                                     </div>
                                 @else
-                                -
+                                    -
                                 @endif
                             </td>
+                            <td>
+                                <!-- Materi Modal -->
+                                <div id="nilai_modal" class="modal">
+                                    <form class="card" action="{{ url('') }}" method="post"">
+                                        @csrf
+                                        <div class="card-header">
+                                            <h1>Beri Nilai</h1>
+                                        </div>
+                                        <div class="card-body">
+
+                                            <div class="input-group @error('materialdesc') input-danger @enderror">
+                                                <label for="">Nilai</label>
+                                                <div class="input-text-icon">
+                                                    <input type="number" name="materialdesc" id=""
+                                                        placeholder="Nilai">
+                                                </div>
+                                                @error('materialdesc')
+                                                    <p>{{ $message }}</p>
+                                                @enderror
+                                            </div>
+
+
+                                        </div>
+                                        <div class="card-footer pos-child-right">
+                                            <button target-modal="materi_modal" type="button"
+                                                class="button-close-modal bg-danger">Close</button>
+                                            <button target-modal="materi_modal" type="submit" class="button-close-modal"
+                                                type="submit">Beri Nilai</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <button target-modal="nilai_modal" class="button-open-modal mb-16 pos-self-right">
+                                    <i class="bi bi-pencil"></i>Nilai
+                                </button>
+                            </td>
+
                         </tr>
                     @endforeach
                 </tbody>
