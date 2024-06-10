@@ -46,16 +46,15 @@ class TeacherAssignmentController extends Controller
         $course_taught = $course->find($assignment_cid);
         if (!$course_taught) return back()->with("notification", "You don't teach this course!.");
 
-        $student = Student::find($req->student_id);
+        $student = Student::find($req->sid);
+        // dd($student->Assignment->find($req->assignment_id));
+        if($student->Assignment->find($req->assignment_id)) {
+            $result = $student->Assignment()->updateExistingPivot($assignment, [
+                'SCORE' => $req->score,
+            ]);
+        }
 
-        dump($req->all());
-        dump($assignment->Student()->wherePivot("STUDENT_ID", $req->sid)->toRawSql());
-        if(!$assignment->Student->find($req->sid)) {
-            dump("no one submitted");
-        }
-        else {
-            dump($req->score);
-        }
+        return back();
     }
 
     public function download_assignment(Request $req) {

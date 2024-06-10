@@ -84,7 +84,7 @@
             @endforeach
 
             @if ($currStu)
-                <span> {{ $mark }}/100</span>
+                <span> {{ $mark ?? 0 }}/100</span>
                 <i class="bi bi-check-circle"></i>
             @else
                 <span> Belum Mengumpulkan!</span>

@@ -52,7 +52,7 @@ class Student extends Authenticatable
     public function Assignment()
     {
         return $this->belongsToMany(Assignment::class, 'finished_assignments', 'STUDENT_ID', 'ASSIGNMENT_ID')
-            ->withPivot("SCORE","FILE_PATH","CREATED_AT");;
+            ->withPivot("SCORE","FILE_PATH","CREATED_AT");
     }
 
 
