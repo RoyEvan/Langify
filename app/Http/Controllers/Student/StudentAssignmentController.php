@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AssignmentFile;
 use Carbon\Carbon;
 use DateTime;
+use DateTimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,26 +40,27 @@ class StudentAssignmentController extends Controller
     }
 
     public function upload_assign (Request $req){
-        $aid = $req->assignment_id;
-
-        $assign = Assignment::find($aid);
-
-        if(!$assign) return back()->with("notification", "You don't have this assignment!");
-
         $req->validate([
-            "fileAssign"  => "file"
+            "fileAssign"  => "required|file"
         ],[
             "fileAssign.file"  => "File tidak valid"
         ],[]);
 
+        $aid = $req->assignment_id;
         $file = $req->file("fileAssign");
-        if(!$file) return back()->with("notification", "You have not uploaded any file!");
-
-        $aid = $assign->ASSIGNMENT_ID;
-        $filename = $aid . "_" . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . "." . $file->getClientOriginalExtension();
-        $foldername = "FileAssignments";
 
         $student = Auth::guard("student_guard")->user();
+        $assign = Assignment::find($req->assignment_id);
+
+        $course = $student->Course()->wherePivot("IS_FINISHED", 0)->get();
+        $assignment_cid = $assign->Course->COURSE_ID;
+        $course_joined = $course->find($assignment_cid);
+        if (!$course_joined) return back()->with("notification", "You don't have this task!.");
+
+
+        $filename = $aid . "_" . $student->STUDENT_ID . "_" . pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME) . "." . $file->getClientOriginalExtension();
+        $foldername = "assignments";
+
         $result = $student->Assignment()->attach($assign, ['FILE_PATH' => $filename, "SCORE" => 0, "CREATED_AT" => new DateTime()]);
 
         $file->storeAs($foldername, $filename, "local");

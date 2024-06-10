@@ -114,7 +114,7 @@
                                     <div class="icon-text">
                                         <i class="bi bi-download"></i>
                                         <a
-                                            href="{{ url('teacher/assignment/' . $assign->ASSIGNMENT_ID . '/download' . '/' . $s->Assignment->find($assign->ASSIGNMENT_ID)->pivot->FILE_PATH) }}">
+                                            href="{{ url("teacher/classroom/" . $assign->Course->COURSE_ID . "/download/assignment/$assign->ASSIGNMENT_ID/$s->STUDENT_ID") }}">
                                             Tugas Siswa
                                         </a>
                                     </div>
@@ -125,20 +125,25 @@
                             <td>
                                 <!-- Materi Modal -->
                                 <div id="nilai_modal" class="modal">
-                                    <form class="card" action="{{ url('') }}" method="post">
+                                    <form class="card" action="{{ url("teacher/assignment/$assign->ASSIGNMENT_ID/grade") }}" method="post">
                                         @csrf
+                                        <div class="input-group @error('student_id') input-danger @enderror">
+                                            <input type="hidden" name="student_id" value="{{ $s->STUDENT_ID }}">
+                                        </div>
                                         <div class="card-header">
                                             <h1>Beri Nilai</h1>
                                         </div>
                                         <div class="card-body">
 
-                                            <div class="input-group @error('materialdesc') input-danger @enderror">
+                                            <div class="input-group @error('score') input-danger @enderror">
                                                 <label for="">Nilai</label>
                                                 <div class="input-text-icon">
-                                                    <input type="number" name="materialdesc" id=""
-                                                        placeholder="Nilai">
+                                                    <input type="number" name="score" placeholder="Nilai">
                                                 </div>
-                                                @error('materialdesc')
+                                                @error('score')
+                                                    <p>{{ $message }}</p>
+                                                @enderror
+                                                @error('student_id')
                                                     <p>{{ $message }}</p>
                                                 @enderror
                                             </div>
@@ -148,7 +153,7 @@
                                         <div class="card-footer pos-child-right">
                                             <button target-modal="nilai_modal" type="button"
                                                 class="button-close-modal bg-danger">Close</button>
-                                            <button target-modal="nilai_modal" type="submit" class="button-close-modal"
+                                            <button target-modal="nilai_modal" type="submit" id="{{ $s->STUDENT_ID }}" class="button-close-modal"
                                                 type="submit">Beri Nilai</button>
                                         </div>
                                     </form>
