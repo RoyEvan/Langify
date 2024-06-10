@@ -37,29 +37,61 @@
     <div id="class-tabs-nav" class="tabs-nav-box card">
         <button class="tabs-item active">Beranda</button>
         <button class="tabs-item">Daftar Mahasiswa</button>
+        {{-- <button class="tabs-item">Presensi</button> --}}
         <button class="tabs-item">Materi</button>
         <button class="tabs-item">Tugas</button>
         <button class="tabs-item">Module</button>
     </div>
 
 
-    <div id="class-tabs-content" class="tabs-content-box">
+
         <!-- Beranda -->
         <div class="tab-content @if (!$errors->any()) active @endif">
-            @foreach ($materials as $m)
-                <div class="card">
-                    <div class="card-header space-between">
-                        <h3>{{ $m->MATERIAL_TITLE }}</h3>
-                    </div>
-                    <div class="card-body">
-                        <p>{{ $m->MATERIAL_DESC }}</p>
-                    </div>
-                    <div class="card-footer space-between">
-                        <span><i class="bi bi-calendar-event"></i>12 Februari 2012 at 24:00</span>
-                    </div>
+        @php
+        use Carbon\Carbon;
+        use Illuminate\Support\Str;
+        Carbon::setLocale('en');
+        @endphp
+
+        @foreach($combined as $c)
+            <div class="card">
+                <div class="card-header space-between">
+                    <h3>{{ $c->ASSIGNMENT_TITLE }}</h3>
+                    {{-- pengecekan kalo ada week pada desc berarti materi --}}
+                    @if ($c->DEADLINE == null)
+                        <h4 class="tag bg-success"><i class="bi bi-book"></i>Materi</h4>
+                    @else
+                        <h4 class="tag bg-success"><i class="bi bi-journal-code"></i>Tugas</h4>
+                    @endif
                 </div>
-            @endforeach
-        </div>
+                <div class="card-body">
+                    <p>{{ $c->ASSIGNMENT_DESC }}</p>
+                    @if ($c->DEADLINE == null)
+                        {{-- materi file --}}
+                        <ul>
+                            @php
+                                $file = App\Models\Material::find($c->ASSIGNMENT_ID)->MaterialFile;
+                            @endphp
+                            @if (count($file) == 1)
+                                <li><a href="{{ url("student/classroom/$c->COURSE_ID/download/material/" . $file[0]->MATERIAL_FILE_PATH ) }}">Download Materi</a></li>
+                            @endif
+                        </ul>
+                    @else
+                        {{-- assignment --}}
+                        <ul>
+                            <li><a href="{{ url("student/assignment/$c->ASSIGNMENT_ID") }}">Lihat Detail</a></li>
+                        </ul>
+                    @endif
+                <div class="card-footer space-between">
+                    <div class="flex-row">
+                        <img src="assets/img/WP62.png" alt="">
+                        {{-- <p>Budi Meresapi S.epeda</p> --}}
+                    </div>
+                    <span><i class="bi bi-calendar-event"></i>{{ Carbon::parse($c->CREATED_AT)->translatedFormat('d F Y \a\t H:i') }}</span>
+                </div>
+            </div>
+        @endforeach
+    </div>
 
         <!-- Daftar Mahasiswa -->
         <div class="tab-content">
@@ -169,8 +201,7 @@
                                             @endif
                                         </ul>
                                     </td>
-                                    <td><a href="{{ url("teacher/classroom/$course->COURSE_ID/delete/material/" . $m->MATERIAL_ID) }}"><button class="bg-danger" type="button">Delete</button></a></td>
-
+                                    <td><a href="{{ url("teacher/classroom/$course->COURSE_ID/delete/material/" . $c->ASSIGNMENT_ID) }}"><button class="bg-danger" type="button">Delete</button></a></td>
                                 </tr>
                             @endfor
                         </tbody>
@@ -180,7 +211,7 @@
         </div>
 
         <!-- Tugas -->
-        <div class="tab-content @if ($errors->has('assignment_title') || $errors->has('deadline') || $errors->has('assignment_desc')) active @endif">
+        <div class="tab-content">
 
 
             <!-- Tugas Modal -->
@@ -190,9 +221,8 @@
                         <h1>Tambah Tugas</h1>
                     </div>
                     <div class="card-body">
-                        <form action="{{url("teacher/classroom/$course->COURSE_ID/add/assignment")}}"
+                        <form action="{{url("teacher/classroom/$course->COURSE_ID/add/tugas")}}"
                             method="POST" enctype="multipart/form-data">
-                            @csrf
                             <div class="input-group">
                                 <label for="">Judul Tugas</label>
                                 <div class="input-text-icon">
@@ -214,17 +244,20 @@
                             <div class="input-group">
                                 <label for="">Deadline</label>
                                 <div class="input-text-icon">
-                                    <input type="date" name="deadline" id="deadline">
+                                    <input type="date" name="deadline" id="deadline" placeholder="Deadline Tugas">
                                     @error('deadline')
                                         <p>{{ $message }}</p>
                                     @enderror
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-footer pos-child-right">
-                            <button target-modal="tugas_modal" class="button-close-modal bg-danger">Close</button>
-                            <button target-modal="tugas_modal" type="submit" class="button-close-modal">Tambah</button>
-                        </div>
+
+
+
+                    </div>
+                    <div class="card-footer pos-child-right">
+                        <button target-modal="tugas_modal" class="button-close-modal bg-danger">Close</button>
+                        <button target-modal="tugas_modal" type="submit" class="button-close-modal">Tambah</button>
+                    </div>
                     </form>
                 </div>
             </div>
@@ -248,7 +281,7 @@
                                 $no = 1;
                             @endphp
 
-                            @foreach ($assign as $a)
+                            @foreach ($assign as $a )
                                 @if ($course->COURSE_ID == $a->COURSE_ID)
                                     <tr>
                                         <td>{{$no}}</td>
@@ -271,6 +304,8 @@
             </div>
         </div>
 
+
+
         <!-- Module -->
         <div class="tab-content">
             <div class="card">
@@ -279,6 +314,8 @@
                         <thead>
                             <tr>
                                 <th>Nama Module</th>
+                                {{-- <th>Jenis Module</th> --}}
+                                {{-- <th>Sifat</th> --}}
                                 <th>Deadline</th>
                                 <th>Status</th>
                                 <th>Banyak Pengumpulan</th>
@@ -289,6 +326,8 @@
                                 @if ($course->COURSE_ID == $a->COURSE_ID)
                                     <tr>
                                         <td class="pos-child-left">{{$a->ASSIGNMENT_TITLE}}</td>
+                                        {{-- <td>Misi</td> --}}
+                                        {{-- <td>Online</td> --}}
                                         <td>{{$a->DEADLINE}}</td>
                                         @php
                                             $date = new dateTime($a->DEADLINE);
@@ -299,7 +338,7 @@
                                         @else
                                             <td>AKTIF</td>
                                         @endif
-                                        <td> 0  / {{ Count($student) }}</td>
+                                        <td> 0  / {{ Count($students) }}</td>
                                         <td>
                                             <ul>
                                                 <li><a href="{{ url("teacher/assignment/$a->ASSIGNMENT_ID") }}">Lihat Module</a></li>
