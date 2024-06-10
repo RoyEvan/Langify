@@ -33,10 +33,10 @@ class TeacherAssignmentController extends Controller
 
     public function grade_assignment(Request $req) {
         $req->validate([
-            "student_id" => "required",
+            "sid" => "required",
             "score" => "required|integer|min:0|max:100"
         ],[
-            "student_id.required" => "Invalid student!"
+            "sid.required" => "Invalid student!"
         ],[]);
 
         $teacher = Auth::guard('teacher_guard')->user();
@@ -49,8 +49,8 @@ class TeacherAssignmentController extends Controller
         $student = Student::find($req->student_id);
 
         dump($req->all());
-        dump($assignment->Student()->wherePivot("STUDENT_ID", $req->student_id)->toRawSql());
-        if(!$assignment->Student->find($req->student_id)) {
+        dump($assignment->Student()->wherePivot("STUDENT_ID", $req->sid)->toRawSql());
+        if(!$assignment->Student->find($req->sid)) {
             dump("no one submitted");
         }
         else {
@@ -67,7 +67,7 @@ class TeacherAssignmentController extends Controller
 
 
         $assignment = Assignment::find($req->assignment_id);
-        $student = $assignment->Student()->find($req->student_id);
+        $student = $assignment->Student()->find($req->sid);
         $filename = $student->pivot->FILE_PATH;
         return Storage::disk("local")->download("assignments/". $filename);
     }

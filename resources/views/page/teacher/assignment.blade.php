@@ -124,20 +124,17 @@
                             </td>
                             <td>
                                 <!-- Materi Modal -->
-                                <div id="nilai_modal" class="modal">
+                                <div id="nilai_modal_{{ $s->STUDENT_ID }}" class="modal">
                                     <form class="card" action="{{ url("teacher/assignment/$assign->ASSIGNMENT_ID/grade") }}" method="post">
                                         @csrf
-                                        <div class="input-group @error('student_id') input-danger @enderror">
-                                            <input type="hidden" name="student_id" value="{{ $s->STUDENT_ID }}">
-                                        </div>
                                         <div class="card-header">
                                             <h1>Beri Nilai</h1>
                                         </div>
                                         <div class="card-body">
-
                                             <div class="input-group @error('score') input-danger @enderror">
                                                 <label for="">Nilai</label>
                                                 <div class="input-text-icon">
+                                                    <input type="hidden" name="sid" value="{{ $s->STUDENT_ID }}">
                                                     <input type="number" name="score" placeholder="Nilai">
                                                 </div>
                                                 @error('score')
@@ -147,8 +144,6 @@
                                                     <p>{{ $message }}</p>
                                                 @enderror
                                             </div>
-
-
                                         </div>
                                         <div class="card-footer pos-child-right">
                                             <button target-modal="nilai_modal" type="button"
@@ -159,11 +154,10 @@
                                     </form>
                                 </div>
 
-                                <button target-modal="nilai_modal" class="button-open-modal mb-16 pos-self-right">
+                                <button target-modal="nilai_modal_{{ $s->STUDENT_ID }}" class="button-open-modal mb-16 pos-self-right">
                                     <i class="bi bi-pencil"></i>Nilai
                                 </button>
                             </td>
-
                         </tr>
                     @endforeach
                 </tbody>
