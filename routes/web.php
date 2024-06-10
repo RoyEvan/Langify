@@ -72,7 +72,7 @@ Route::prefix("teacher")->middleware(['CekRole:teacher'])->group(function () {
 
         Route::prefix("download")->group(function() {
             Route::get('material/{file_id}', [TeacherClassDetailController::class, "download_material"]);
-            Route::get('assignment/{assignment_id}', [TeacherAssignmentController::class, "download_assignment"]);
+            Route::get('assignment/{assignment_id}/{student_id}', [TeacherAssignmentController::class, "download_assignment"]);
         });
     });
 
@@ -85,7 +85,7 @@ Route::prefix("teacher")->middleware(['CekRole:teacher'])->group(function () {
 
     Route::prefix("assignment")->group(function() {
         Route::get('{assignment_id?}', [TeacherAssignmentController::class, "assignment"]);
-        Route::post('add', [TeacherAssignmentController::class, "add_assignment"]);
+        Route::post('{assignment_id}/grade', [TeacherAssignmentController::class, "grade_assignment"]);
     });
 
 });

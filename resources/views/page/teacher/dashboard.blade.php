@@ -106,7 +106,7 @@
                         @if ($file->MATERIAL_ID == $m->MATERIAL_ID)
                             <div class="card-footer">
                                 <div class="icon-text"><i class="bi bi-download"></i><a
-                                        href="{{ url('student/classroom/' . $m->Course->COURSE_ID . "/download/material/$file->MATERIAL_FILE_PATH") }}">Download
+                                        href="{{ url('teacher/classroom/' . $m->Course->COURSE_ID . "/download/material/$file->MATERIAL_FILE_PATH") }}">Download
                                         File Materi</a></div>
                             </div>
                         @else

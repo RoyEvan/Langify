@@ -221,7 +221,7 @@
                             </div>
                         </div>
                         <div class="card-footer pos-child-right">
-                            <button target-modal="tugas_modal" class="button-close-modal bg-danger">Close</button>
+                            <button target-modal="tugas_modal" type="button" class="button-close-modal bg-danger">Close</button>
                             <button target-modal="tugas_modal" type="submit" class="button-close-modal">Tambah</button>
                         </div>
                     </form>
@@ -269,48 +269,5 @@
                 </div>
             </div>
         </div>
-
-        <!-- Module -->
-        {{-- <div class="tab-content">
-            <div class="card">
-                <div class="card-body">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nama Module</th>
-                                <th>Deadline</th>
-                                <th>Status</th>
-                                <th>Banyak Pengumpulan</th>
-                                <th>Action</th>
-                            </tr>
-                        <tbody>
-                            @foreach ($assign as $a)
-                                @if ($course->COURSE_ID == $a->COURSE_ID)
-                                    <tr>
-                                        <td class="pos-child-left">{{$a->ASSIGNMENT_TITLE}}</td>
-                                        <td>{{$a->DEADLINE}}</td>
-                                        @php
-                                            $date = new dateTime($a->DEADLINE);
-                                            $now = new dateTime();
-                                        @endphp
-                                        @if ($date < $now)
-                                            <td>NON-AKTIF</td>
-                                        @else
-                                            <td>AKTIF</td>
-                                        @endif
-                                        <td> 0  / {{ Count($student) }}</td>
-                                        <td>
-                                            <ul>
-                                                <li><a href="{{ url("teacher/assignment/$a->ASSIGNMENT_ID") }}">Lihat Module</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                @endif
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div> --}}
     </div>
 @endsection
