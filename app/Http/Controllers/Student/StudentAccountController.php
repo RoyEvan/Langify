@@ -138,7 +138,7 @@ class StudentAccountController extends Controller
                 Auth::guard('student_guard')->logout();
             }
 
-            return redirect('login')->with('notification', "Great! You've been promoted to Minimum Wage.");
+            return redirect('login')->with('notification', "Great! You've been promoted to Teacher.");
         } else {
             return redirect('student/account_settings')->with('notification', "Wrong Access Code!");
         }
