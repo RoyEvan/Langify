@@ -36,6 +36,10 @@
                 </div>
                 <div class="card-body">
                     <div class="icon-text">
+                        <i class="bi bi-hash"></i>
+                        {{ $c->COURSE_ID }}
+                    </div>
+                    <div class="icon-text">
                         <i class="bi bi-mortarboard"></i>
                         {{ $c->Teacher->TEACHER_NAME }}
                     </div>
