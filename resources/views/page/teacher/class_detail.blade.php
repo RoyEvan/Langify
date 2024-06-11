@@ -40,13 +40,14 @@
         {{-- <button class="tabs-item">Presensi</button> --}}
         <button class="tabs-item">Materi</button>
         <button class="tabs-item">Tugas</button>
-        <button class="tabs-item">Module</button>
+        {{-- <button class="tabs-item">Module</button> --}}
     </div>
 
 
 
         <!-- Beranda -->
         <div class="tab-content @if (!$errors->any()) active @endif">
+
         @php
         use Carbon\Carbon;
         use Illuminate\Support\Str;
@@ -86,6 +87,7 @@
                     <div class="flex-row">
                         <img src="assets/img/WP62.png" alt="">
                         {{-- <p>Budi Meresapi S.epeda</p> --}}
+
                     </div>
                     <span><i class="bi bi-calendar-event"></i>{{ Carbon::parse($c->CREATED_AT)->translatedFormat('d F Y \a\t H:i') }}</span>
                 </div>
@@ -201,7 +203,7 @@
                                             @endif
                                         </ul>
                                     </td>
-                                    <td><a href="{{ url("teacher/classroom/$course->COURSE_ID/delete/material/" . $c->ASSIGNMENT_ID) }}"><button class="bg-danger" type="button">Delete</button></a></td>
+                                    <td><a href="{{ url("teacher/classroom/$course->COURSE_ID/delete/material/" . $m->MATERIAL_ID) }}"><button class="bg-danger" type="button">Delete</button></a></td>
                                 </tr>
                             @endfor
                         </tbody>
@@ -251,13 +253,11 @@
                                 </div>
                             </div>
 
-
-
-                    </div>
-                    <div class="card-footer pos-child-right">
-                        <button target-modal="tugas_modal" class="button-close-modal bg-danger">Close</button>
-                        <button target-modal="tugas_modal" type="submit" class="button-close-modal">Tambah</button>
-                    </div>
+                        </div>
+                        <div class="card-footer pos-child-right">
+                            <button target-modal="tugas_modal" type="button" class="button-close-modal bg-danger">Close</button>
+                            <button target-modal="tugas_modal" type="submit" class="button-close-modal">Tambah</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -296,55 +296,6 @@
                                     @php
                                         $no++;
                                     @endphp
-                                @endif
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-
-
-        <!-- Module -->
-        <div class="tab-content">
-            <div class="card">
-                <div class="card-body">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nama Module</th>
-                                {{-- <th>Jenis Module</th> --}}
-                                {{-- <th>Sifat</th> --}}
-                                <th>Deadline</th>
-                                <th>Status</th>
-                                <th>Banyak Pengumpulan</th>
-                                <th>Action</th>
-                            </tr>
-                        <tbody>
-                            @foreach ($assign as $a)
-                                @if ($course->COURSE_ID == $a->COURSE_ID)
-                                    <tr>
-                                        <td class="pos-child-left">{{$a->ASSIGNMENT_TITLE}}</td>
-                                        {{-- <td>Misi</td> --}}
-                                        {{-- <td>Online</td> --}}
-                                        <td>{{$a->DEADLINE}}</td>
-                                        @php
-                                            $date = new dateTime($a->DEADLINE);
-                                            $now = new dateTime();
-                                        @endphp
-                                        @if ($date < $now)
-                                            <td>NON-AKTIF</td>
-                                        @else
-                                            <td>AKTIF</td>
-                                        @endif
-                                        <td> 0  / {{ Count($students) }}</td>
-                                        <td>
-                                            <ul>
-                                                <li><a href="{{ url("teacher/assignment/$a->ASSIGNMENT_ID") }}">Lihat Module</a></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
                                 @endif
                             @endforeach
                         </tbody>

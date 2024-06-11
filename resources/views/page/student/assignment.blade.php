@@ -52,8 +52,11 @@
         @php
             $deadline = new DateTime($assign->DEADLINE, new DateTimeZone('Asia/Jakarta'));
             $now = new DateTime('', new DateTimeZone('Asia/Jakarta'));
+            $submitted = $studentDone->find($user->STUDENT_ID);
         @endphp
-        @if ($now->diff($deadline)->invert == 0)
+
+        {{-- NEEDS FIXING --}}
+        @if ($now->diff($deadline)->invert == 0 && !$submitted)
             <form class="assignment-action" action="{{ url("student/assignment/$assign->ASSIGNMENT_ID/upload/tugas") }}"
                 method="POST" enctype="multipart/form-data">
 
@@ -81,7 +84,7 @@
             @endforeach
 
             @if ($currStu)
-                <span> {{ $mark }}/100</span>
+                <span> {{ $mark ?? 0 }}/100</span>
                 <i class="bi bi-check-circle"></i>
             @else
                 <span> Belum Mengumpulkan!</span>
@@ -103,7 +106,7 @@
                     </tr>
                     <tr>
                         <td>Deadline</td>
-                        <td>{{ $assign->DEADLINE }}</td>
+                        <td>{{ $deadline->format('Y-m-d H:i:s') }}</td>
                     </tr>
                     <tr>
                         <td>Keterangan</td>
@@ -154,7 +157,7 @@
                             <td>{{ $doneDate }}</td>
                         </tr>
                     @endforeach
-                    
+
                 </tbody>
             </table>
         </div>
