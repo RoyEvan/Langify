@@ -37,63 +37,64 @@
     <div id="class-tabs-nav" class="tabs-nav-box card">
         <button class="tabs-item active">Beranda</button>
         <button class="tabs-item">Daftar Mahasiswa</button>
-        {{-- <button class="tabs-item">Presensi</button> --}}
         <button class="tabs-item">Materi</button>
         <button class="tabs-item">Tugas</button>
-        {{-- <button class="tabs-item">Module</button> --}}
     </div>
 
+    <div id="class-tabs-content" class="tabs-content-box">
 
 
         <!-- Beranda -->
         <div class="tab-content @if (!$errors->any()) active @endif">
 
-        @php
-        use Carbon\Carbon;
-        use Illuminate\Support\Str;
-        Carbon::setLocale('en');
-        @endphp
+            @php
+                use Carbon\Carbon;
+                use Illuminate\Support\Str;
+                Carbon::setLocale('en');
+            @endphp
 
-        @foreach($combined as $c)
-            <div class="card">
-                <div class="card-header space-between">
-                    <h3>{{ $c->ASSIGNMENT_TITLE }}</h3>
-                    {{-- pengecekan kalo ada week pada desc berarti materi --}}
-                    @if ($c->DEADLINE == null)
-                        <h4 class="tag bg-success"><i class="bi bi-book"></i>Materi</h4>
-                    @else
-                        <h4 class="tag bg-success"><i class="bi bi-journal-code"></i>Tugas</h4>
-                    @endif
-                </div>
-                <div class="card-body">
-                    <p>{{ $c->ASSIGNMENT_DESC }}</p>
-                    @if ($c->DEADLINE == null)
-                        {{-- materi file --}}
-                        <ul>
-                            @php
-                                $file = App\Models\Material::find($c->ASSIGNMENT_ID)->MaterialFile;
-                            @endphp
-                            @if (count($file) == 1)
-                                <li><a href="{{ url("student/classroom/$c->COURSE_ID/download/material/" . $file[0]->MATERIAL_FILE_PATH ) }}">Download Materi</a></li>
-                            @endif
-                        </ul>
-                    @else
-                        {{-- assignment --}}
-                        <ul>
-                            <li><a href="{{ url("student/assignment/$c->ASSIGNMENT_ID") }}">Lihat Detail</a></li>
-                        </ul>
-                    @endif
-                <div class="card-footer space-between">
-                    <div class="flex-row">
-                        <img src="assets/img/WP62.png" alt="">
-                        {{-- <p>Budi Meresapi S.epeda</p> --}}
+            @foreach ($combined as $c)
+                <div class="card">
+                    <div class="card-header space-between">
+                        <h3>{{ $c->ASSIGNMENT_TITLE }}</h3>
+                        {{-- pengecekan kalo ada week pada desc berarti materi --}}
+                        @if ($c->DEADLINE == null)
+                            <h4 class="tag bg-success"><i class="bi bi-book"></i>Materi</h4>
+                        @else
+                            <h4 class="tag bg-success"><i class="bi bi-journal-code"></i>Tugas</h4>
+                        @endif
+                    </div>
+                    <div class="card-body">
+                        <p>{{ $c->ASSIGNMENT_DESC }}</p>
+                        @if ($c->DEADLINE == null)
+                            {{-- materi file --}}
+                            <ul>
+                                @php
+                                    $file = App\Models\Material::find($c->ASSIGNMENT_ID)->MaterialFile;
+                                @endphp
+                                @if (count($file) == 1)
+                                    <li><a
+                                            href="{{ url("student/classroom/$c->COURSE_ID/download/material/" . $file[0]->MATERIAL_FILE_PATH) }}">Download
+                                            Materi</a></li>
+                                @endif
+                            </ul>
+                        @else
+                            {{-- assignment --}}
+                            <ul>
+                                <li><a href="{{ url("student/assignment/$c->ASSIGNMENT_ID") }}">Lihat Detail</a></li>
+                            </ul>
+                        @endif
 
                     </div>
-                    <span><i class="bi bi-calendar-event"></i>{{ Carbon::parse($c->CREATED_AT)->translatedFormat('d F Y \a\t H:i') }}</span>
+                    <div class="card-footer space-between">
+                        <span>
+                            <i class="bi bi-calendar-event"></i>
+                            {{ Carbon::parse($c->CREATED_AT)->translatedFormat('d F Y \a\t H:i') }}
+                        </span>
+                    </div>
                 </div>
-            </div>
-        @endforeach
-    </div>
+            @endforeach
+        </div>
 
         <!-- Daftar Mahasiswa -->
         <div class="tab-content">
@@ -203,7 +204,9 @@
                                             @endif
                                         </ul>
                                     </td>
-                                    <td><a href="{{ url("teacher/classroom/$course->COURSE_ID/delete/material/" . $m->MATERIAL_ID) }}"><button class="bg-danger" type="button">Delete</button></a></td>
+                                    <td><a
+                                            href="{{ url("teacher/classroom/$course->COURSE_ID/delete/material/" . $materials[$i]->MATERIAL_ID) }}"><button
+                                                class="bg-danger" type="button">Delete</button></a></td>
                                 </tr>
                             @endfor
                         </tbody>
@@ -223,12 +226,13 @@
                         <h1>Tambah Tugas</h1>
                     </div>
                     <div class="card-body">
-                        <form action="{{url("teacher/classroom/$course->COURSE_ID/add/tugas")}}"
-                            method="POST" enctype="multipart/form-data">
+                        <form action="{{ url("teacher/classroom/$course->COURSE_ID/add/tugas") }}" method="POST"
+                            enctype="multipart/form-data">
                             <div class="input-group">
                                 <label for="">Judul Tugas</label>
                                 <div class="input-text-icon">
-                                    <input type="text" name="assignment_title" id="assignment_title" placeholder="Judul Tugas">
+                                    <input type="text" name="assignment_title" id="assignment_title"
+                                        placeholder="Judul Tugas">
                                     @error('assignment_title')
                                         <p>{{ $message }}</p>
                                     @enderror
@@ -237,7 +241,8 @@
                             <div class="input-group">
                                 <label for="">Deskripsi</label>
                                 <div class="input-text-icon">
-                                    <input type="text" name="assignment_desc" id="assignment_desc" placeholder="Deskripsi Tugas">
+                                    <input type="text" name="assignment_desc" id="assignment_desc"
+                                        placeholder="Deskripsi Tugas">
                                     @error('assignment_desc')
                                         <p>{{ $message }}</p>
                                     @enderror
@@ -253,11 +258,12 @@
                                 </div>
                             </div>
 
-                        </div>
-                        <div class="card-footer pos-child-right">
-                            <button target-modal="tugas_modal" type="button" class="button-close-modal bg-danger">Close</button>
-                            <button target-modal="tugas_modal" type="submit" class="button-close-modal">Tambah</button>
-                        </div>
+                    </div>
+                    <div class="card-footer pos-child-right">
+                        <button target-modal="tugas_modal" type="button"
+                            class="button-close-modal bg-danger">Close</button>
+                        <button target-modal="tugas_modal" type="submit" class="button-close-modal">Tambah</button>
+                    </div>
                     </form>
                 </div>
             </div>
@@ -281,15 +287,17 @@
                                 $no = 1;
                             @endphp
 
-                            @foreach ($assign as $a )
+                            @foreach ($assign as $a)
                                 @if ($course->COURSE_ID == $a->COURSE_ID)
                                     <tr>
-                                        <td>{{$no}}</td>
-                                        <td>{{$a->ASSIGNMENT_TITLE}}</td>
-                                        <td>{{$a->ASSIGNMENT_DESC}}</td>
+                                        <td>{{ $no }}</td>
+                                        <td>{{ $a->ASSIGNMENT_TITLE }}</td>
+                                        <td>{{ $a->ASSIGNMENT_DESC }}</td>
                                         <td>
                                             <ul>
-                                                <li><a href="{{url("teacher/assignment/$a->ASSIGNMENT_ID")}}">Lihat Detail Tugas</a></li>
+                                                <li><a href="{{ url("teacher/assignment/$a->ASSIGNMENT_ID") }}">Lihat
+                                                        Detail
+                                                        Tugas</a></li>
                                             </ul>
                                         </td>
                                     </tr>
@@ -303,5 +311,6 @@
                 </div>
             </div>
         </div>
+
     </div>
 @endsection

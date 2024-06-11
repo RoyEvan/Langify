@@ -16,16 +16,30 @@ class TeacherClassDetailController extends Controller
 {
     public function class_detail(Request $req) {
         $active_route = "classroom";
+
+
+
         $teacher = Auth::guard('teacher_guard')->user();
 
         $course = $teacher->Course()->find($req->course_id);
-        if(!$course) return redirect("teacher/classroom")->with("notification", "Page Not Found!");
+
+
+
+        if (!$course) {
+            return abort(403);
+        }
+
+        $materials = $course->Material()->get();
+        $files = Storage::disk("local")->files("assignments");
+
+        $assign = Assignment::withTrashed()->get();
+        $student = $course->Student()->wherePivot("IS_FINISHED", 0)->get();
+        //$studentDone = $assign->Student()->get();
+
 
         $students = $course->Student()->wherePivot("IS_FINISHED", 0)->get();
         $materials = $course->Material()->get();
-        $assign = $course->Assignment()->get();
 
-        $files = Storage::disk("local")->files("materials");
 
         $combined = DB::table('assignments')
             ->select('ASSIGNMENT_ID', 'COURSE_ID', 'ASSIGNMENT_TITLE', 'ASSIGNMENT_DESC', 'CREATED_AT', 'UPDATED_AT', 'DELETED_AT', 'DEADLINE')
@@ -38,7 +52,9 @@ class TeacherClassDetailController extends Controller
             ->orderBy('CREATED_AT','DESC')
             ->get();
 
-        return view("page.teacher.class_detail", compact("active_route", "course", "materials", "students", "files", "combined", "assign"));
+
+
+        return view("page.teacher.class_detail", compact("active_route", "course", "materials", "students", "files", "student", "assign", "combined"));
     }
 
     public function add_tugas(Request $req){
