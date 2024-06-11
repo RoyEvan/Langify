@@ -43,10 +43,9 @@
 
 
     <div id="class-tabs-content" class="tabs-content-box">
-
-
         <!-- Beranda -->
         <div class="tab-content active">
+
             @php
                 use Carbon\Carbon;
                 use Illuminate\Support\Str;
@@ -83,18 +82,45 @@
                             </ul>
                         @endif
 
-                    </div>
-                    <div class="card-footer space-between">
-                        <div class="flex-row">
-                            <img src="assets/img/WP62.png" alt="">
-                            <p>Budi Meresapi S.epeda</p>
-                        </div>
-                        <span><i
-                                class="bi bi-calendar-event"></i>{{ Carbon::parse($c->CREATED_AT)->translatedFormat('d F Y \a\t H:i') }}</span>
-                    </div>
+            @foreach($combined as $c)
+            <div class="card">
+                <div class="card-header space-between">
+                    <h3>{{ $c->ASSIGNMENT_TITLE }}</h3>
+                    {{-- pengecekan kalo ada week pada desc berarti materi --}}
+                    @if ($c->DEADLINE == null)
+                        <h4 class="tag bg-success"><i class="bi bi-book"></i>Materi</h4>
+                    @else
+                        <h4 class="tag bg-success"><i class="bi bi-journal-code"></i>Tugas</h4>
+                    @endif
                 </div>
+                <div class="card-body">
+                    <p>{{ $c->ASSIGNMENT_DESC }}</p>
+                    @if ($c->DEADLINE == null)
+                        {{-- materi file --}}
+                        <ul>
+                            @php
+                                $file = App\Models\Material::find($c->ASSIGNMENT_ID)->MaterialFile;
+                            @endphp
+                            @if (count($file) == 1)
+                                <li><a href="{{ url("student/classroom/$c->COURSE_ID/download/material/" . $file[0]->MATERIAL_FILE_PATH ) }}">Download Materi</a></li>
+                            @endif
+                        </ul>
+                    @else
+                        {{-- assignment --}}
+                        <ul>
+                            <li><a href="{{ url("student/assignment/$c->ASSIGNMENT_ID") }}">Lihat Detail</a></li>
+                        </ul>
+                    @endif
+                <div class="card-footer space-between">
+                    <div class="flex-row">
+                        <img src="assets/img/WP62.png" alt="">
+                        {{-- <p>Budi Meresapi S.epeda</p> --}}
+                    </div>
+                    <span><i class="bi bi-calendar-event"></i>{{ Carbon::parse($c->CREATED_AT)->translatedFormat('d F Y \a\t H:i') }}</span>
+                </div>
+            </div>
             @endforeach
-
+            <br>
         </div>
 
         <!-- Daftar Mahasiswa -->
@@ -181,11 +207,12 @@
                             @foreach ($assign as $a)
                                 @if ($course->COURSE_ID == $a->COURSE_ID)
                                     <tr>
-                                        <td>{{ $no }}</td>
-                                        <td>{{ $a->ASSIGNMENT_TITLE }}</td>
-                                        <td>{{ $a->ASSIGNMENT_DESC }}</td>
+                                        <td>{{$no}}</td>
+                                        <td>{{$a->ASSIGNMENT_TITLE}}</td>
+                                        <td>{{$a->ASSIGNMENT_DESC}}</td>
                                         <td>
                                             <ul>
+
                                                 <li><a href="{{ url("student/assignment/$a->ASSIGNMENT_ID") }}">Lihat
                                                     Detail Tugas</a></li>
                                             </ul>
@@ -210,6 +237,8 @@
                         <thead>
                             <tr>
                                 <th>Nama Module</th>
+                                {{-- <th>Jenis Module</th>
+                                <th>Sifat</th> --}}
                                 <th>Deadline</th>
                                 <th>Status</th>
                                 <th>Banyak Pengumpulan</th>
@@ -219,8 +248,10 @@
                             @foreach ($assign as $a)
                                 @if ($course->COURSE_ID == $a->COURSE_ID)
                                     <tr>
-                                        <td class="pos-child-left">{{ $a->ASSIGNMENT_TITLE }}</td>
-                                        <td>{{ $a->DEADLINE }}</td>
+                                        <td class="pos-child-left">{{$a->ASSIGNMENT_TITLE}}</td>
+                                        {{-- <td>Misi</td> --}}
+                                        {{-- <td>Online</td> --}}
+                                        <td>{{$a->DEADLINE}}</td>
                                         @php
                                             $date = new dateTime($a->DEADLINE);
                                             $now = new dateTime();
@@ -230,11 +261,10 @@
                                         @else
                                             <td>AKTIF</td>
                                         @endif
-                                        <td> 0 / {{ Count($course->Student) }}</td>
+                                        <td> 0  / {{ Count($course->Student) }}</td>
                                         <td>
                                             <ul>
-                                                <li><a href="{{ url("teacher/assignment/$a->ASSIGNMENT_ID") }}">Lihat
-                                                        Module</a></li>
+                                                <li><a href="{{ url("teacher/assignment/$a->ASSIGNMENT_ID") }}">Lihat Module</a></li>
                                             </ul>
                                         </td>
                                     </tr>
