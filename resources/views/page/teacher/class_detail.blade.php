@@ -25,6 +25,7 @@
             <p>{{ $course->COURSE_DESC }}</p>
         </div>
         <div class="card-footer">
+            <p><i class="bi bi-hash"></i>{{ $course->COURSE_ID }}</p>
             <p><i class="bi bi-people"></i>{{ count($students) }} People</p>
             <p><i class="bi bi-mortarboard"></i>{{ $course->Teacher->TEACHER_NAME }}</p>
             <p><i class="bi bi-geo-alt"></i>{{ $course->COURSE_CLASS }}</p>
