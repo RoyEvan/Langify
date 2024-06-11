@@ -50,6 +50,7 @@ Route::prefix("student")->middleware(['CekRole:student'])->group(function () {
     Route::prefix("account_settings")->group(function() {
         Route::get('/', [StudentAccountController::class, "account_settings"]);
         Route::get('update', [StudentAccountController::class, "updateSetting"]);
+        Route::get('delete', [StudentAccountController::class, "delete_account"]);
         Route::post('join_class', [StudentAccountController::class, "join_class"]);
         Route::post('become_teacher', [StudentAccountController::class, "become_teacher"]);
     });
@@ -79,6 +80,7 @@ Route::prefix("teacher")->middleware(['CekRole:teacher'])->group(function () {
 
 
     Route::prefix("account_settings")->group(function() {
+        Route::get('delete', [TeacherAccountController::class, "delete_account"]);
         Route::get('/', [TeacherAccountController::class, "account_settings"]);
         Route::get('update', [TeacherAccountController::class, "updateSetting"]);
     });

@@ -18,7 +18,9 @@
     <h3>Account Settings</h3>
     <section class="card-list">
 
-        <article class="card">
+        <div class="card-list">
+
+            <article class="card">
 
                 <div class="card-header">
                     <h1>Profile</h1>
@@ -27,7 +29,28 @@
                     <div class="flex-row">Your now login as : <span class="tag">Student</span></div>
                 </div>
 
-        </article>
+            </article>
+            <article class="card">
+
+                <div class="card-header">
+                    <h1>Delete Account</h1>
+                </div>
+                <div class="card-body">
+
+                    <div class="icon-text danger"><i class="bi bi-exclamation-triangle"></i>
+                        Your email address is no longer available for reuse or registration!
+                    </div>
+                    <div class="icon-text danger"><i class="bi bi-exclamation-triangle"></i>
+                        This action cannot be reversed!
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="account_settings/delete"><button class="bg-danger">Delete Account</button></a>
+                </div>
+
+            </article>
+        </div>
+
 
         <article class="card">
             <div class="card-header">
