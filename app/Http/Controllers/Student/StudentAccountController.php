@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Student;
 use App\Models\Teacher;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class StudentAccountController extends Controller
@@ -96,9 +98,18 @@ class StudentAccountController extends Controller
         }
 
         // ADD
-        $result = $student->Course()->attach($course, ['IS_FINISHED' =>  $is_finished]);
+        DB::beginTransaction();
+        try {
+            $result = $student->Course()->attach($course, ['IS_FINISHED' =>  $is_finished]);
 
-        return redirect('student/account_settings')->with('notification', 'Woohoo! Its a success!');
+            DB::commit();
+            return redirect('student/account_settings')->with('notification', 'Woohoo! Its a success!');
+        }
+        catch(Exception $ex) {
+            DB::rollback();
+            return redirect('student/account_settings')->with('notification', 'There\'s something wrong!');
+        }
+
     }
 
     public function become_teacher(Request $req)
