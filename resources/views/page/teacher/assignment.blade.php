@@ -123,40 +123,44 @@
                                 @endif
                             </td>
                             <td>
-                                <!-- Materi Modal -->
-                                <div id="nilai_modal_{{ $s->STUDENT_ID }}" class="modal">
-                                    <form class="card" action="{{ url("teacher/assignment/$assign->ASSIGNMENT_ID/grade") }}" method="post">
-                                        @csrf
-                                        <div class="card-header">
-                                            <h1>Beri Nilai</h1>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="input-group @error('score') input-danger @enderror">
-                                                <label for="">Nilai</label>
-                                                <div class="input-text-icon">
-                                                    <input type="hidden" name="sid" value="{{ $s->STUDENT_ID }}">
-                                                    <input type="number" name="score" placeholder="Nilai">
-                                                </div>
-                                                @error('score')
-                                                    <p>{{ $message }}</p>
-                                                @enderror
-                                                @error('student_id')
-                                                    <p>{{ $message }}</p>
-                                                @enderror
+                                @if ($done)
+                                    <!-- Materi Modal -->
+                                    <div id="nilai_modal_{{ $s->STUDENT_ID }}" class="modal">
+                                        <form class="card" action="{{ url("teacher/assignment/$assign->ASSIGNMENT_ID/grade") }}" method="post">
+                                            @csrf
+                                            <div class="card-header">
+                                                <h1>Beri Nilai</h1>
                                             </div>
-                                        </div>
-                                        <div class="card-footer pos-child-right">
-                                            <button target-modal="nilai_modal" type="button"
-                                                class="button-close-modal bg-danger">Close</button>
-                                            <button target-modal="nilai_modal" type="submit" id="{{ $s->STUDENT_ID }}" class="button-close-modal"
-                                                type="submit">Beri Nilai</button>
-                                        </div>
-                                    </form>
-                                </div>
+                                            <div class="card-body">
+                                                <div class="input-group @error('score') input-danger @enderror">
+                                                    <label for="">Nilai</label>
+                                                    <div class="input-text-icon">
+                                                        <input type="hidden" name="sid" value="{{ $s->STUDENT_ID }}">
+                                                        <input type="number" name="score" placeholder="Nilai">
+                                                    </div>
+                                                    @error('score')
+                                                        <p>{{ $message }}</p>
+                                                    @enderror
+                                                    @error('student_id')
+                                                        <p>{{ $message }}</p>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="card-footer pos-child-right">
+                                                <button target-modal="nilai_modal" type="button"
+                                                    class="button-close-modal bg-danger">Close</button>
+                                                <button target-modal="nilai_modal" type="submit" id="{{ $s->STUDENT_ID }}" class="button-close-modal"
+                                                    type="submit">Beri Nilai</button>
+                                            </div>
+                                        </form>
+                                    </div>
 
-                                <button target-modal="nilai_modal_{{ $s->STUDENT_ID }}" class="button-open-modal mb-16 pos-self-right">
-                                    <i class="bi bi-pencil"></i>Nilai
-                                </button>
+                                    <button target-modal="nilai_modal_{{ $s->STUDENT_ID }}" class="button-open-modal mb-16 pos-self-right">
+                                        <i class="bi bi-pencil"></i>Nilai
+                                    </button>
+                                @else
+                                    -
+                                @endif
                             </td>
                         </tr>
                     @endforeach
