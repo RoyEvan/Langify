@@ -63,7 +63,8 @@ insert  into `courses`(`COURSE_ID`,`TEACHER_ID`,`COURSE_NAME`,`COURSE_DESC`,`COU
 ('C0005','T2024003','Spanish','You will learn basic Spanish for daily life!',1,'A-205','Saturday',1.5,'2024-06-02 06:39:05',NULL,NULL),
 ('C0006','T2024003','Spanish','You will learn complex Spanish for complex conversations!',2,'A-206','Thursday',2.5,'2024-06-02 06:39:05',NULL,NULL),
 ('C0007','T2024004','Japanese','You will learn basic Japanese for daily life!',1,'A-207','Saturday',1.5,'2024-06-02 06:39:05',NULL,NULL),
-('C0008','T2024004','Japanese','You will learn complex Japanese for complex conversations!',2,'A-208','Friday',2.5,'2024-06-02 06:39:05',NULL,NULL);
+('C0008','T2024004','Japanese','You will learn complex Japanese for complex conversations!',2,'A-208','Friday',2.5,'2024-06-02 06:39:05',NULL,NULL),
+('C0009','T2024004','Japanese','Japanese B',1,'A-201','Monday',2,'2024-06-11 09:45:54','2024-06-11 09:45:54',NULL);
 
 /*Data for the table `courses_taken` */
 
@@ -85,13 +86,18 @@ insert  into `courses_taken`(`STUDENT_ID`,`COURSE_ID`,`IS_FINISHED`) values
 ('S2400004','C0001',1),
 ('S2400004','C0002',0),
 ('S2400004','C0003',0),
-('S2400004','C0005',0);
+('S2400004','C0005',0),
+('S2400005','C0007',0),
+('S2400005','C0008',0),
+('S2400005','C0009',0);
 
 /*Data for the table `finished_assignments` */
 
 insert  into `finished_assignments`(`ASSIGNMENT_ID`,`STUDENT_ID`,`FILE_PATH`,`SCORE`,`CREATED_AT`,`UPDATED_AT`,`DELETED_AT`) values 
-(12,'S2400002','2',99,'2024-06-08 23:54:34',NULL,NULL),
-(4,'S2400004','1',100,'2024-06-08 16:20:14',NULL,NULL);
+(12,'S2400002','2.html',99,'2024-06-08 23:54:34',NULL,NULL),
+(4,'S2400004','1.txt',100,'2024-06-08 16:20:14',NULL,NULL),
+(18,'S2400004','18_S2400004_LogoVCT.png',0,'2024-06-10 15:08:06',NULL,NULL),
+(4,'S2400002','2.html',NULL,'2024-06-08 16:20:14',NULL,NULL);
 
 /*Data for the table `material_files` */
 
@@ -142,7 +148,8 @@ insert  into `students`(`STUDENT_ID`,`STUDENT_USERNAME`,`STUDENT_PASSWORD`,`STUD
 ('S2400001','AlbertV24','$2y$12$rjQKITsUL1XZmKvfP3inveTj9nBGn7syXhZxwHN3h8ITnbMwyE8HC','Albert Valentino Utomo','albert.v22@mhs.istts.ac.id','Jalan Yang Penuh Kenangan No. 6-10 Blok A','81322310662','2024-06-02 06:39:05',NULL,NULL),
 ('S2400002','KevinJo24','$2y$12$ntat4FFbZXf0opJSWfbOX.z/uURMWHo2Cpyw/Jj5vxlnUBBbk79LK','Kevin Jonathan','kevin.j22@mhs.istts.ac.id','Jalan Kenangan No. 45-47','81322310664','2024-06-02 06:39:05',NULL,NULL),
 ('S2400003','Raymond24','$2y$12$fNRqBK60hRob1Ayl8KKKjOpux3Xa0LIR.cyq2UX33nnJieD/WNSLG','Raymond Lyanto Hoentoro','raymond.l22@mhs.istts.ac.id','Jalan Tidak Buntu No. 73-79','81322310667','2024-06-02 06:39:05',NULL,NULL),
-('S2400004','RoyEvan24','$2y$12$40S0zbNW0QJtS9W46Z70UO6V3fUFFwUm9j3F763tFd42uLRw4WiK.','Roy Evan Wiguna','roy.e22@mhs.istts.ac.id','Jalan Ku Berpisah Dengan Mu No. 73-77','81322310670','2024-06-02 06:39:05',NULL,NULL);
+('S2400004','RoyEvan24','$2y$12$40S0zbNW0QJtS9W46Z70UO6V3fUFFwUm9j3F763tFd42uLRw4WiK.','Roy Evan Wiguna','roy.e22@mhs.istts.ac.id','Jalan Ku Berpisah Dengan Mu No. 73-77','81322310670','2024-06-02 06:39:05',NULL,NULL),
+('S2400005','eaa5c0cec1','$2y$12$hUyjHN5/Vm.7D1R2iST6WeeU.ImrpAWlYB6rG6sXlcIJO1Bxs24rq','Guru Coba Coba','coba123@example.com','','','2024-06-11 08:05:40','2024-06-11 08:05:40',NULL);
 
 /*Data for the table `teachers` */
 
