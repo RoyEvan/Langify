@@ -102,7 +102,7 @@
                             <label for="">Course Class</label>
                             <div class="input-text-icon">
                                 <i class="bi bi-geo-alt"></i>
-                                <input type="text" name="COURSE_CLASS" id="" placeholder="Course Day"
+                                <input type="text" name="COURSE_CLASS" id="" placeholder="Course Location"
                                     value="">
                             </div>
                             @error('COURSE_CLASS')
