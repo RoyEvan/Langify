@@ -30,7 +30,7 @@ class StudentAccountController extends Controller
     public function updateSetting(Request $req)
     {
         $req->validate([
-            "STUDENT_EMAIL" => 'required|email',
+            "STUDENT_EMAIL" => 'required|email|unique:students,STUDENT_EMAIL',
             "STUDENT_NAME" => 'required',
             "STUDENT_ADDRESS" => 'required',
             "STUDENT_PHONE" => 'required',
@@ -60,6 +60,22 @@ class StudentAccountController extends Controller
     }
 
 
+    public function delete_account(Request $req)
+    {
+
+        $student = Student::find(Auth::guard('student_guard')->user()->STUDENT_ID);
+
+        $result = $student->delete();
+
+
+        if ($result) {
+            return redirect('login')->with('notification', 'Goodbye! You have been promoted to Unemployment!');
+        } else {
+            return redirect('student/account_settings')->with('notification', 'There is something wrong!');
+        }
+    }
+
+
     public function join_class(Request $req)
     {
 
@@ -74,6 +90,10 @@ class StudentAccountController extends Controller
         $student = Student::find(Auth::guard('student_guard')->user()->STUDENT_ID);
         $course = Course::find($req->COURSE_ID);
         $is_finished = 0;
+
+        if (!$course) {
+            return redirect('student/account_settings')->with('notification', 'Wrong Class Code! Try Again!');
+        }
 
         // ADD
         $result = $student->Course()->attach($course, ['IS_FINISHED' =>  $is_finished]);
@@ -96,7 +116,7 @@ class StudentAccountController extends Controller
 
 
             $prefix = 'T' . Date::now()->format('Y');
-            $lastId = Teacher::orderBy('TEACHER_ID', 'desc')->first()->TEACHER_ID;
+            $lastId = Teacher::withTrashed()->orderBy('TEACHER_ID', 'desc')->first()->TEACHER_ID;
             $numericPart = (int) substr($lastId ?? '', strlen($prefix));
             $newNumericPart = str_pad($numericPart + 1, 3, '0', STR_PAD_LEFT);
             $newID = $prefix . $newNumericPart;
@@ -122,8 +142,5 @@ class StudentAccountController extends Controller
         } else {
             return redirect('student/account_settings')->with('notification', "Wrong Access Code!");
         }
-
-
-
     }
 }

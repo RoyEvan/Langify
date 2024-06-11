@@ -24,15 +24,17 @@ class RegisterController extends Controller
     public function doRegister(Request $req)
     {
         $req->validate([
-            "student_email" => 'required|email',
+            "student_email" => 'required|email|unique:students,STUDENT_EMAIL',
             "student_name" => 'required',
             "student_password" => 'required|confirmed',
-        ], [], []);
+        ], [], [
+            "student_email" => "email",
+        ]);
 
 
         // Create New ID
         $prefix = 'S' . Date::now()->format('y');
-        $lastId = Student::orderBy('STUDENT_ID', 'desc')->first()->STUDENT_ID;
+        $lastId = Student::withTrashed()->orderBy('STUDENT_ID', 'desc')->first()->STUDENT_ID;
         $numericPart = (int) substr($lastId ?? '', strlen($prefix));
         $newNumericPart = str_pad($numericPart + 1, 5, '0', STR_PAD_LEFT);
         $newID = $prefix . $newNumericPart;

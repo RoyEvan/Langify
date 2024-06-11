@@ -845,6 +845,15 @@ main:has(.scroll-card-list) {
     margin-bottom: 3px;
 }
 
+.card .card-footer button {
+    margin-left: auto;
+}
+
+.card .card-footer a:has(button) {
+    margin-left: auto;
+}
+
+
 .card-details {
     margin: 8px;
     display: flex;
@@ -912,6 +921,7 @@ p~.icon-text:first-of-type {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(272px, 3fr));
     gap: 16px;
+    height: fit-content;
 }
 
 section.card-list {

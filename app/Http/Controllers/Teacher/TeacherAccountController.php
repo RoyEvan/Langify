@@ -22,7 +22,7 @@ class TeacherAccountController extends Controller
     public function updateSetting(Request $req)
     {
         $req->validate([
-            "TEACHER_EMAIL" => 'required|email',
+            "TEACHER_EMAIL" => 'required|email|unique:teachers,TEACHER_EMAIL',
             "TEACHER_NAME" => 'required',
             "TEACHER_ADDRESS" => 'required',
             "TEACHER_PHONE" => 'required',
@@ -50,7 +50,22 @@ class TeacherAccountController extends Controller
         } else {
             return redirect('teacher/account_settings')->with('notification', 'There is something wrong!');
         }
+    }
 
 
+    public function delete_account(Request $req)
+    {
+
+        $teacher = Teacher::find(Auth::guard('teacher_guard')->user()->TEACHER_ID);
+
+        $result = $teacher->delete();
+
+
+
+        if ($result) {
+            return redirect('login')->with('notification', 'Goodbye! You have been promoted to Unemployment!');
+        } else {
+            return redirect('student/account_settings')->with('notification', 'There is something wrong!');
+        }
     }
 }

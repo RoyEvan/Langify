@@ -31,7 +31,7 @@
                 <input type="text" name="student_email" id="" placeholder="Email"
                     value="{{ old('student_email', '') }}">
             </div>
-            @error('email')
+            @error('student_email')
                 <p>{{ $message }}</p>
             @enderror
         </div>
