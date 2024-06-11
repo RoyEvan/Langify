@@ -9,6 +9,7 @@ use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Hash;
 
 class StudentAccountController extends Controller
 {
@@ -90,7 +91,7 @@ class StudentAccountController extends Controller
 
 
 
-        if ($req->ACCESS_CODE == "Langify Reverse Card") {
+        if (Hash::check($req->ACCESS_CODE, "$2y$12$8/Gnw.JyC3G6CrlgUuXoqeeRaHttb/eeaaLUyT71cuQ.LfyJNxqHi")) {
             $student = Auth::guard('student_guard')->user();
 
 
