@@ -154,6 +154,6 @@ class TeacherClassDetailController extends Controller
     }
 
     public function download_material(Request $req) {
-        return Storage::disk("local")->download("materials/$req->file_id");;
+        return Storage::disk("local")->download("materials/$req->file_id");
     }
 }
